@@ -1,0 +1,227 @@
+%YAML 1.2
+---
+name: modstag program (1.0.1)
+scope: source.modstag-pg
+version: 2
+
+file_extensions:
+  - modstag-pg
+  - modstag-program
+
+contexts:
+  prototype:
+    - match: '\s//tips: .*$\n?|\s// tips: .*$\n?|\n//tips: .*$\n?|\n// tips: .*$\n?'
+      scope: minecraft.modstag.color.tips
+
+  main:
+    - include: package
+    - include: run
+
+  package:
+    - match: 'package'
+      scope: minecraft.modstag.color.dark_red
+      push:
+        - match: ' : |: '
+          scope: minecraft.modstag.color.tips
+          push: 
+            - match: '\nrun()'
+              scope: minecraft.modstag.color.dark_purple
+            - match: '\\\\'
+              scope: minecraft.modstag.color.dark_aqua
+            - match: '\\'
+              scope: invalid.illegal.expected-mapping-key
+            - include: main
+            - match: '[^\s\n]'
+              scope: minecraft.modstag.color.dark_aqua
+        - match: ':| :'
+          scope: minecraft.modstag.color.tips
+        - match: '\s'
+          scope: invalid.illegal.expected-mapping-key
+        - include: main
+
+  run:
+    - match: '>>-'
+      scope: minecraft.modstag.color.purple
+      push:
+        - include: program-setting
+    - match: '>-'
+      scope: minecraft.modstag.color.red
+      push:
+        - include: program-setting
+
+  program-setting:
+    - match: 'print'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - match: '\('
+          scope: minecraft.modstag.color.gold
+          pop: 1
+          push:
+            - include: print
+    - match: 'texture'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - match: '\('
+          scope: minecraft.modstag.color.gold
+          pop: 1
+          push:
+            - include: texture
+    - match: 'end'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - include: run
+
+    - match: '[^\s\(]'
+      scope: invalid.illegal.expected-mapping-key
+
+
+  print:
+    - match: '\)'
+      scope: minecraft.modstag.color.gold
+      push:
+        - include: run
+    - match: 'data[0-9]|data'
+      scope: minecraft.modstag.color.aqua
+    - match: ';'
+      scope: minecraft.modstag.color.tips
+    - match: ''''
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - match: ''''
+          scope: minecraft.modstag.color.aqua
+          pop: 1
+          push:
+            - match: '\)'
+              scope: minecraft.modstag.color.gold
+              pop: 1
+              push:
+                - include: run
+        - match: 'minecraft.modstag:color_black|\§0|\\u00a70'
+          scope: minecraft.modstag.color.black
+        - match: 'minecraft.modstag:color_dark_blue|\§1|\\u00a71'
+          scope: minecraft.modstag.color.dark_blue
+        - match: 'minecraft.modstag:color_dark_green|\§2|\\u00a72'
+          scope: minecraft.modstag.color.dark_green
+        - match: 'minecraft.modstag:color_dark_aqua|\§3|\\u00a73'
+          scope: minecraft.modstag.color.dark_aqua
+        - match: 'minecraft.modstag:color_dark_red|\§4|\\u00a74'
+          scope: minecraft.modstag.color.dark_red
+        - match: 'minecraft.modstag:color_dark_purple|\§5|\\u00a75'
+          scope: minecraft.modstag.color.dark_purple
+        - match: 'minecraft.modstag:color_gold|\§6|\\u00a76'
+          scope: minecraft.modstag.color.gold
+        - match: 'minecraft.modstag:color_gray|\§7|\\u00a77'
+          scope: minecraft.modstag.color.gray
+        - match: 'minecraft.modstag:color_dark_gray|\§8|\\u00a78'
+          scope: minecraft.modstag.color.dark_gray
+        - match: 'minecraft.modstag:color_blue|\§9|\\u00a79'
+          scope: minecraft.modstag.color.blue
+        - match: 'minecraft.modstag:color_green|\§a|\\u00a7a'
+          scope: minecraft.modstag.color.green
+        - match: 'minecraft.modstag:color_aqua|\§b|\\u00a7b'
+          scope: minecraft.modstag.color.aqua
+        - match: 'minecraft.modstag:color_red|\§c|\\u00a7c'
+          scope: minecraft.modstag.color.red
+        - match: 'minecraft.modstag:color_purple|\§d|\\u00a7d'
+          scope: minecraft.modstag.color.purple
+        - match: 'minecraft.modstag:color_yellow|\§e|\\u00a7e'
+          scope: minecraft.modstag.color.yellow
+        - match: 'minecraft.modstag:color_white|\§f|\\u00a7f'
+          scope: minecraft.modstag.color.white
+        - match: 'minecraft.modstag:color_defult|minecraft.modstag:color_reload|reload|defult|null|\§r|\\u00a7r'
+          scope: minecraft.modstag.color.textwhite
+        - match: 'auto|\\\"text\\\"|\\\"'
+          scope: minecraft.modstag.color.defult
+        - match: '[^\s\'']'
+          scope: minecraft.modstag.color.yellow
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - match: '\"'
+          scope: minecraft.modstag.color.aqua
+          pop: 1
+          push:
+            - match: '\)'
+              scope: minecraft.modstag.color.gold
+              pop: 1
+              push:
+                - include: run
+        - match: '[^\s\"]'
+          scope: minecraft.modstag.color.yellow
+
+
+  texture:
+    - match: '\)'
+      scope: minecraft.modstag.color.gold
+      pop: 1
+    - match: 'add'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - match: '\['
+          scope: minecraft.modstag.color.gold
+          pop: 1
+          push:
+            - match: 'data[0-9]|data'
+              scope: minecraft.modstag.color.aqua
+            - match: ''''
+              scope: minecraft.modstag.color.aqua
+              pop: 1
+              push:
+                - include: texture]
+    - match: 'coordinate'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - match: '\['
+          scope: minecraft.modstag.color.gold
+          pop: 1
+          push:
+            - match: 'data[0-9]|data'
+              scope: minecraft.modstag.color.aqua
+              push: 
+                - match: ';'
+                  scope: minecraft.modstag.color.tips
+                - match: 'x=|z='
+                  scope: minecraft.modstag.color.yellow
+                - match: 'pixel|p'
+                  scope: minecraft.modstag.color.yellow
+                - match: '-'
+                  scope: minecraft.modstag.color.red
+                - match: '[0-9]'
+                  scope: minecraft.modstag.color.yellow
+                - match: '[0-9]'
+                  scope: minecraft.modstag.color.yellow
+                - match: '\]'
+                  scope: minecraft.modstag.color.gold
+                - match: ','
+                  scope: minecraft.modstag.color.tips
+                  pop: 1
+                  push:
+                    - include: texture
+                - match: '\)'
+                  scope: minecraft.modstag.color.gold
+                  pop: 1
+                  push:
+                    - include: run
+  texture]:
+    - match: ''''
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - match: '\]'
+          scope: minecraft.modstag.color.gold
+          pop: 1
+          push:
+            - match: ','
+              scope: minecraft.modstag.color.tips
+              pop: 1
+              push:
+                - include: texture
+            - match: '\)'
+              scope: minecraft.modstag.color.gold
+              pop: 1
+              push:
+                - include: run
+    - match: '[^\s\'']'
+      scope: minecraft.modstag.color.yellow
