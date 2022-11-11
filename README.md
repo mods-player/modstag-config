@@ -1,6 +1,3 @@
-# modstag-config
-This is my "sublime text‘ test package
-<Readme>
-  <a type="sublime text" name="modstag config">
-  </a>
-<Readme>
+English
+# modstag-sublimeText
+## The idea comes from: writing a mod yourself
