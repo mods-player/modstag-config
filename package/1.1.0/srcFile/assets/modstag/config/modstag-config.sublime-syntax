@@ -1,0 +1,1131 @@
+%YAML 1.2
+---
+version: 1.1.0
+name: modstag config
+scope: source.modstag-cfg
+
+file_extensions:
+  - modstag-cfg
+  - modstag-config
+
+contexts:
+  prototype:
+    - match: '//tips: .*$\n?'
+      scope: minecraft.modstag.color.tips
+      
+  main:
+    - include: package
+    - include: run
+
+  package:
+    - match: 'package'
+      scope: minecraft.modstag.color.dark_red
+      push:
+        - match: ' : |: '
+          scope: minecraft.modstag.color.tips
+          pop: 2
+          push: 
+            - match: '\\\\'
+              scope: minecraft.modstag.color.dark_aqua
+            - include: run
+            - match: '[\\/:\?\*<>\|\"]'
+              scope: minecraft.modstag.color.error-key
+            - match: '[^\s\n]'
+              scope: minecraft.modstag.color.dark_aqua
+            - match: '\n'
+              scope: minecraft.modstag.color.textwhite
+              push:
+                - include: run
+                - include: readme
+        - match: ':| :'
+          scope: minecraft.modstag.color.tips
+        - match: '\s\s|\s'
+          scope: minecraft.modstag.color.error-key
+        - include: main
+
+  readme:
+    - match: 'readme|README|Readme'
+      scope: minecraft.modstag.color.dark_red
+      push:
+        - match: ' : |: '
+          scope: minecraft.modstag.color.tips
+          pop: 2
+          push:
+            - match: '\\\\'
+              scope: minecraft.modstag.color.dark_aqua
+            - include: run
+            - match: '[\\/:\?\*<>\|\"]'
+              scope: minecraft.modstag.color.error-key
+            - match: '[^\s\n]'
+              scope: minecraft.modstag.color.dark_aqua
+            - match: '\n'
+              scope: minecraft.modstag.color.textwhite
+              push:
+                - include: run
+                - include: readme
+            - include: run
+        - match: ':| :'
+          scope: minecraft.modstag.color.tips
+          push:
+            - include: run
+        - match: '\s\s|\s'
+          scope: minecraft.modstag.color.error-key
+          push:
+            - include: run
+            - include: package
+        - include: main
+
+  run:
+    - match: 'run\('
+      scope: minecraft.modstag.color.dark_purple
+      push:
+        - match: '\)\n'
+          scope: minecraft.modstag.color.dark_purple
+          push:
+            - include: cfg
+            
+  cfg:
+    - match: '%'
+      scope: minecraft.modstag.color.red
+      pop: 1
+      push:
+        - match: '%|&'
+          scope: minecraft.modstag.color.error-key
+        - match: 'cfg'
+          scope: minecraft.modstag.color.aqua
+          pop: 3
+          push:
+            - match: '\.'
+              scope: minecraft.modstag.color.tips
+              pop: 1
+              push:
+                - match: 'file'
+                  scope: minecraft.modstag.color.aqua
+                  pop: 4
+                  push:
+                    - match: '\.'
+                      scope: minecraft.modstag.color.tips
+                      pop: 1
+                      push:
+                        - match: '\\%|\\&|\\\\|\\;'
+                          scope: minecraft.modstag.color.purple
+                        - match: '[\[\]:]'
+                          scope: minecraft.modstag.color.red
+                        - match: ';'
+                          scope: minecraft.modstag.color.gray
+                        - match: '&|\\'
+                          scope: minecraft.modstag.color.error-key
+                        - match: '%'
+                          scope: minecraft.modstag.color.red
+                          pop: 1
+                          push:
+                            - match: ':'
+                              scope: minecraft.modstag.color.tips
+                              pop: 1
+                              push:
+                                - include: cfg(
+                        - match: '\n'
+                          scope: minecraft.modstag.color.textwhite
+                          push:
+                            - clear_scopes: 1
+                            - include: cfg
+                        - match: '[^\s\n\:]'
+                          scope: minecraft.modstag.color.aqua
+    - match: '&'
+      scope: minecraft.modstag.color.red
+      pop: 1
+      push:
+        - match: '\.|%'
+          scope: minecraft.modstag.color.error-key
+        - match: '&'
+          scope: minecraft.modstag.color.red
+          push:
+            - match: ':'
+              scope: minecraft.modstag.color.tips
+              pop: 1
+              push:
+                - include: cfg(
+        - match: '\n'
+          scope: minecraft.modstag.color.textwhite
+          push:
+            - clear_scopes: 1
+            - include: cfg
+        - match: '[^\&]'
+          scope: minecraft.modstag.color.aqua
+    - match: '[^\s\n\:]'
+      scope: minecraft.modstag.color.error-key
+
+  cfg(:
+    - match: '\('
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - include: cfg)
+
+  cfg)end:
+    - match: '\)'
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - match: ';'
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg
+  cfg):
+    - match: '\)'
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - match: ';'
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg
+    - match: '%'
+      scope: minecraft.modstag.color.red
+      pop: 1
+      push:
+        - match: '%|&'
+          scope: minecraft.modstag.color.error-key
+        - match: 'cfg'
+          scope: minecraft.modstag.color.aqua
+          pop: 3
+          push:
+            - match: '\.'
+              scope: minecraft.modstag.color.tips
+              pop: 1
+              push:
+                - match: 'data'
+                  scope: minecraft.modstag.color.aqua
+                  pop: 4
+                  push:
+                    - match: '\.'
+                      scope: minecraft.modstag.color.tips
+                      pop: 1
+                      push:
+                        - match: '\\[%&;\\]'
+                          scope: minecraft.modstag.color.purple
+                        - match: '[\[\]:]'
+                          scope: minecraft.modstag.color.red
+                        - match: ';'
+                          scope: minecraft.modstag.color.gray
+                        - match: '&|\\'
+                          scope: minecraft.modstag.color.error-key
+                        - match: '%'
+                          scope: minecraft.modstag.color.red
+                          pop: 1
+                          push:
+                            - match: ':'
+                              scope: minecraft.modstag.color.tips
+                              pop: 1
+                              push:
+                                - include: cfg.setting
+                        - match: '\n'
+                          scope: minecraft.modstag.color.textwhite
+                          push:
+                            - clear_scopes: 1
+                            - include: cfg
+                        - match: '[^\s\n\:]'
+                          scope: minecraft.modstag.color.aqua
+    - match: '&'
+      scope: minecraft.modstag.color.red
+      pop: 1
+      push:
+        - match: '\.|%'
+          scope: minecraft.modstag.color.error-key
+        - match: '&'
+          scope: minecraft.modstag.color.red
+          push:
+            - match: ':'
+              scope: minecraft.modstag.color.tips
+              pop: 1
+              push:
+                - include: cfg.setting
+        - match: '\n'
+          scope: minecraft.modstag.color.textwhite
+          push:
+            - clear_scopes: 1
+            - include: cfg
+        - match: '[^\&]'
+          scope: minecraft.modstag.color.aqua
+    - match: '[^\s\n\:]'
+      scope: minecraft.modstag.color.error-key
+
+  cfg.setting:
+    - include: cfg<
+    - include: cfg[
+    - include: cfgdata
+
+
+
+  cfg<:
+    - match: '<'
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - include: cfg>
+
+  cfg>:
+    - match: '\n'
+      scope: minecraft.modstag.color.textwhite
+      push:
+        - clear_scopes: 1
+    - match: '\.\.'
+      scope: minecraft.modstag.color.green
+    - match: '\.'
+      scope: minecraft.modstag.color.error-key
+    - match: '>>|<<'
+      scope: minecraft.modstag.color.red
+    - match: '>'
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          push:
+            - include: cfg)
+        - include: cfg)end
+    - match: '%s|''%s'''
+      scope: keyword.operator.word
+      push:
+        - include: cfg>%s
+    - match: '\=\='
+      scope: minecraft.modstag.color.purple
+      push:
+        - match: '%s|''%s'''
+          scope: keyword.operator.word
+          push:
+            - match: '>'
+              scope: minecraft.modstag.color.gold
+              pop: 1
+              push:
+                - match: ','
+                  scope: minecraft.modstag.color.tips
+                  push:
+                    - include: cfg)
+                - include: cfg)end
+            - match: '[^\%s]'
+              scope: minecraft.modstag.color.error-key
+        - match: '[^\%s]'
+          scope: minecraft.modstag.color.error-key
+    - match: '[\+\-\=\~\,\;\*\^\/\(\)]'
+      scope: minecraft.modstag.color.red
+    - match: '[0-9]'
+      scope: minecraft.modstag.color.green
+    - match: '[^\,\.<>1234567890%s]'
+      scope: minecraft.modstag.color.error-key
+
+  cfg>%s:
+    - match: '\n'
+      scope: minecraft.modstag.color.textwhite
+      push:
+        - clear_scopes: 1
+    - match: '\.\.'
+      scope: minecraft.modstag.color.green
+    - match: '\.'
+      scope: minecraft.modstag.color.error-key
+    - match: '>>|<<'
+      scope: minecraft.modstag.color.red
+    - match: '>'
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          push:
+            - include: cfg)
+        - include: cfg)end
+    - match: '[\+\-\=\~\,\;\*\^\/\(\)]'
+      scope: minecraft.modstag.color.red
+    - match: '[0-9]'
+      scope: minecraft.modstag.color.green
+    - match: '[^\,\;\.<>1234567890%s ]'
+      scope: minecraft.modstag.color.error-key
+
+
+
+  cfg[:
+    - match: '\['
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - include: cfg]
+
+  cfg]end:
+    - match: '\]'
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg)
+        - include: cfg)end
+  cfg]:
+    - match: '\]'
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg)
+        - include: cfg)end
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - include: cfg].1
+    - include: cfg].number
+    - include: cfg{
+    - include: cfg].<
+
+  cfg].number:
+    - match: '[0-9]'
+      scope: minecraft.modstag.color.green
+    - match: '[Ii]nfinity'
+      scope: minecraft.modstag.color.green
+    - match: ','
+      scope: minecraft.modstag.color.tips
+      push:
+        - include: cfg]
+    - include: cfg]end
+  cfg].<:
+    - match: '<'
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - include: cfg].>
+
+  cfg].>:
+    - match: '\n'
+      scope: minecraft.modstag.color.textwhite
+      push:
+        - clear_scopes: 1
+    - match: '\.\.'
+      scope: minecraft.modstag.color.green
+    - match: '\.'
+      scope: minecraft.modstag.color.error-key
+    - match: '>>|<<'
+      scope: minecraft.modstag.color.red
+    - match: '>'
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          push:
+            - include: cfg]
+        - include: cfg]end
+    - match: '%s|''%s'''
+      scope: keyword.operator.word
+      push:
+        - include: cfg].>%s
+    - match: '\=\='
+      scope: minecraft.modstag.color.purple
+      push:
+        - match: '%s|''%s'''
+          scope: keyword.operator.word
+          push:
+            - match: '>'
+              scope: minecraft.modstag.color.gold
+              pop: 1
+              push:
+                - match: ','
+                  scope: minecraft.modstag.color.tips
+                  push:
+                    - include: cfg].)
+                - include: cfg].)end
+            - match: '[^\%s]'
+              scope: minecraft.modstag.color.error-key
+        - match: '[^\%s]'
+          scope: minecraft.modstag.color.error-key
+    - match: '[\+\-\=\~\,\;\*\^\/\(\)]'
+      scope: minecraft.modstag.color.red
+    - match: '[0-9]'
+      scope: minecraft.modstag.color.green
+    - match: '[^\,\.<>1234567890%s]'
+      scope: minecraft.modstag.color.error-key
+
+  cfg].>%s:
+    - match: '\n'
+      scope: minecraft.modstag.color.textwhite
+      push:
+        - clear_scopes: 1
+    - match: '\.\.'
+      scope: minecraft.modstag.color.green
+    - match: '\.'
+      scope: minecraft.modstag.color.error-key
+    - match: '>>|<<'
+      scope: minecraft.modstag.color.red
+    - match: '>'
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          push:
+            - include: cfg]
+        - include: cfg]end
+    - match: '[\+\-\=\~\,\;\*\^\/\(\)]'
+      scope: minecraft.modstag.color.red
+    - match: '[0-9]'
+      scope: minecraft.modstag.color.green
+    - match: '[^\,\;\.<>1234567890%s ]'
+      scope: minecraft.modstag.color.error-key
+
+
+  cfg].1:
+    - match: '\\[\"\\]'
+      scope: minecraft.modstag.color.yellow
+    - match: '\\'
+      scope: minecraft.modstag.color.error-key
+    - match: '\n'
+      scope: minecraft.modstag.color.textwhite
+      push:
+        - clear_scopes: 1
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - include: cfg].11
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          push:
+            - include: cfg]
+        - include: cfg]end
+    - match: '[^\"]'
+      scope: minecraft.modstag.color.yellow
+
+  cfg].11:
+    - match: '\='
+      scope: minecraft.modstag.color.red
+      pop: 1
+      push:
+        - match: '\n'
+          scope: minecraft.modstag.color.textwhite
+          push:
+            - clear_scopes: 1
+        - match: '[0-9]'
+          scope: minecraft.modstag.color.green
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          push:
+            - include: cfg]
+        - match: '\"'
+          scope: minecraft.modstag.color.aqua
+          pop: 1
+          push:
+            - include: cfg].12
+  cfg].12:
+    - match: '\n'
+      scope: minecraft.modstag.color.textwhite
+      push:
+        - clear_scopes: 1
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg]
+        - include: cfg]end
+    - match: '[^\s\"\n]'
+      scope: minecraft.modstag.color.yellow
+
+
+
+  cfg{:
+    - match: '\{'
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - include: cfg}
+
+  cfg}end:
+    - match: '\}'
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg]
+            - include: cfg{
+        - include: cfg]end
+  cfg}:
+    - match: '\}'
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg]
+            - include: cfg{
+        - include: cfg]end
+    - include: cfg}.1
+
+  cfg}.1:
+    - match: ':'
+      scope: minecraft.modstag.color.tips
+      pop: 1
+      push:
+        - include: cfg}.101
+        - include: cfg}.11
+        - include: cfg}.21
+    - match: '[^\:]'
+      scope: minecraft.modstag.color.aqua
+
+  cfg}.11:
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - include: cfg}.12
+  cfg}.12:
+    - match: '\\[bfnrt]|\\u[0-9a-fA-F]{4}'
+      scope: keyword.operator.word
+    - match: '\\[\"/\\]'
+      scope: minecraft.modstag.color.yellow
+    - match: '\\'
+      scope: minecraft.modstag.color.error-key
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg}
+        - include: cfg}end
+    - match: '[^\s\n\"]'
+      scope: minecraft.modstag.color.yellow
+
+  cfg}.21:
+    - match: 'false|true|null|enable|unable'
+      scope: minecraft.modstag.color.false-true
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg}
+        - include: cfg}end
+    - match: '(0|1|-1)b'
+      scope: minecraft.modstag.color.false-true2
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg}
+        - include: cfg}end
+
+
+  cfg}.101:
+    - match: '\['
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - include: cfg}.102
+  cfg}.102end:
+    - match: '\]'
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg}
+        - include: cfg}end
+  cfg}.102:
+    - match: '\]'
+      scope: minecraft.modstag.color.gold
+      pop: 1
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg}
+        - include: cfg}end
+    - match: ''''
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - include: cfg}.201
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - include: cfg}.103
+  cfg}.103:
+    - match: '\\[\"\\]'
+      scope: minecraft.modstag.color.yellow
+    - match: '\\[bfnrt]|\\u[0-9a-fA-F]{4}'
+      scope: keyword.operator.word
+    - match: '[ㄅㄆㄇㄝㄞㄟㄈㄉㄊㄠㄡㄢㄋㄌㄍㄣㄤㄥㄎㄏㄐㄦㄧㄨㄑㄒㄓㄩㄔㄕㄖㄗㄘㄙㄚㄛㄜˊˇˋ˙]'
+      scope: keyword.operator.word
+    - match: '[]'
+      scope: keyword.operator.word
+    - match: '\\'
+      scope: minecraft.modstag.color.error-key
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - match: '\='
+          scope: minecraft.modstag.color.red
+          push:
+            - match: '\"'
+              scope: minecraft.modstag.color.aqua
+              pop: 1
+              push:
+                - include: cfg}.104
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          push:
+            - include: cfg}.102
+        - include: cfg}.102end
+    - match: '[^\s\n\"]'
+      scope: minecraft.modstag.color.yellow
+  cfg}.104:
+    - match: '\\[\"\\]'
+      scope: minecraft.modstag.color.yellow
+    - match: '\\[bfnrt]|\\u[0-9a-fA-F]{4}'
+      scope: keyword.operator.word
+    - match: '[ㄅㄆㄇㄝㄞㄟㄈㄉㄊㄠㄡㄢㄋㄌㄍㄣㄤㄥㄎㄏㄐㄦㄧㄨㄑㄒㄓㄩㄔㄕㄖㄗㄘㄙㄚㄛㄜˊˇˋ˙]'
+      scope: keyword.operator.word
+    - match: '[]'
+      scope: keyword.operator.word
+    - match: '\\'
+      scope: minecraft.modstag.color.error-key
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          push:
+            - include: cfg}.102
+        - include: cfg}.102end
+    - match: '[^\s\n\"]'
+      scope: minecraft.modstag.color.yellow
+
+  cfg}.201:
+    - match: ''''
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg}.102
+        - include: cfg}.102end
+    - match: '\{'
+      scope: minecraft.modstag.color.purple
+      pop: 1
+      push:
+        - include: cfg}.203
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - include: cfg}.202
+  cfg}.202:
+    - match: '\\[\"\\]'
+      scope: minecraft.modstag.color.yellow
+    - match: '\n'
+      scope: minecraft.modstag.color.textwhite
+      push:
+        - clear_scopes: 1
+    - match: '\\'
+      scope: minecraft.modstag.color.error-key
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - include: cfg}.201
+    - match: '[^\s\n\"]'
+      scope: minecraft.modstag.color.yellow
+  cfg}.203:
+    - match: '\}'
+      scope: minecraft.modstag.color.purple
+      pop: 1
+      push:
+        - include: cfg}.201
+    - include: cfg}.204
+  cfg}.204:
+    - match: '(\"text\"|\"%s\")[^\}\:]'
+      scope: minecraft.modstag.color.error-key
+      push:
+        - include: cfg}.203
+    - match: '\"text\"|\"%s\"'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - match: ':'
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg}.203
+            - include: cfg}.211
+        - include: cfg}.203
+    - match: '\"type\"[^\}\:]'
+      scope: minecraft.modstag.color.error-key
+      push:
+        - include: cfg}.203
+    - match: '\"type\"'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - match: ':'
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg}.221
+        - include: cfg}.203
+    - match: '\"color\"[^\}\:]'
+      scope: minecraft.modstag.color.error-key
+      push:
+        - include: cfg}.203
+    - match: '\"color\"'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - match: ':'
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg}.231
+        - include: cfg}.203
+    - match: '(\"extraEvent\"|\"extra\")[^\}\:]'
+      scope: minecraft.modstag.color.error-key
+    - match: '\"extraEvent\"|\"extra\"'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - match: ':'
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg}.241
+        - include: cfg}.203
+    - match: '\}'
+      scope: minecraft.modstag.color.purple
+      pop: 1
+      push:
+        - include: cfg}.201
+
+  cfg}.211:
+    - match: '\\\"'
+      scope: minecraft.modstag.color.error-key
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - include: cfg}.212
+  cfg}.212:
+    - match: '\\[bfnrt\"\\]|\\u[0-9a-fA-F]{4}'
+      scope: minecraft.modstag.color.yellow
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - match: ', '
+          scope: minecraft.modstag.color.tips
+          push: 
+            - include: cfg}.203
+            - include: cfg}.204
+        - include: cfg}.203
+    - match: '%s'
+      scope: keyword.operator.word
+    - match: '#[BDGOPKURWY]|#c[a-eA-E]{6}|#c[a-eA-E]{5}|#c[a-eA-E]{4}|#c[a-eA-E]{3}|#c[a-eA-E]{2}|#c[a-eA-E]{1}'
+      scope: minecraft.modstag.color.red
+    - match: '[^\"]'
+      scope: minecraft.modstag.color.yellow
+
+  cfg}.221:
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1 
+      push:
+        - include: cfg}.222
+  cfg}.222:
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - match: ', '
+          scope: minecraft.modstag.color.tips
+          push: 
+            - include: cfg}.204
+        - include: cfg}.203
+    - match: 'mayor'
+      scope: minecraft.modstag.color.yellow
+    - match: '[^\"\,]'
+      scope: minecraft.modstag.color.error-key
+
+  cfg}.231:
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - include: cfg}.232
+  cfg}.232:
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - match: ', '
+          scope: minecraft.modstag.color.tips
+          push: 
+            - include: cfg}.204
+        - include: cfg}.203
+    - include: cfg}.233
+  cfg}.233:
+    - match: 'minecraft.modstag:color_black|\§0|\\u00a70'
+      scope: minecraft.modstag.color.black
+    - match: 'minecraft.modstag:color_dark_blue|\§1|\\u00a71'
+      scope: minecraft.modstag.color.dark_blue
+    - match: 'minecraft.modstag:color_dark_green|\§2|\\u00a72'
+      scope: minecraft.modstag.color.dark_green
+    - match: 'minecraft.modstag:color_dark_aqua|\§3|\\u00a73'
+      scope: minecraft.modstag.color.dark_aqua
+    - match: 'minecraft.modstag:color_dark_red|\§4|\\u00a74'
+      scope: minecraft.modstag.color.dark_red
+    - match: 'minecraft.modstag:color_dark_purple|\§5|\\u00a75'
+      scope: minecraft.modstag.color.dark_purple
+    - match: 'minecraft.modstag:color_gold|\§6|\\u00a76'
+      scope: minecraft.modstag.color.gold
+    - match: 'minecraft.modstag:color_gray|\§7|\\u00a77'
+      scope: minecraft.modstag.color.gray
+    - match: 'minecraft.modstag:color_dark_gray|\§8|\\u00a78'
+      scope: minecraft.modstag.color.dark_gray
+    - match: 'minecraft.modstag:color_blue|\§9|\\u00a79'
+      scope: minecraft.modstag.color.blue
+    - match: 'minecraft.modstag:color_green|\§a|\\u00a7a'
+      scope: minecraft.modstag.color.green
+    - match: 'minecraft.modstag:color_aqua|\§b|\\u00a7b'
+      scope: minecraft.modstag.color.aqua
+    - match: 'minecraft.modstag:color_red|\§c|\\u00a7c'
+      scope: minecraft.modstag.color.red
+    - match: 'minecraft.modstag:color_purple|\§d|\\u00a7d'
+      scope: minecraft.modstag.color.purple
+    - match: 'minecraft.modstag:color_yellow|\§e|\\u00a7e'
+      scope: minecraft.modstag.color.yellow
+    - match: 'minecraft.modstag:color_white|\§f|\\u00a7f'
+      scope: minecraft.modstag.color.white
+    - match: 'minecraft.modstag:color_defult|defult|null|\§r|\\u00a7r'
+      scope: minecraft.modstag.color.textwhite
+    - match: 'minecraft.modstag:color_error-key'
+      scope: minecraft.modstag.color.textwhite
+    - match: 'auto|\\\"text\\\"|\\\"'
+      scope: minecraft.modstag.color.defult
+    - match: '[^\s\n]'
+      scope: minecraft.modstag.color.error-key
+
+  cfg}.241:
+    - match: '\{'
+      scope: minecraft.modstag.color.purple
+      pop: 1
+      push:
+        - include: cfg}.242
+  cfg}.242end:
+    - match: '\}'
+      scope: minecraft.modstag.color.purple
+      pop: 1
+      push:
+        - match: ', '
+          scope: minecraft.modstag.color.tips
+          push: 
+            - include: cfg}.204
+        - include: cfg}.203
+  cfg}.242:
+    - match: '\}'
+      scope: minecraft.modstag.color.purple
+      pop: 1
+      push:
+        - match: ', '
+          scope: minecraft.modstag.color.tips
+          push: 
+            - include: cfg}.204
+        - include: cfg}.203
+    - match: '(\"textEvent\"|\"tagEvent\")[^\}\:]'
+      scope: minecraft.modstag.color.error-key
+    - match: '\"textEvent\"|\"tagEvent\"'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - match: ':'
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg}.243-201
+    - match: '\"clickEvent\"[^\}\:]'
+      scope: minecraft.modstag.color.error-key
+    - match: '\"clickEvent\"'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - match: ':'
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg}.243-211
+
+  cfg}.243-201:
+    - match: '\\\"'
+      scope: minecraft.modstag.color.error-key
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - include: cfg}.243-202
+  cfg}.243-202:
+    - match: '\\[bfnrt\"\\]|\\u[0-9a-fA-F]{4}'
+      scope: minecraft.modstag.color.yellow
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - match: ', '
+          scope: minecraft.modstag.color.tips
+          push: 
+            - include: cfg}.242
+        - include: cfg}.242end
+    - match: '%s'
+      scope: keyword.operator.word
+    - match: '#[BDGOPKURWY]|#c[a-eA-E]{6}|#c[a-eA-E]{5}|#c[a-eA-E]{4}|#c[a-eA-E]{3}|#c[a-eA-E]{2}|#c[a-eA-E]{1}'
+      scope: minecraft.modstag.color.red
+    - match: '[^\"]'
+      scope: minecraft.modstag.color.yellow
+
+  cfg}.243-211:
+    - match: '\{'
+      scope: minecraft.modstag.color.purple
+      pop: 1
+      push:
+        - include: cfg}.243-212
+  cfg}.243-212end:
+    - match: '\}'
+      scope: minecraft.modstag.color.purple
+      pop: 1
+      push:
+        - match: ', '
+          scope: minecraft.modstag.color.tips
+          push: 
+            - include: cfg}.242
+        - include: cfg}.242end
+  cfg}.243-212:
+    - match: '\}'
+      scope: minecraft.modstag.color.purple
+      pop: 1
+      push:
+        - match: ', '
+          scope: minecraft.modstag.color.tips
+          push: 
+            - include: cfg}.242
+        - include: cfg}.242end
+    - match: '\"action\"'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - match: ':'
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg}.243-213
+    - match: '\"value\"'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - match: ':'
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg}.243-215
+  cfg}.243-213:
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - include: cfg}.243-214
+  cfg}.243-214:
+    - match: 'run_(command|url)'
+      scope: minecraft.modstag.color.yellow
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - match: ', '
+          scope: minecraft.modstag.color.tips
+          push:
+            - include: cfg}.243-212
+        - include: cfg}.243-212end
+  cfg}.243-215:
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - include: cfg}.243-216
+  cfg}.243-216:
+    - match: '\\[\"\\]'
+      scope: minecraft.modstag.color.yellow
+    - match: '\\'
+      scope: minecraft.modstag.color.error-key
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      push:
+        - match: ', '
+          scope: minecraft.modstag.color.tips
+          push:
+            - include: cfg}.243-212
+        - include: cfg}.243-212end
+    - match: '[^\s\n\"]'
+      scope: minecraft.modstag.color.yellow
+
+  cfgdata:
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - include: cfg\"
+    - match: ','
+      scope: minecraft.modstag.color.tips
+      pop: 1
+      push:
+        - include: cfg)
+    - include: cfg)end
+    - match: 'false|true|null'
+      scope: minecraft.modstag.color.false-true
+    - match: '(0|1|-1)b'
+      scope: minecraft.modstag.color.false-true2
+    - match: '[0-9]'
+      scope: minecraft.modstag.color.green
+    - match: '[Ii]nfinity'
+      scope: minecraft.modstag.color.green
+    - match: '[^\s\n\"]'
+      scope: minecraft.modstag.color.error-key
+
+  cfg\":
+    - match: '\\[\"\\]'
+      scope: minecraft.modstag.color.yellow
+    - match: '\n'
+      scope: minecraft.modstag.color.error-key
+      push:
+        - clear_scopes: 1
+        - include: cfg)
+    - match: '\\'
+      scope: minecraft.modstag.color.error-key
+    - match: '\"'
+      scope: minecraft.modstag.color.aqua
+      pop: 1
+      push:
+        - match: ','
+          scope: minecraft.modstag.color.tips
+          pop: 1
+          push:
+            - include: cfg)
+        - include: cfg)end
+    - match: '[^\n\"]'
+      scope: minecraft.modstag.color.yellow
