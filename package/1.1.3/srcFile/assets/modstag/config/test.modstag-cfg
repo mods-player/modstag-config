@@ -1,0 +1,74 @@
+//tips: version 1.1.3
+
+package: \/:?*<>|" 1234567890abchefghijklmnopqratuvwxyz`!@#$%^&()_+-=.,~
+\/:?*<>|" 1234567890abchefghijklmnopqratuvwxyz`!@#$%^&()_+-=.,~
+readme: \/:?*<>|" 1234567890abchefghijklmnopqratuvwxyz`!@#$%^&()_+-=.,~
+\/:?*<>|" 1234567890abchefghijklmnopqratuvwxyz`!@#$%^&()_+-=.,~
+//tips: run()
+%cfg.file.test%:()
+run()
+%cfg.file.test[\% \\ \ \]%:();
+%cfg.file.test%:(
+  %cfg.data.test_""%: "\ \\ / : ? * < > | \" 1 2 3 4 5 6 7 8 9 0 a b c h e f g h i j k l m n o p q r a t u v w x y z ` ! @ # $ % ^ & ( ) _ + - = . , ~",
+  //tips: ..num or <<num = <num
+  //tips: num.. or >>num = >num
+  //tips: write %s = 'num==%s'
+  %cfg.data.test_booler-1%: null,
+  %cfg.data.test_booler0%: false,
+  %cfg.data.test_booler1%: true,
+  %cfg.data.test_booler-1,0,1%: null false true,
+  %cfg.data.test_[booler]%: [false,true,false true],
+  %cfg.data.test_[num]%: [12345678901234567890,1234567890,1234567890,<1234567890>],
+  %cfg.data.test_<num+num>%: <123+3312-03213=..123>,
+  %cfg.data.test_<num+\%s=num>%: <3213+'%s'=123+123-123>,
+  %cfg.data.test_<\%s=num>%: <%s=123+321-1321>,
+  %cfg.data.test_<==>%: <123==%s\/:?*|" 1234567890abchefghijklmnopqratuvwxyz`!@#$^&()_+-=.,~ >,
+  %cfg.data.test_<error>%: <\/:?*<<>>|" 1234567890abchefghijklmnopqratuvwxyz`!@#$%^&()_+-=.,~>,
+  %cfg.data.test_[""]%: ["\ \\ / : ? * < > | \" 1 2 3 4 5 6 7 8 9 0 a b c h e f g h i j k l m n o p q r a t u v w x y z ` ! @ # $ % ^ & ( ) _ + - = . , ~", "" '' , '' '' ""="" ""],
+  %cfg.data.test_[{}]%: [
+    {
+      "test": "",
+      test: "",
+      test: ["", "", ""],
+      test: ['{
+        //tips: this is exclusive only "%s text type(debugging...ha ha) color extra extraEvent" can be selected
+        //tips: extra only "tagEvent textEvent clickEvent" can be selected
+        //tips: clickEvent only "action value" can be selected
+        "text": "testdata", 
+        "color": "minecraft.modstag:color_black §0 \u00a70",        //tips: 
+        "color": "minecraft.modstag:color_dark_blue §1 \u00a71",    //tips: 
+        "color": "minecraft.modstag:color_dark_green §2 \u00a72",   //tips: 
+        "color": "minecraft.modstag:color_dark_aqua §3 \u00a73",    //tips: 
+        "color": "minecraft.modstag:color_dark_red §4 \u00a74",     //tips: 
+        "color": "minecraft.modstag:color_dark_purple §5 \u00a75",  //tips: 
+        "color": "minecraft.modstag:color_gold §6 \u00a76",         //tips: 
+        "color": "minecraft.modstag:color_gray §7 \u00a77",         //tips: 
+        "color": "minecraft.modstag:color_dark_gray §8 \u00a78",    //tips: 
+        "color": "minecraft.modstag:color_blue §9 \u00a79",         //tips: 
+        "color": "minecraft.modstag:color_green §a \u00a7a",        //tips: 
+        "color": "minecraft.modstag:color_aqua §b \u00a7b",         //tips: 
+        "color": "minecraft.modstag:color_red §c \u00a7c",          //tips: 
+        "color": "minecraft.modstag:color_purple §d \u00a7d",       //tips: 
+        "color": "minecraft.modstag:color_yellow §e \u00a7e",       //tips: 
+        "color": "minecraft.modstag:color_white §f \u00a7f",        //tips: 
+        "color": "minecraft.modstag:color_default §r \u00a7r",       //tips: subl default color
+        "color": "minecraft.modstag:color_error-key",               //tips: is error-key but...
+        "color": "auto \"text\""                                    //tips: 
+        "extra": {
+          "textEvent": "testdata", 
+          "tagEvent": "testdata", 
+          //tips: ↓edit...ouo
+          "clickEvent": {
+            "action": "run_command", 
+            "value" : "uiuy4ui2843765348291", 
+          }, 
+          "clickEvent": {
+            "action": "run_url", 
+            "value": "https://github.com/mods-player/sublimeText-modstag"
+          }
+        }, 
+      }', '"\ \\ / : ? * < > | \" 1 2 3 4 5 6 7 8 9 0 a b c h e f g h i j k l m n o p q r a t u v w x y z ` ! @ # $ % ^ & ( ) _ + - = . , ~"']
+    }
+  ],
+);
+%cfg.file.test%:()
