@@ -1,6 +1,6 @@
 **upgrade:**
 ===
-delete all boolean, now can't use 0b/1b/-1b
+delete number type boolean, now can't use 0b/1b/-1b
 ---
 add list-number use: %config.list-number.name%: \[num1, num2, num3...\]
 ---
