@@ -1,4 +1,4 @@
-**upgrade:**
+**upgradeConfig:**
 ===
 delete number type boolean, now can't use 0b/1b/-1b
 ---
