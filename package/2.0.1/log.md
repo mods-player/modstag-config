@@ -1,4 +1,4 @@
-**upgrade:**
+**upgradeConfig:**
 ===
 File refactoring, abandoning code obfuscation
 ---
