@@ -1,0 +1,140 @@
+[
+	// Auto-pair quotations: "key": %|%,
+	{ "keys": ["%"], "command": "insert_snippet", "args": {"contents": "%cfg.$0%: "}, "context":
+		[
+			{ "key": "setting.auto_match_enabled" },
+			{ "key": "selector", "operand": "source.modstag-cfg" },
+			{ "key": "selection_empty", "match_all": true },
+			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "['\\w]$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |]|,|:|\\}|$)", "match_all": true }
+		]
+	},
+	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "res://Packages/modstag/net/modstag/macro/Delete=LLLLL$RRR.sublime-macro"}, "context":
+		[
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selector", "operand": "source.modstag-cfg" },
+			{ "key": "selection_empty", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "%cfg.$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^%: ", "match_all": true },
+		]
+	},
+	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "res://Packages/modstag/net/modstag/macro/Delete=L$R.sublime-macro"}, "context":
+		[
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selector", "operand": "source.modstag-cfg" },
+			{ "key": "selection_empty", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "%%$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^", "match_all": true },
+		]
+	},
+	
+	// Auto-pair quotations: "key": &|&,
+	{ "keys": ["&"], "command": "insert_snippet", "args": {"contents": "&$0&: "}, "context":
+		[
+			{ "key": "setting.auto_match_enabled" },
+			{ "key": "selector", "operand": "source.modstag-cfg" },
+			{ "key": "selection_empty", "match_all": true },
+			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "['\\w]$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |]|,|:|\\}|$)", "match_all": true }
+		]
+	},
+	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "res://Packages/modstag/net/modstag/macro/Delete=LLLL$.sublime-macro"}, "context":
+		[
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selector", "operand": "source.modstag-cfg" },
+			{ "key": "selection_empty", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "&&: $", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^", "match_all": true },
+		]
+	},
+	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "res://Packages/modstag/net/modstag/macro/Delete=L$RRR.sublime-macro"}, "context":
+		[
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selector", "operand": "source.modstag-cfg" },
+			{ "key": "selection_empty", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "&$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^&: ", "match_all": true },
+		]
+	},
+	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "res://Packages/modstag/net/modstag/macro/Delete=L$R.sublime-macro"}, "context":
+		[
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selector", "operand": "source.modstag-cfg" },
+			{ "key": "selection_empty", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "&$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^&", "match_all": true },
+		]
+	},
+
+	// Auto-pair quotations: "key": '|',
+	{ "keys": ["'"], "command": "insert_snippet", "args": {"contents": "'$0'"}, "context":
+		[
+			{ "key": "setting.auto_match_enabled" },
+			{ "key": "selector", "operand": "source.modstag-cfg" },
+			{ "key": "selection_empty", "match_all": true },
+			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "['\\w]$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |]|,|:|\\}|$)", "match_all": true }
+		]
+	},
+
+	// Auto-pair quotations: "key": "|",
+	{ "keys": ["\""], "command": "insert_snippet", "args": {"contents": "\"$0\""}, "context":
+		[
+			{ "key": "setting.auto_match_enabled" },
+			{ "key": "selector", "operand": "source.modstag-cfg" },
+			{ "key": "selection_empty", "match_all": true },
+			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "[\"\\w]$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |]|,|:|\\}|$)", "match_all": true }
+		]
+	},
+
+	// Auto-pair braces: "key": {|},
+	{ "keys": ["{"], "command": "insert_snippet", "args": {"contents": "{$0}"}, "context":
+		[
+			{ "key": "setting.auto_match_enabled" },
+			{ "key": "selector", "operand": "source.modstag-cfg" },
+			{ "key": "selection_empty", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |]|,|:|\\}|$)", "match_all": true }
+		]
+	},
+
+	// Auto-pair square brackets: "key": [|],
+	{ "keys": ["["], "command": "insert_snippet", "args": {"contents": "[$0]"}, "context":
+		[
+			{ "key": "setting.auto_match_enabled" },
+			{ "key": "selector", "operand": "source.modstag-cfg" },
+			{ "key": "selection_empty", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |]|,|:|\\}|$)", "match_all": true }
+		]
+	},
+
+	// Auto-pair square brackets: "key": (|),
+	{ "keys": ["("], "command": "insert_snippet", "args": {"contents": "($0)"}, "context":
+		[
+			{ "key": "setting.auto_match_enabled" },
+			{ "key": "selector", "operand": "source.modstag-cfg" },
+			{ "key": "selection_empty", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |]|,|:|\\}|$)", "match_all": true }
+		]
+	},
+
+	// Add indented line in square brackets
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "\n\t$0\n"}, "context":
+		[
+			{ "key": "setting.auto_indent" },
+			{ "key": "selector", "operand": "source.modstag-cfg" },
+			{ "key": "selection_empty", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\[$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\]", "match_all": true }
+		]
+	},
+	{ "keys": ["shift+enter"], "command": "insert_snippet", "args": {"contents": "\n\t$0\n"}, "context":
+		[
+			{ "key": "setting.auto_indent" },
+			{ "key": "selector", "operand": "source.modstag-cfg" },
+			{ "key": "selection_empty", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\[$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\]", "match_all": true }
+		]
+	},
+]

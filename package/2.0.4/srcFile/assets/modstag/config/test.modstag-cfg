@@ -1,0 +1,84 @@
+@modstag-cfg
+@modstag-version 2.0.3+
+@modstag-version 2.0.4-
+
+package: \/:?*<>|" 1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~
+\/:?*<>|" 1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~
+readme: \/:?*<>|" 1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~
+\/:?*<>|" 1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~
+//tips: run()
+%cfg.file.test%:()
+run()
+%cfg.file.test[\% \\]%:();
+%cfg.file.test%:(
+  %cfg.string.test_""%: "\\ / : ? * < > | \" 1 2 3 4 5 6 7 8 9 0 a b c h e f g h i j k l m n o p q r s t u v w x y z ` ! @ # $ % ^ & ( ) _ + - = . , ~",
+  %cfg.text.test_""%: "\\ / : ? * < > | \" 1 2 3 4 5 6 7 8 9 0 a b c h e f g h i j k l m n o p q r s t u v w x y z ` ! @ # $ % ^ & ( ) _ + - = . , ~",
+  %cfg.byte.test%: 127b,
+  %cfg.short.test%: 127s,
+  %cfg.int.test%: 127,
+  %cfg.long.test%: 1L,
+  %cfg.number.test%: 1,
+  %cfg.float.test%: 1.0f,
+  %cfg.double.test%: 1.0d,
+  %cfg.decimal.test%: 1.0,
+  %cfg.boolean.test_booler-1%: null,
+  %cfg.boolean.test_booler0%: false,
+  %cfg.boolean.test_booler1%: true,
+  %cfg.math.test_<num+num>%: <123+3312-03213>,
+  %cfg.math.test_<num+\%s>%: <3213+'%s'>,
+  %cfg.math.test_<\%s==num>%: <%s==123>,
+  %cfg.math.test_<\%s==num+\%s>%: <%s==123+%s>,
+  %cfg.math.test_<error>%: </*<<>>1234567890^()+.>,
+  %cfg.base-2.test_2bas%: 10100110 10001101 10001011 1001100001100100,
+  %cfg.base-16.test_16bas%: 1f fc fa 9f 100a d01a,
+  %cfg.list-boolean.test_booler1%: [true, false, null],
+  %cfg.list-text.test_[""]%: ["\\ / : ? * < > | \" 1 2 3 4 5 6 7 8 9 0 a b c h e f g h i j k l m n o p q r s t u v w x y z ` ! @ # $ % ^ & ( ) _ + - = . , ~", "", ""=""],
+  %cfg.list-decimal.test_[num]%: [12345678901234567890,1234567890,1234567890],
+  %cfg.list-extra.test_[{}]%: [
+    {
+      "test": "",
+      test: "",
+      test: ["", "", ""],
+      test: ['{
+        //tips: this is exclusive only "%s text type(debugging...ha ha) color extra extraEvent" can be selected
+        //tips: extra only "tagEvent textEvent clickEvent" can be selected
+        //tips: clickEvent only "action value" can be selected
+        "text": "testdata", 
+        "color": "minecraft.modstag:color_black §0 \u00a70",        //tips: 
+        "color": "minecraft.modstag:color_dark_blue §1 \u00a71",    //tips: 
+        "color": "minecraft.modstag:color_dark_green §2 \u00a72",   //tips: 
+        "color": "minecraft.modstag:color_dark_aqua §3 \u00a73",    //tips: 
+        "color": "minecraft.modstag:color_dark_red §4 \u00a74",     //tips: 
+        "color": "minecraft.modstag:color_dark_purple §5 \u00a75",  //tips: 
+        "color": "minecraft.modstag:color_gold §6 \u00a76",         //tips: 
+        "color": "minecraft.modstag:color_gray §7 \u00a77",         //tips: 
+        "color": "minecraft.modstag:color_dark_gray §8 \u00a78",    //tips: 
+        "color": "minecraft.modstag:color_blue §9 \u00a79",         //tips: 
+        "color": "minecraft.modstag:color_green §a \u00a7a",        //tips: 
+        "color": "minecraft.modstag:color_aqua §b \u00a7b",         //tips: 
+        "color": "minecraft.modstag:color_red §c \u00a7c",          //tips: 
+        "color": "minecraft.modstag:color_purple §d \u00a7d",       //tips: 
+        "color": "minecraft.modstag:color_yellow §e \u00a7e",       //tips: 
+        "color": "minecraft.modstag:color_white §f \u00a7f",        //tips: 
+        "color": "minecraft.modstag:color_default §r \u00a7r",      //tips: subl default color
+        "color": "minecraft.modstag:color_error-key",               //tips: is error-key but... key error...
+        "color": "auto \"text\"",                                   //tips: 
+        "extra": {
+          "textEvent": "testdata", 
+          "tagEvent": "testdata", 
+          //tips: ↓edit...ouo
+          "clickEvent": {
+            "action": "run_command", 
+            "value" : "uiuy4ui2843765348291"
+          }, 
+          "clickEvent": {
+            "action": "run_url", 
+            "value": "https://github.com/mods-player/sublimeText-modstag"
+          }
+        }
+      }', 
+      '" \\ / : ? * < > | \" 1 2 3 4 5 6 7 8 9 0 a b c h e f g h i j k l m n o p q r s t u v w x y z ` ! @ # $ % ^ & ( ) _ + - = . , ~"']
+    }
+  ]
+);
+%cfg.file.test%:()
