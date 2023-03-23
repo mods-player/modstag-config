@@ -1,6 +1,6 @@
-@modstag-cfg()
-@modstag-version 2.0.7+
-@modstag-version 2.0.7-
+@modstag-cfg
+@modstag-version 2.0.6+
+@modstag-version 2.0.6-
 
 package: \/:?*<>|" 1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~
 \/:?*<>|" 1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~
@@ -14,8 +14,8 @@ run()
 %cfg.file[float].test2%:(
   %cfg.string.test_""%: "\\ / : ? * < > | \" 1 2 3 4 5 6 7 8 9 0 a b c h e f g h i j k l m n o p q r s t u v w x y z ` ! @ # $ % ^ & ( ) _ + - = . ,~",
   %cfg.text.test_""%: "\\ / : ? * < > | \" 1 2 3 4 5 6 7 8 9 0 a b c h e f g h i j k l m n o p q r s t u v w x y z ` ! @ # $ % ^ & ( ) _ + - = . ,~",
-  %cfg.byte.test%: 127B,
-  %cfg.short.test%: 127S,
+  %cfg.byte.test%: 127b,
+  %cfg.short.test%: 127s,
   %cfg.int.test%: 127I,
   %cfg.long.test%: 127L,
   %cfg.number.test%: 127,
