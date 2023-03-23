@@ -1,0 +1,203 @@
+%YAML 1.2
+---
+name: modstag 2base
+scope: source.modstag-2base
+
+file_extensions:
+  - modstag-2b
+  - modstag-2base
+
+contexts:
+  main:
+    - include: 2base-8text-purple
+  2base-8text-purple:
+    - match: '[0-1]{8}'
+      scope: minecraft.modstag.color.purple
+      set: 
+        - match: '\n'
+          scope: minecraft.modstag.color.dark_aqua
+          set:
+            - include: 2base-32text-aqua
+            - include: 2base-16text-red
+            - include: 2base-8text-purple
+        - include: 2base-32text-purple
+        - include: 2base-16text-green
+        - include: 2base-8text-red
+    - match: '[^\s\n01]'
+      scope: minecraft.modstag.color.error-key
+  2base-8text-red:
+    - match: '[0-1]{8}'
+      scope: minecraft.modstag.color.red
+      set:
+        - match: '\n'
+          scope: minecraft.modstag.color.dark_aqua
+          set:
+            - include: 2base-32text-aqua
+            - include: 2base-16text-red
+            - include: 2base-8text-purple
+        - include: 2base-32text-red
+        - include: 2base-16text-aqua
+        - include: 2base-8text-green
+    - match: '[^\s\n01]'
+      scope: minecraft.modstag.color.error-key
+
+  2base-8text-green:
+    - match: '[0-1]{8}'
+      scope: minecraft.modstag.color.green
+      set:
+        - match: '\n'
+          scope: minecraft.modstag.color.dark_aqua
+          set:
+            - include: 2base-32text-aqua
+            - include: 2base-16text-red
+            - include: 2base-8text-purple
+        - include: 2base-32text-green
+        - include: 2base-16text-purple
+        - include: 2base-8text-aqua
+    - match: '[^\s\n01]'
+      scope: minecraft.modstag.color.error-key
+  2base-8text-aqua:
+    - match: '[0-1]{8}'
+      scope: minecraft.modstag.color.aqua
+      set:
+        - match: '\n'
+          scope: minecraft.modstag.color.dark_aqua
+          set:
+            - include: 2base-32text-aqua
+            - include: 2base-16text-red
+            - include: 2base-8text-purple
+        - include: 2base-32text-aqua
+        - include: 2base-16text-red
+        - include: 2base-8text-purple
+    - match: '[^\s\n01]'
+      scope: minecraft.modstag.color.error-key
+
+  2base-16text-purple:
+    - match: '([0-1]{8})([0-1]{8})'
+      captures:
+        1: minecraft.modstag.color.dark_aqua
+        2: minecraft.modstag.color.dark_purple
+      set: 
+        - match: '\n'
+          scope: minecraft.modstag.color.aqua
+          set:
+            - include: 2base-32text-aqua
+            - include: 2base-16text-red
+            - include: 2base-8text-purple
+        - include: 2base-32text-purple
+        - include: 2base-16text-green
+        - include: 2base-8text-red
+    - match: '[^\s\n01]'
+      scope: minecraft.modstag.color.error-key
+  2base-16text-red:
+    - match: '([0-1]{8})([0-1]{8})'
+      captures:
+        1: minecraft.modstag.color.dark_purple
+        2: minecraft.modstag.color.dark_red
+      set: 
+        - match: '\n'
+          scope: minecraft.modstag.color.aqua
+          set:
+            - include: 2base-32text-aqua
+            - include: 2base-16text-red
+            - include: 2base-8text-purple
+        - include: 2base-32text-red
+        - include: 2base-16text-aqua
+        - include: 2base-8text-green
+    - match: '[^\s\n01]'
+      scope: minecraft.modstag.color.error-key
+  2base-16text-green:
+    - match: '([0-1]{8})([0-1]{8})'
+      captures:
+        1: minecraft.modstag.color.dark_red
+        2: minecraft.modstag.color.dark_green
+      set: 
+        - match: '\n'
+          scope: minecraft.modstag.color.aqua
+          set:
+            - include: 2base-32text-aqua
+            - include: 2base-16text-red
+            - include: 2base-8text-purple
+        - include: 2base-32text-green
+        - include: 2base-16text-purple
+        - include: 2base-8text-aqua
+    - match: '[^\s\n01]'
+      scope: minecraft.modstag.color.error-key
+  2base-16text-aqua:
+    - match: '([0-1]{8})([0-1]{8})'
+      captures:
+        1: minecraft.modstag.color.dark_green
+        2: minecraft.modstag.color.dark_aqua
+      set: 
+        - match: '\n'
+          scope: minecraft.modstag.color.aqua
+          set:
+            - include: 2base-32text-aqua
+            - include: 2base-16text-red
+            - include: 2base-8text-purple
+        - include: 2base-32text-aqua
+        - include: 2base-16text-red
+        - include: 2base-8text-purple
+    - match: '[^\s\n01]'
+      scope: minecraft.modstag.color.error-key
+
+  2base-32text-purple:
+    - match: '[0-1]{32}'
+      scope: minecraft.modstag.color.gold
+      set: 
+        - match: '\n'
+          scope: minecraft.modstag.color.aqua
+          set:
+            - include: 2base-32text-aqua
+            - include: 2base-16text-red
+            - include: 2base-8text-purple
+        - include: 2base-32text-red
+        - include: 2base-16text-aqua
+        - include: 2base-8text-purple
+    - match: '[^\s\n01]'
+      scope: minecraft.modstag.color.error-key
+  2base-32text-red:
+    - match: '[0-1]{32}'
+      scope: minecraft.modstag.color.gold
+      set: 
+        - match: '\n'
+          scope: minecraft.modstag.color.aqua
+          set:
+            - include: 2base-32text-aqua
+            - include: 2base-16text-red
+            - include: 2base-8text-purple
+        - include: 2base-32text-green
+        - include: 2base-16text-purple
+        - include: 2base-8text-red
+    - match: '[^\s\n01]'
+      scope: minecraft.modstag.color.error-key
+  2base-32text-green:
+    - match: '[0-1]{32}'
+      scope: minecraft.modstag.color.gold
+      set: 
+        - match: '\n'
+          scope: minecraft.modstag.color.aqua
+          set:
+            - include: 2base-32text-aqua
+            - include: 2base-16text-red
+            - include: 2base-8text-purple
+        - include: 2base-32text-aqua
+        - include: 2base-16text-red
+        - include: 2base-8text-green
+    - match: '[^\s\n01]'
+      scope: minecraft.modstag.color.error-key
+  2base-32text-aqua:
+    - match: '[0-1]{32}'
+      scope: minecraft.modstag.color.gold
+      set: 
+        - match: '\n'
+          scope: minecraft.modstag.color.aqua
+          set:
+            - include: 2base-32text-aqua
+            - include: 2base-16text-red
+            - include: 2base-8text-purple
+        - include: 2base-32text-purple
+        - include: 2base-16text-green
+        - include: 2base-8text-aqua
+    - match: '[^\s\n01]'
+      scope: minecraft.modstag.color.error-key
