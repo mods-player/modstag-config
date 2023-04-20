@@ -1,0 +1,284 @@
+@modstag-cfg(version: 3.0.1)
+
+package: \/:?*<>|" 1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~
+\/:?*<>|" 1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~
+readme: \/:?*<>|" 1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~
+\/:?*<>|" 1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~
+#tips: run()
+%cfg.file.test%:()
+run()
+%cfg.file.test[\% \& \\ \: \[ \] \;]%:();
+run()
+%cfg.file[float].test%:(
+  %cfg.string.test_""%: "\\ / : ? * < > | \" 1 2 3 4 5 6 7 8 9 0 a b c h e f g h i j k l m n o p q r s t u v w x y z ` ! @ # $ % ^ & ( ) _ + - = . ,~",
+  %cfg.text.test_""%: "\\ / : ? * < > | \" 1 2 3 4 5 6 7 8 9 0 a b c h e f g h i j k l m n o p q r s t u v w x y z ` ! @ # $ % ^ & ( ) _ + - = . ,~",
+  %cfg.byte.test%: 127B,
+  %cfg.short.test%: 127S,
+  %cfg.int.test%: 127I,
+  %cfg.long.test%: 127L,
+  %cfg.number.test%: 127,
+  %cfg.float.test%: 127.0E1f,
+  %cfg.double.test%: 127.0E1d,
+  %cfg.decimal.test%: 127.0E1,
+  %cfg.boolean.test_booler-1%: null,
+  %cfg.boolean.test_booler0%: false,
+  %cfg.boolean.test_booler1%: true,
+  %cfg.math.test_<num+num>%: <123+3312-03213>,
+  %cfg.math.test_<num+\%s>%: <3213+'%s'>,
+  %cfg.math.test_<\%s==num>%: <%s==123>,
+  %cfg.math.test_<\%s==num+\%s>%: <%s==123+%s>,
+  %cfg.math.test_<error>%: </*<<>>1234567890^()+.>,
+  %cfg.base-2.test_2base%: 10100110 10001101 10001011 1001100001100100,
+  %cfg.base-16.test_16base%: 1f fc fa 9f 100a d01a,
+  %cfg.list-boolean.test_booler1%: [true,false,null],
+  %cfg.list-text.test_[""]%: ["\\ / : ? * < > | \" 1 2 3 4 5 6 7 8 9 0 a b c h e f g h i j k l m n o p q r s t u v w x y z ` ! @ # $ % ^ & ( ) _ + - = . ,~","",""=""],
+  %cfg.list-decimal.test_[num]%: [12345678901234567890,1234567890,1234567890],
+  %cfg.list-extra.test_\[{}\]%: [
+    {
+      "test": "",
+      test: "",
+      test: 127,
+      test: [
+        '{
+          //tips:
+          this is exclusive only "%s text type(debugging...ha ha) color extra extraEvent" can be selected
+          extra only "tagEvent textEvent clickEvent" can be selected
+          clickEvent only "action value" can be selected
+          :end//
+          "text": "testdata%s",
+          "%s": "%v",
+          "var": ["", ""],
+          "color": "minecraft.modstag:color_black §0 \u00a70",       #tips: 
+          "color": "minecraft.modstag:color_dark_blue §1 \u00a71",   #tips: 
+          "color": "minecraft.modstag:color_dark_green §2 \u00a72",  #tips: 
+          "color": "minecraft.modstag:color_dark_aqua §3 \u00a73",   #tips: 
+          "color": "minecraft.modstag:color_dark_red §4 \u00a74",    #tips: 
+          "color": "minecraft.modstag:color_dark_purple §5 \u00a75", #tips: 
+          "color": "minecraft.modstag:color_gold §6 \u00a76",        #tips: 
+          "color": "minecraft.modstag:color_gray §7 \u00a77",        #tips: 
+          "color": "minecraft.modstag:color_dark_gray §8 \u00a78",   #tips: 
+          "color": "minecraft.modstag:color_blue §9 \u00a79",        #tips: 
+          "color": "minecraft.modstag:color_green §a \u00a7a",       #tips: 
+          "color": "minecraft.modstag:color_aqua §b \u00a7b",        #tips: 
+          "color": "minecraft.modstag:color_red §c \u00a7c",         #tips: 
+          "color": "minecraft.modstag:color_purple §d \u00a7d",      #tips: 
+          "color": "minecraft.modstag:color_yellow §e \u00a7e",      #tips: 
+          "color": "minecraft.modstag:color_white §f \u00a7f",       #tips: 
+          "color": "minecraft.modstag:color_default §r \u00a7r",     #tips: sublime_text default color
+          "color": "minecraft.modstag:color_error-key",              #tips: is error-key but... key error...
+          "color": "auto \"text\"",                                  #tips: 
+          "color": "#ffffff",                                        #tips: 
+          "color": "a",                                              #tips: error color
+          "extra": {
+            "textEvent": "testdata",
+            "tagEvent": "testdata",
+            "clickEvent": {
+              "action": "run_code",
+              "value" : "ModsTag.entity.jsonTag(json.tag.minecraft.color)"
+            },
+            "clickEvent": {
+              "action": "run_command",
+              "value" : "/say \"hallo :D\""
+            },
+            "clickEvent": {
+              "action": "run_herf",
+              "value" : "https://github.com/mods-player/sublimeText-modstag"
+            },
+            "clickEvent": {
+              "action": "run_url",
+              "value" : "https://github.com/mods-player/sublimeText-modstag"
+            }
+          }
+        }',
+        '" \\ / : ? * < > | \" 1 2 3 4 5 6 7 8 9 0 a b c h e f g h i j k l m n o p q r s t u v w x y z ` ! @ # $ % ^ & ( ) _ + - = . ,~"',
+        "text"
+      ]
+    }
+  ]
+);
+run(modstag)
+%cfg.file[plus_int16].test%:(
+  %cfg.string.test%: "\\ / : ? * < > | \" 1 2 3 4 5 6 7 8 9 0 a b c h e f g h i j k l m n o p q r s t u v w x y z ` ! @ # $ % ^ & ( ) _ + - = . ,~",
+  %cfg.int4.test%: 127mt_i4,
+  %cfg.int8.test%: 127mt_i8,
+  %cfg.int16.test%: 127mt_i16,
+  %cfg.int32.test%: 127mt_i32,
+  %cfg.int64.test%: 127mt_i64,
+  %cfg.int128.test%: 127mt_i128,
+  %cfg.int256.test%: 127mt_i256,
+  %cfg.plus_int4.test%: 127mt_i4,
+  %cfg.plus_int8.test%: 127mt_i8,
+  %cfg.plus_int16.test%: 127mt_i16,
+  %cfg.plus_int32.test%: 127mt_i32,
+  %cfg.plus_int64.test%: 127mt_i64,
+  %cfg.plus_int128.test%: 127mt_i128,
+  %cfg.plus_int256.test%: 127mt_i256,
+  %cfg.minus_int4.test%: -127mt_i4,
+  %cfg.minus_int8.test%: -127mt_i8,
+  %cfg.minus_int16.test%: -127mt_i16,
+  %cfg.minus_int32.test%: -127mt_i32,
+  %cfg.minus_int64.test%: -127mt_i64,
+  %cfg.minus_int128.test%: -127mt_i128,
+  %cfg.minus_int256.test%: -127mt_i256,
+  %cfg.int4.test%: 127mt_i4,
+  %cfg.int8.test%: 127mt_i8,
+  %cfg.int16.test%: 127mt_i16,
+  %cfg.int32.test%: 127mt_i32,
+  %cfg.int64.test%: 127mt_i64,
+  %cfg.int128.test%: 127mt_i128,
+  %cfg.int256.test%: 127mt_i256,
+  %cfg.decimal8.test%: 127.0E1mt_d8,
+  %cfg.decimal16.test%: 127.0E1mt_d16,
+  %cfg.decimal32.test%: 127.0E1mt_d32,
+  %cfg.decimal64.test%: 127.0E1mt_d64,
+  %cfg.decimal128.test%: 127.0E1mt_d128,
+  %cfg.decimal256.test%: 127.0E1mt_d256,
+  %cfg.plus_decimal8.test%: 127.0E1mt_d8,
+  %cfg.plus_decimal16.test%: 127.0E1mt_d16,
+  %cfg.plus_decimal32.test%: 127.0E1mt_d32,
+  %cfg.plus_decimal64.test%: 127.0E1mt_d64,
+  %cfg.plus_decimal128.test%: 127.0E1mt_d128,
+  %cfg.plus_decimal256.test%: 127.0E1mt_d256,
+  %cfg.minus_decimal8.test%: -127.0E1mt_d8,
+  %cfg.minus_decimal16.test%: -127.0E1mt_d16,
+  %cfg.minus_decimal32.test%: -127.0E1mt_d32,
+  %cfg.minus_decimal64.test%: -127.0E1mt_d64,
+  %cfg.minus_decimal128.test%: -127.0E1mt_d128,
+  %cfg.minus_decimal256.test%: -127.0E1mt_d256,
+  %cfg.superPrecision128.test%: 127.0E1mt_s128,
+  %cfg.superPrecision256.test%: 127.0E1mt_s256,
+  %cfg.plus_superPrecision128.test%: 127.0E1mt_s128,
+  %cfg.plus_superPrecision256.test%: 127.0E1mt_s256,
+  %cfg.minus_superPrecision128.test%: -127.0E1mt_s128,
+  %cfg.minus_superPrecision256.test%: -127.0E1mt_s256,
+  %cfg.float.test%: 127.0E1mt_f32,
+  %cfg.double.test%: 127.0E1mt_f64,
+  %cfg.doubledouble.test%: 127.0E1mt_f128,
+  %cfg.boolean.test_booler-1%: null,
+  %cfg.boolean.test_booler0%: false,
+  %cfg.boolean.test_booler1%: true,
+  %cfg.math.test_<num+num>%: <123+3312-03213>,
+  %cfg.math.test_<num+\%s>%: <3213+'%s'>,
+  %cfg.math.test_<\%s==num>%: <%s==123>,
+  %cfg.math.test_<\%s==num+\%s>%: <%s==123+%s>,
+  %cfg.math.test_<error>%: </*<<>>1234567890^()+.>,
+  %cfg.base-2.test_2base%: 10100110 10001101 10001011 1001100001100100,
+  %cfg.base-16.test_16base%: 1f fc fa 9f 100a d01a,
+  %cfg.list-boolean.test_booler1%: [true,false,null],
+  %cfg.list-string.test_[""]%: ["\\ / : ? * < > | \" 1 2 3 4 5 6 7 8 9 0 a b c h e f g h i j k l m n o p q r s t u v w x y z ` ! @ # $ % ^ & ( ) _ + - = . ,~","",""=""],
+  %cfg.list-int.test%: [12345678123456781234567812345678],
+  %cfg.list-decimal.test_[num]%: [12345678901234567890,1234567890,1234567890],
+  %cfg.list-extra.test_\[{}\]%: [
+    {
+      "test": "",
+      test: "",
+      test: 127,
+      test: [
+        '{
+          //tips:
+          this is exclusive only "%s text type(debugging...ha ha) color extra extraEvent" can be selected
+          extra only "tagEvent textEvent clickEvent" can be selected
+          clickEvent only "action value" can be selected
+          :end//
+          "text": "testdata%s",
+          "%s": "%v",
+          "var": ["", ""],
+          "color": "minecraft.modstag:color_black §0 \u00a70",       #tips: 
+          "color": "minecraft.modstag:color_dark_blue §1 \u00a71",   #tips: 
+          "color": "minecraft.modstag:color_dark_green §2 \u00a72",  #tips: 
+          "color": "minecraft.modstag:color_dark_aqua §3 \u00a73",   #tips: 
+          "color": "minecraft.modstag:color_dark_red §4 \u00a74",    #tips: 
+          "color": "minecraft.modstag:color_dark_purple §5 \u00a75", #tips: 
+          "color": "minecraft.modstag:color_gold §6 \u00a76",        #tips: 
+          "color": "minecraft.modstag:color_gray §7 \u00a77",        #tips: 
+          "color": "minecraft.modstag:color_dark_gray §8 \u00a78",   #tips: 
+          "color": "minecraft.modstag:color_blue §9 \u00a79",        #tips: 
+          "color": "minecraft.modstag:color_green §a \u00a7a",       #tips: 
+          "color": "minecraft.modstag:color_aqua §b \u00a7b",        #tips: 
+          "color": "minecraft.modstag:color_red §c \u00a7c",         #tips: 
+          "color": "minecraft.modstag:color_purple §d \u00a7d",      #tips: 
+          "color": "minecraft.modstag:color_yellow §e \u00a7e",      #tips: 
+          "color": "minecraft.modstag:color_white §f \u00a7f",       #tips: 
+          "color": "minecraft.modstag:color_default §r \u00a7r",     #tips: sublime_text default color
+          "color": "minecraft.modstag:color_error-key",              #tips: is error-key but... key error...
+          "color": "auto \"text\"",                                  #tips: 
+          "color": "#ffffff",                                        #tips: 
+          "color": "a",                                              #tips: error color
+          "extra": {
+            "textEvent": "testdata",
+            "tagEvent": "testdata",
+            "clickEvent": {
+              "action": "run_code",
+              "value" : "ModsTag.entity.jsonTag(json.tag.minecraft.color)"
+            },
+            "clickEvent": {
+              "action": "run_command",
+              "value" : "/say \"hallo :D\""
+            },
+            "clickEvent": {
+              "action": "run_herf",
+              "value" : "https://github.com/mods-player/sublimeText-modstag"
+            },
+            "clickEvent": {
+              "action": "run_url",
+              "value" : "https://github.com/mods-player/sublimeText-modstag"
+            }
+          }
+        }',
+        '" \\ / : ? * < > | \" 1 2 3 4 5 6 7 8 9 0 a b c h e f g h i j k l m n o p q r s t u v w x y z ` ! @ # $ % ^ & ( ) _ + - = . ,~"',
+        "text"
+      ]
+    }
+  ]
+);
+run(cs)
+%cfg.file[int].test%:(
+  %cfg.short.test%: 127S,
+  %cfg.int.test%: 127I,
+  %cfg.long.test%: 127L,
+  %cfg.float.test%: 127F,
+  %cfg.double.test%: 127D,
+  %cfg.decimal.name%: 127M
+);
+run(c++)
+%cfg.file[int].test%:(
+  #tips: __int8, signed __int8, signed char, unsigned __int8, unsigned char
+  %cfg.char.test%: '',
+  #tips: __int16, int16_t, short int, int short
+  #tips: signed __int16, signed int16_t, signed short int, signed int short
+  #tips: unsigned __int16, unsigned int16_t, unsigned short int, unsigned int short, char16_t, wchar_t
+  %cfg.short.test%: 127S,
+  #tips: __int32, int32_t, int, long, int long, long int, ptrdiff_t
+  #tips: signed __int32, signed int32_t, signed int, signed long, signed int long, signed long int
+  #tips: unsigned __int32, unsigned int32_t, unsigned int, unsigned long, unsigned int long, unsigned long int, char32_t
+  %cfg.int.test%: 127I,
+  #tips: __int64, int64_t, long long, long long int, long int long, int long long
+  #tips: signed __int64, signed int64_t, signed long long, signed long long int, signed long int long, signed int long long
+  #tips: unsigned __int64, unsigned int64_t, unsigned long long, unsigned long long int, unsigned long int long, unsigned int long long
+  %cfg.long long.test%: 127L,
+  %cfg.float.test%: 127F,
+  %cfg.double.test%: 127D,
+  #tips: double long
+  %cfg.long double.name%: 127
+);
+run(c)
+%cfg.file[int].test%:(
+  #tips: __int8, signed __int8, signed char, unsigned __int8, unsigned char
+  %cfg.char.test%: '',
+  #tips: __int16, short int, int short
+  #tips: signed __int16, signed short int, signed int short
+  #tips: unsigned __int16, unsigned short int, unsigned int short
+  %cfg.short.test%: 127S,
+  #tips: __int32, int, long, int long, long int, signed __int32
+  #tips: signed int, signed long, signed int long, signed long int
+  #tips: unsigned __int32, unsigned int, unsigned long, unsigned int long, unsigned long int
+  %cfg.int.test%: 127I,
+  #tips: __int64, long long, long long int, long int long, int long long
+  #tips: signed __int64, signed long long, signed long long int, signed long int long, signed int long long
+  #tips: unsigned __int64, unsigned long long, unsigned long long int, unsigned long int long, unsigned int long long
+  %cfg.long long.test%: 127L,
+  %cfg.float.test%: 127F,
+  %cfg.double.test%: 127D,
+  #tips: double long
+  %cfg.long double.name%: 127
+)
