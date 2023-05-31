@@ -1,7 +1,7 @@
 **upgradeConfig:**
 ===
-Fixed "run(java)" can't find bug
-Fixed "run(cpp)" can't find bug
+Fixed "run(java)" end find error bug
+Fixed "run(cpp)" end find error bug
 Fixed "all-config-file-listInt" code error bug
 Fixed "firstmatch-type-version" color error bug
 ---
