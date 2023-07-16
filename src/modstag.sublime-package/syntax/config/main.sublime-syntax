@@ -1,0 +1,234 @@
+%YAML 1.2
+---
+name: modstag config
+scope: source.modstag-cfg
+
+file_extensions:
+  - modstag-cfg
+  - modstag-config
+
+first_line_match: '@modstag-config|@modstag-cfg'
+
+contexts:
+  prototype:
+    - match: '//tips:'
+      scope: minecraft.modstag.color.tips
+      push:
+        - meta_scope: minecraft.modstag.color.tips
+        - meta_include_prototype: false
+        - match: ':end//'
+          scope: minecraft.modstag.color.tips
+          pop: 1
+    - match: '#tips:.*$\n?'
+      scope: minecraft.modstag.color.tips
+  main:
+    - include: firstmatch
+    - include: package
+    - include: readme
+    - include: run
+  firstmatch:
+    - match: '!tips: .*$\n?'
+      scope: minecraft.modstag.color.tips
+    - match: '(@modstag-config|@modstag-cfg)\('
+      scope: minecraft.modstag.color.italic_red
+      set: 
+        - meta_include_prototype: false
+        - include: firstmatch-type
+        - include: firstmatch-type.end
+  firstmatch-type:
+    - match: '(version)(:)'
+      captures:
+        1: minecraft.modstag.color.italic_red
+        2: minecraft.modstag.color.italic_tips
+      set:
+        - meta_include_prototype: false
+        - include: firstmatch-type-version
+    - match: '(maincode)(:)'
+      captures:
+        1: minecraft.modstag.color.italic_red
+        2: minecraft.modstag.color.italic_tips
+      set:
+        - meta_include_prototype: false
+        - include: firstmatch-type-maincode
+    - match: '(bin)(:)'
+      captures:
+        1: minecraft.modstag.color.italic_red
+        2: minecraft.modstag.color.italic_tips
+      set:
+        - meta_include_prototype: false
+        - include: firstmatch-type-bin
+  firstmatch-type.end:
+    - match: '\)'
+      scope: minecraft.modstag.color.italic_red
+      set:
+        - include: package
+        - include: readme
+        - include: run
+  firstmatch-type-version:
+    - match: '(4)(\.)([0-9])(\.)([0-9][0-9][+-])|(4)(\.)([0-9])(\.)([0-9][+-])'
+      captures: 
+        1: minecraft.modstag.color.italic_yellow
+        2: minecraft.modstag.color.tips
+        3: minecraft.modstag.color.italic_yellow
+        4: minecraft.modstag.color.tips
+        5: minecraft.modstag.color.italic_yellow
+        6: minecraft.modstag.color.italic_yellow
+        7: minecraft.modstag.color.tips
+        8: minecraft.modstag.color.italic_yellow
+        9: minecraft.modstag.color.tips
+        10: minecraft.modstag.color.italic_yellow
+      set:
+        - meta_include_prototype: false
+        - match: ','
+          scope: minecraft.modstag.color.italic_tips
+          set:
+            - meta_include_prototype: false
+            - include: firstmatch-type
+        - include: firstmatch-type.end
+    - match: '(4)(\.)([0-9])(\.)([0-9][0-9])|(4)(\.)([0-9])(\.)([0-9])'
+      captures: 
+        1: minecraft.modstag.color.italic_yellow
+        2: minecraft.modstag.color.tips
+        3: minecraft.modstag.color.italic_yellow
+        4: minecraft.modstag.color.tips
+        5: minecraft.modstag.color.italic_yellow
+        6: minecraft.modstag.color.italic_yellow
+        7: minecraft.modstag.color.tips
+        8: minecraft.modstag.color.italic_yellow
+        9: minecraft.modstag.color.tips
+        10: minecraft.modstag.color.italic_yellow
+      set:
+        - meta_include_prototype: false
+        - match: ','
+          scope: minecraft.modstag.color.italic_tips
+          set:
+            - meta_include_prototype: false
+            - include: firstmatch-type
+        - include: firstmatch-type.end
+  firstmatch-type-maincode:
+    - match: 'modstag|python3|python|java|cs|cpp|c++|c'
+      scope: minecraft.modstag.color.italic_yellow
+      set:
+        - meta_include_prototype: false
+        - match: ','
+          scope: minecraft.modstag.color.italic_tips
+          set:
+            - meta_include_prototype: false
+            - include: firstmatch-type
+        - include: firstmatch-type.end
+  firstmatch-type-bin:
+    - match: '!/usr/bin/env (modstag|cpp|c++|cs|c|java|python3|python|sh)'
+      scope: minecraft.modstag.color.italic_yellow
+      set:
+        - meta_include_prototype: false
+        - match: ','
+          scope: minecraft.modstag.color.italic_tips
+          set:
+            - meta_include_prototype: false
+            - include: firstmatch-type
+        - include: firstmatch-type.end
+  package:
+    - match: '!tips: .*$\n?'
+      scope: minecraft.modstag.color.tips
+    - match: '(package)(\s:\s|:\s)'
+      captures: 
+        1: minecraft.modstag.color.italic_red
+        2: minecraft.modstag.color.tips
+      set:
+        - meta_scope: minecraft.modstag.color.italic_yellow
+        - meta_include_prototype: false
+        - match: '\\\\'
+          scope: minecraft.modstag.color.italic_yellow
+        - include: run
+        - match: '[\\/:\?\*<>\|\"]'
+          scope: minecraft.modstag.color.error-key
+        - match: '\n'
+          scope: minecraft.modstag.color.textwhite
+          set:
+            - include: run
+            - include: readme
+  readme:
+    - match: '!tips: .*$\n?'
+      scope: minecraft.modstag.color.tips
+    - match: '(readme|README|Readme)(\s:\s|:\s)'
+      captures:
+        1: minecraft.modstag.color.italic_red
+        2: minecraft.modstag.color.tips
+      set:
+        - meta_scope: minecraft.modstag.color.italic_yellow
+        - meta_include_prototype: false
+        - match: '\\\\'
+          scope: minecraft.modstag.color.italic_yellow
+        - include: run
+        - match: '[\\/:\?\*<>\|\"]'
+          scope: minecraft.modstag.color.error-key
+        - match: '\n'
+          scope: minecraft.modstag.color.textwhite
+          set:
+            - include: run
+            - include: package
+  run:
+    - match: '!tips: .*$\n?'
+      scope: minecraft.modstag.color.tips
+    - match: '(run)(\()'
+      captures: 
+        1: minecraft.modstag.color.italic_red
+        2: minecraft.modstag.color.italic_gold
+      set:
+        - meta_include_prototype: false
+        - match: 'modstag'
+          scope: minecraft.modstag.color.italic_aqua
+          set:
+            - meta_include_prototype: false
+            - match: '\)'
+              scope: minecraft.modstag.color.italic_gold
+              set: 
+                - match: '\n'
+                  set:
+                    - include: Packages/modstag/syntax/config/main_ModsTag.sublime-syntax
+        - match: 'cs'
+          scope: minecraft.modstag.color.italic_aqua
+          set:
+            - meta_include_prototype: false
+            - match: '\)'
+              scope: minecraft.modstag.color.italic_gold
+              set: 
+                - match: '\n'
+                  set:
+                    - include: Packages/modstag/syntax/config/main_CSharp.sublime-syntax
+        - match: 'cpp|c\+\+'
+          scope: minecraft.modstag.color.italic_aqua
+          set:
+            - meta_include_prototype: false
+            - match: '\)'
+              scope: minecraft.modstag.color.italic_gold
+              set: 
+                - match: '\n'
+                  set:
+                    - include: Packages/modstag/syntax/config/main_CPlusPlus.sublime-syntax
+        - match: 'c'
+          scope: minecraft.modstag.color.italic_aqua
+          set:
+            - meta_include_prototype: false
+            - match: '\)'
+              scope: minecraft.modstag.color.italic_gold
+              set: 
+                - match: '\n'
+                  set:
+                    - include: Packages/modstag/syntax/config/main_C.sublime-syntax
+        - match: 'java'
+          scope: minecraft.modstag.color.italic_aqua
+          set:
+            - meta_include_prototype: false
+            - match: '\)'
+              scope: minecraft.modstag.color.italic_gold
+              set: 
+                - match: '\n'
+                  set:
+                    - include: Packages/modstag/syntax/config/main_Java.sublime-syntax
+        - match: '\)'
+          scope: minecraft.modstag.color.italic_gold
+          set: 
+            - match: '\n'
+              set:
+                - include: Packages/modstag/syntax/config/main_.sublime-syntax
