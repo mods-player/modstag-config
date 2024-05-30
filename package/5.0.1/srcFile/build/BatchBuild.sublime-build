@@ -1,0 +1,9 @@
+{
+	"selector": "source.dosbatch",
+
+	"env": {"PYTHONIOENCODING": "utf-8"},
+
+	"windows": {
+		"cmd": ["$file"],
+	}
+}

@@ -1,0 +1,87 @@
+%YAML 1.2
+---
+name: 'cs:var'
+display: false
+scope: source.modstag
+
+variables:
+  modstag_valueType: 'sbyte|byte|short|int|long|ushort|uint|ulong|float|double|decimal'
+
+contexts:
+  prototype:
+    - match: '//tips:'
+      scope: minecraft.color.gray
+      push:
+        - meta_scope: minecraft.color.gray
+        - meta_include_prototype: false
+        - match: ':end//'
+          scope: minecraft.color.gray
+          pop: 1
+    - match: '#tips:.*$\n?'
+      scope: minecraft.color.gray
+  main:
+    - include: prototype
+  string:
+    - match: '\"'
+      scope: minecraft.color.aqua
+      set:
+        - meta_include_prototype: false
+        - include: oth.notNextError
+        - match: '\"'
+          scope: minecraft.color.aqua
+          pop: 1
+        - match: '\\[bfnrt\"\\]|\\u[0-9a-fA-F]{4}'
+          scope: minecraft.color.purple
+        - match: '\\'
+          scope: modstag.color.error-key
+        - match: '[^\s\n\"]'
+          scope: minecraft.color.yellow
+  stringList:
+    - meta_include_prototype: false
+    - match: '\"'
+      scope: minecraft.color.aqua
+      push:
+        - meta_include_prototype: false
+        - include: oth.notNextError
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - meta_include_prototype: false
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - match: '\]\s*\n'
+              scope: minecraft.color.gold
+              pop: 2
+        - match: '\\[bfnrt\"\\]|\\u[0-9a-fA-F]{4}'
+          scope: minecraft.color.purple
+        - match: '\\'
+          scope: modstag.color.error-key
+        - match: '[^\s\n\"]'
+          scope: minecraft.color.yellow
+  boolean:
+    - meta_include_prototype: false
+    - match: 'false|true|null'
+      scope: minecraft.color.italic_red
+      pop: 1
+  booleanList:
+    - meta_include_prototype: false
+    - match: 'false|true|null'
+      scope: minecraft.color.italic_red
+      push:
+        - meta_include_prototype: false
+        - match: ','
+          scope: minecraft.color.gray
+          pop: 1
+        - match: '\]\s*\n'
+          scope: minecraft.color.gold
+          pop: 2
+  json:
+    - match: ''''
+      scope: minecraft.color.aqua
+      set:
+        - include: Packages/modstag/css/modstag/config/api_json.sublime-syntax#value
+        - match: ''''
+          scope: minecraft.color.aqua
+          set:
+            - include: oth.end

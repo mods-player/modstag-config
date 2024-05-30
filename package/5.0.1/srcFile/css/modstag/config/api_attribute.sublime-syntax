@@ -1,0 +1,98 @@
+%YAML 1.2
+---
+name: 'modstag:api'
+display: false
+scope: source.json
+
+variables:
+  attr_syntax: 'lambda|tag|keybind|cfg|marge|custom|patch|attribute|import|end'
+
+contexts:
+  main:
+    - match: '\['
+      scope: minecraft.color.red
+      push:
+        - match: 'private'
+          scope: minecraft.color.italic_red
+          set:
+            - match: '\]'
+              scope: minecraft.color.red
+              pop: 1
+        - match: '\]\s*\n'
+          scope: minecraft.color.red
+          pop: 1
+        - match: '\.'
+          scope: minecraft.color.gray
+        - match: 'false|true|null|this'
+          scope: minecraft.color.italic_red
+        - match: '{{attr_syntax}}'
+          scope: minecraft.color.italic_aqua
+        - match: '[a-zA-Z_][a-zA-Z\d_]*'
+          scope: minecraft.color.aqua
+        - include: attribute
+        - match: ','
+          scope: minecraft.color.gray
+  attribute:
+    - match: '\('
+      scope: minecraft.color.red
+      push:
+        - match: '\[(\"([^\s\n\"]*)\")(\:)(\d+)\]'
+          scope: minecraft.color.red
+          captures:
+            1: minecraft.color.aqua
+            2: minecraft.color.yellow
+            3: minecraft.color.gray
+            4: minecraft.color.green
+        - match: 'false|true|null|this'
+          scope: minecraft.color.italic_red
+        - match: '{{attr_syntax}}'
+          scope: minecraft.color.italic_aqua
+        - match: '[a-zA-Z_][a-zA-Z\d_]*'
+          scope: minecraft.color.aqua
+        - match: '\.'
+          scope: minecraft.color.gray
+        - match: '0x[\da-fA-F]*|0b[01]*|\d*'
+          scope: minecraft.color.green
+        - include: attribute
+        - match: '\"'
+          scope: minecraft.color.aqua
+          push:
+            - match: '(\\[\\\"bfnrt]|[^\s\n\"])'
+              scope: minecraft.color.yellow
+            - match: '\"'
+              scope: minecraft.color.aqua
+              pop: 1
+        - match: '='
+          scope: minecraft.color.gray
+          push:
+            - match: '\[(\"([^\s\n\"]*)\")(\:)(\d+)\]'
+              scope: minecraft.color.red
+              captures:
+                1: minecraft.color.aqua
+                2: minecraft.color.yellow
+                3: minecraft.color.gray
+                4: minecraft.color.green
+            - match: 'false|true|null|this'
+              scope: minecraft.color.italic_red
+            - match: '{{attr_syntax}}'
+              scope: minecraft.color.italic_aqua
+            - match: '[a-zA-Z_][a-zA-Z\d_]*'
+              scope: minecraft.color.aqua
+              pop: 1
+            - match: '0x[\da-fA-F]*|0b[01]*|\d*'
+              scope: minecraft.color.green
+              pop: 1
+            - include: attribute
+            - match: '\"'
+              scope: minecraft.color.aqua
+              push:
+                - match: '(\\[\\\"bfnrt]|[^\s\n\"])'
+                  scope: minecraft.color.yellow
+                - match: '\"'
+                  scope: minecraft.color.aqua
+                  pop: 2
+        - match: ','
+          scope: minecraft.color.gray
+        - match: '\)'
+          scope: minecraft.color.red
+          pop: 1

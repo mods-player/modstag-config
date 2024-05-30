@@ -1,0 +1,226 @@
+%YAML 1.2
+---
+name: 'java:var'
+display: false
+scope: source.modstag
+
+variables:
+  modstag_valueType: 'byte|short|int|long|float|double'
+  modstag_valueType_Big: 'Byte|Short|Integer|Long|Float|Double'
+
+contexts:
+  prototype:
+    - match: '//tips:'
+      scope: minecraft.color.gray
+      push:
+        - meta_scope: minecraft.color.gray
+        - meta_include_prototype: false
+        - match: ':end//'
+          scope: minecraft.color.gray
+          pop: 1
+    - match: '#tips:.*$\n?'
+      scope: minecraft.color.gray
+  main:
+    - include: Packages/modstag/css/modstag/config/api_attribute.sublime-syntax
+    - match: '%'
+      scope: minecraft.color.red
+      push:
+        - meta_include_prototype: false
+        - match: '(String)(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - match: '(%)(\s*)(:)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+              set:
+                - include: Packages/modstag/css/modstag/config-Java/var_oth.sublime-syntax#string
+            - include: main-text
+        - match: '(byte|short|int|long)(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - meta_include_prototype: false
+            - match: '(%)(\s*)(:)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+              set:
+                - include: Packages/modstag/css/modstag/config-Java/var_numberic.sublime-syntax#int
+            - include: main-text
+        - match: '(float|double)(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - meta_include_prototype: false
+            - match: '(%)(\s*)(:)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+              set:
+                - include: Packages/modstag/css/modstag/config-Java/var_numberic.sublime-syntax#fpe
+            - include: main-text
+        - match: '(boolean)(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - match: '(%)(\s*)(:)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+              set:
+                - include: Packages/modstag/css/modstag/config-Java/var_oth.sublime-syntax#boolean
+            - include: main-text
+        - match: '(extra)(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - match: '(%)(\s*)(:)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+              set:
+                - include: Packages/modstag/css/modstag/config-Java/var_extra.sublime-syntax#extra
+            - include: main-text
+        - match: '(json)(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - match: '(%)(\s*)(:)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+              set:
+                - include: Packages/modstag/css/modstag/config-Java/var_oth.sublime-syntax#json
+                - include: main.end
+            - include: main-text
+
+        - match: '(String(\[(\d*)\]))(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.red
+            3: minecraft.color.green
+            4: minecraft.color.gray
+          set:
+            - meta_include_prototype: false
+            - match: '(%)(\s*)(:)(\s*)(\[)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+                4: minecraft.color.gray
+                5: minecraft.color.gold
+              set:
+                - include: Packages/modstag/css/modstag/config-Java/var_oth.sublime-syntax#stringList
+                - include: list.end
+            - include: main-text
+        - match: '(byte|short|int|long)(\[(\d*)\])(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.red
+            3: minecraft.color.green
+            4: minecraft.color.gray
+          set:
+            - meta_include_prototype: false
+            - match: '(%)(\s*)(:)(\s*)(\[)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+                4: minecraft.color.gray
+                5: minecraft.color.gold
+              set:
+                - include: Packages/modstag/css/modstag/config-Java/var_numberic.sublime-syntax#intList
+                - include: list.end
+            - include: main-text
+        - match: '(float|double)(\[(\d*)\])(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.red
+            3: minecraft.color.green
+            4: minecraft.color.gray
+          set:
+            - meta_include_prototype: false
+            - match: '(%)(\s*)(:)(\s*)(\[)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+                4: minecraft.color.gray
+                5: minecraft.color.gold
+              set:
+                - include: Packages/modstag/css/modstag/config-Java/var_numberic.sublime-syntax#fpeList
+                - include: list.end
+            - include: main-text
+        - match: '(boolean)(\[(\d*)\])(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.red
+            3: minecraft.color.green
+            4: minecraft.color.gray
+          set:
+            - meta_include_prototype: false
+            - match: '(%)(\s*)(:)(\s*)(\[)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+                4: minecraft.color.gray
+                5: minecraft.color.gold
+              set:
+                - include: Packages/modstag/css/modstag/config-Java/var_oth.sublime-syntax#booleanList
+                - include: list.end
+            - include: main-text
+        - match: '(extra)(\[(\d*)\])(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.red
+            3: minecraft.color.green
+            4: minecraft.color.gray
+          set:
+            - match: '(%)(\s*)(:)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+              set:
+                - include: Packages/modstag/css/modstag/config-Java/var_extra.sublime-syntax#extraList
+                - include: list.end
+            - include: main-text
+        - match: '[^\s\n\.]'
+          scope: modstag.color.error-key
+        - match: '\n'
+          scope: minecraft.color.textwhite
+          set:
+            - clear_scopes: 1
+            - include: main
+        - match: '[^\s\n\:]'
+          scope: modstag.color.error-key
+    - match: '[^\s\n\:]'
+      scope: modstag.color.error-key
+  main-text:
+    - match: '\\[\\:%\.]'
+      scope: minecraft.color.purple
+    - match: ':\%'
+      scope: minecraft.color.red
+    - match: '\\|%'
+      scope: modstag.color.error-key
+    - match: '[^\\]'
+      scope: minecraft.color.yellow
+  list.end:
+    - match: '\]'
+      scope: minecraft.color.gold
+      pop: 1

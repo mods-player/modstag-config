@@ -1,0 +1,228 @@
+%YAML 1.2
+---
+name: 'modstag:var'
+display: false
+scope: source.modstag
+
+variables:
+  modstag_valueType: 'unsigned\<\<int4|unsigned\<\<int8|unsigned\<\<int16|unsigned\<\<int32|unsigned\<\<int64|unsigned\<\<int128|unsigned\<\<int256|
+    |signed\<\<int4|signed\<\<int8|signed\<\<int16|signed\<\<int32|signed\<\<int64|signed\<\<int128|signed\<\<int256|
+    |unsigned\<\<dec8|unsigned\<\<dec16|unsigned\<\<dec32|unsigned\<\<dec64|unsigned\<\<dec128|unsigned\<\<dec256|
+    |signed\<\<dec8|signed\<\<dec16|signed\<\<dec32|signed\<\<dec64|signed\<\<dec128|signed\<\<dec256|
+    |unsigned\<\<bdec32|unsigned\<\<bdec64|unsigned\<\<bdec128|unsigned\<\<bdec256|
+    |signed\<\<bdec32|signed\<\<bdec64|signed\<\<bdec128|signed\<\<bdec256|
+    |single|double|extended|quadruple|octuple|doubledec'
+
+contexts:
+  prototype:
+    - match: '//tips:'
+      scope: minecraft.color.gray
+      push:
+        - meta_scope: minecraft.color.gray
+        - meta_include_prototype: false
+        - match: ':end//'
+          scope: minecraft.color.gray
+          pop: 1
+    - match: '#tips:.*$\n?'
+      scope: minecraft.color.gray
+  main:
+    - include: prototype
+  int:
+    - match: '(MaxValue|MinValue)(\()({{modstag_valueType}})(\))'
+      captures: 
+        1: minecraft.color.yellow
+        2: minecraft.color.gold
+        3: minecraft.color.green
+        4: minecraft.color.gold
+      pop: 1
+    - match: '(\-?)(\d+)\s*\n'
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.green
+      pop: 1
+  intList:
+    - match: '\[(\s|\n)*\]\s*\n'
+      scope: minecraft.color.gold
+      pop: 1
+    - match: '\['
+      scope: minecraft.color.gold
+      set:
+        - match: '(MaxValue|MinValue)(\()({{modstag_valueType}})(\))'
+          captures: 
+            1: minecraft.color.yellow
+            2: minecraft.color.gold
+            3: minecraft.color.green
+            4: minecraft.color.gold
+          push:
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - match: '\]\s*\n'
+              scope: minecraft.color.gold
+              pop: 2
+        - match: '(-?)(\d+)'
+          captures: 
+            1: minecraft.color.red
+            2: minecraft.color.green
+          push:
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - match: '\]\s*\n'
+              scope: minecraft.color.gold
+              pop: 2
+
+  dec:
+    - match: '(MaxValue|MinValue)(\()({{modstag_valueType}})(\))'
+      captures: 
+        1: minecraft.color.yellow
+        2: minecraft.color.gold
+        3: minecraft.color.green
+        4: minecraft.color.gold
+      pop: 1
+    - match: '(\-?)\d+(\.)\d+\s*\n'
+      scope: minecraft.color.green
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.gray
+      pop: 1
+  decList:
+    - match: '\[(\s|\n)*\]\s*\n'
+      scope: minecraft.color.gold
+      pop: 1
+    - match: '\['
+      scope: minecraft.color.gold
+      set:
+        - match: '(MaxValue|MinValue)(\()({{modstag_valueType}})(\))'
+          captures: 
+            1: minecraft.color.yellow
+            2: minecraft.color.gold
+            3: minecraft.color.green
+            4: minecraft.color.gold
+          push:
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - match: '\]\s*\n'
+              scope: minecraft.color.gold
+              pop: 2
+        - match: '(\-?)\d+(\.)\d+'
+          scope: minecraft.color.green
+          captures: 
+            1: minecraft.color.red
+            2: minecraft.color.gray
+          push:
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - match: '\]\s*\n'
+              scope: minecraft.color.gold
+              pop: 2
+
+  bdec:
+    - match: '(MaxValue|MinValue)(\()({{modstag_valueType}})(\))'
+      captures: 
+        1: minecraft.color.yellow
+        2: minecraft.color.gold
+        3: minecraft.color.green
+        4: minecraft.color.gold
+      pop: 1
+    - match: '(\-?)\d+(\.)\d+\s*\n'
+      scope: minecraft.color.green
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.gray
+      pop: 1
+  bdecList:
+    - match: '\[(\s|\n)*\]\s*\n'
+      scope: minecraft.color.gold
+      pop: 1
+    - match: '\['
+      scope: minecraft.color.gold
+      set:
+        - match: '(MaxValue|MinValue)(\()({{modstag_valueType}})(\))'
+          captures: 
+            1: minecraft.color.yellow
+            2: minecraft.color.gold
+            3: minecraft.color.green
+            4: minecraft.color.gold
+          push:
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - match: '\]\s*\n'
+              scope: minecraft.color.gold
+              pop: 2
+        - match: '(\-?)\d+(\.)\d+'
+          scope: minecraft.color.green
+          captures: 
+            1: minecraft.color.red
+            2: minecraft.color.gray
+          push:
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - match: '\]\s*\n'
+              scope: minecraft.color.gold
+              pop: 2
+
+  fpe:
+    - match: '-infinity|infinity|-Infinity|Infinity|-inf|inf|-Inf|Inf'
+      scope: minecraft.color.green
+      pop: 1
+    - match: '(MaxValue|MinValue)(\()({{modstag_valueType}})(\))'
+      captures: 
+        1: minecraft.color.yellow
+        2: minecraft.color.gold
+        3: minecraft.color.green
+        4: minecraft.color.gold
+      pop: 1
+    - match: '(\-?)(\d+)(\.)(\d+[Ee][\+\-]?\d+)'
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.green
+        3: minecraft.color.gray
+        4: minecraft.color.green
+      pop: 1
+  fpeList:
+    - match: '\[(\s|\n)*\]\s*\n'
+      scope: minecraft.color.gold
+      pop: 1
+    - match: '\['
+      scope: minecraft.color.gold
+      set:
+        - match: '-infinity|infinity|-Infinity|Infinity|-inf|inf|-Inf|Inf'
+          scope: minecraft.color.green
+          push:
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - match: '\]\s*\n'
+              scope: minecraft.color.gold
+              pop: 2
+        - match: '(MaxValue|MinValue)(\()({{modstag_valueType}})(\))'
+          captures: 
+            1: minecraft.color.yellow
+            2: minecraft.color.gold
+            3: minecraft.color.green
+            4: minecraft.color.gold
+          push:
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - match: '\]\s*\n'
+              scope: minecraft.color.gold
+              pop: 2
+        - match: '(\-?)(\d+)(\.)(\d+[Ee][\+\-]?\d+)'
+          captures: 
+            1: minecraft.color.red
+            2: minecraft.color.green
+            3: minecraft.color.gray
+            4: minecraft.color.green
+          push:
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - match: '\]\s*\n'
+              scope: minecraft.color.gold
+              pop: 2

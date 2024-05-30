@@ -1,0 +1,81 @@
+%YAML 1.2
+---
+name: 'cpp:var.main'
+scope: source.modstag
+
+variables:
+  modstag_valueType: '(ungigned|signed)?(__int8|char|__int16|int16_t|short|short int|int short|__int32|int32_t|int|long|int long|long int|__int64|int64_t|long long|long long int|long int long|int long long)|
+    |float|double|double long|long double|wchar_t|char16_t|ptrdiff_t|char32_t'
+
+contexts:
+  prototype:
+    - match: '//tips:'
+      scope: minecraft.color.gray
+      push:
+        - meta_scope: minecraft.color.gray
+        - meta_include_prototype: false
+        - match: ':end//'
+          scope: minecraft.color.gray
+          pop: 1
+    - match: '#tips:.*$\n?'
+      scope: minecraft.color.gray
+  main: 
+    - include: Packages/modstag/css/modstag/config/api_attribute.sublime-syntax
+    - match: '%'
+      scope: minecraft.color.red
+      set:
+        - meta_include_prototype: false
+        - match: '%'
+          scope: modstag.color.error-key
+        - match: '(file)((\[)({{modstag_valueType}}|std::string|boolean|void)?(\]))?(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+            3: minecraft.color.red
+            4: minecraft.color.aqua
+            5: minecraft.color.aqua
+            6: minecraft.color.aqua
+            7: minecraft.color.red
+            8: minecraft.color.gray
+          set:
+            - meta_include_prototype: false
+            - match: '(%)(\s+)?(:)(\s+)?(\()'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+                4: minecraft.color.gray
+                5: minecraft.color.gold
+              set:
+                - include: main.end
+                - include: Packages/modstag/css/modstag/config-CPlusPlus/variable.sublime-syntax#main
+            - match: '\\[\\:%\.]'
+              scope: minecraft.color.purple
+            - match: ':\%'
+              scope: minecraft.color.red
+            - match: '\\|%'
+              scope: modstag.color.error-key
+            - match: '[^\\]'
+              scope: minecraft.color.yellow
+        - include: main.notNextError
+    - match: '[^\s\n\:]'
+      scope: modstag.color.error-key
+  main.end:
+    - include: prototype
+    - match: '\)'
+      scope: minecraft.color.gold
+      set:
+        - meta_include_prototype: false
+        - match: ';'
+          scope: minecraft.color.gray
+          pop: 1
+  main.notNextError:
+    - match: '\n'
+      scope: modstag.color.error-key
+      set:
+        - clear_scopes: 1
+  main.notNext:
+    - match: '\n'
+      scope: minecraft.color.textWhite
+      set:
+        - clear_scopes: 1

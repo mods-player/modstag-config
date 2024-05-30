@@ -1,0 +1,96 @@
+%YAML 1.2
+---
+name: modstag log
+scope: source.modstag
+
+file_extensions:
+  - mtlog
+  - modstag-log
+
+first_line_match: '@modstag-log'
+
+contexts:
+  main:
+    - include: log
+  log:
+    - match: '\['
+      scope: minecraft.color.red
+      push:
+        - match: '\]'
+          scope: minecraft.color.red
+          push:
+            - match: '\s*.*\n'
+              scope: minecraft.color.yellow
+              pop: 2
+        - match: '[a-zA-Z_][a-zA-Z0-9_]*'
+          scope: minecraft.color.aqua
+          push:
+            - match: '\.'
+              scope: minecraft.color.gray
+              push:
+                - match: '[a-zA-Z_][a-zA-Z0-9_]*'
+                  scope: minecraft.color.aqua
+                  pop: 1
+            - match: '='
+              scope: minecraft.color.red
+              push: select
+            - match: '\(\)\s*(,)?'
+              scope: minecraft.color.red
+              captures:
+                1: minecraft.color.gray
+              pop: 1
+            - match: '[a-zA-Z_][a-zA-Z0-9_]*'
+              scope: minecraft.color.aqua
+        - match: '\"'
+          scope: minecraft.color.aqua
+          push:
+            - match: '\"(,)?'
+              scope: minecraft.color.aqua
+              captures:
+                1: minecraft.color.gray
+              pop: 1
+            - match: '\\[bfnrt\"\\]|\\u[0-9a-fA-F]{4}'
+              scope: minecraft.color.purple
+            - match: '\\'
+              scope: modstag.color.error-key
+            - match: '[^\s\n\"]'
+              scope: minecraft.color.yellow
+        - match: '([1-9]\d*)((\.)\d+)?([Ee][\+\-]?\d+)?(,)?'
+          captures:
+            1: minecraft.color.green
+            2: minecraft.color.green
+            3: minecraft.color.gray
+            4: minecraft.color.green
+            5: minecraft.color.gray
+        - match: '(0x\h+|0b[10]+)(,)?'
+          captures: 
+            1: minecraft.color.green
+            2: minecraft.color.gray
+  select:
+    - match: '\"'
+      scope: minecraft.color.aqua
+      push:
+        - match: '\"(,)?'
+          scope: minecraft.color.aqua
+          captures:
+            1: minecraft.color.gray
+          pop: 3
+        - match: '\\[bfnrt\"\\]|\\u[0-9a-fA-F]{4}'
+          scope: minecraft.color.purple
+        - match: '\\'
+          scope: modstag.color.error-key
+        - match: '[^\s\n\"]'
+          scope: minecraft.color.yellow
+    - match: '([1-9]\d*)((\.)\d+)?([Ee][\+\-]?\d+)?(,)?'
+      captures:
+        1: minecraft.color.green
+        2: minecraft.color.green
+        3: minecraft.color.gray
+        4: minecraft.color.green
+        5: minecraft.color.gray
+      pop: 3
+    - match: '(0x\h+|0b[10]+)(,)?'
+      captures: 
+        1: minecraft.color.green
+        2: minecraft.color.gray
+      pop: 3

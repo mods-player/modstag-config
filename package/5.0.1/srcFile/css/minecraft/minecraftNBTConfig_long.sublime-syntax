@@ -1,0 +1,820 @@
+%YAML 1.2
+---
+name: minecraft NBT Config_long
+scope: source.mccnbtl
+
+file_extensions:
+  - mccnbtl
+  - javalongconfig
+
+contexts:
+  # prototype:
+  #   - include: tips
+  main:
+    - include: mccnbtl
+    - include: tips
+  tips:
+    - match: '#'
+      scope: minecraft.color.gray
+      push:
+        - include: tips-list
+        - match: '\n'
+          scope: minecraft.color.gray
+          pop: 1
+        - match: '[^\s\n]'
+          scope: minecraft.color.gray
+  tips-list:
+    - match: '\['
+      scope: minecraft.color.darkRed
+      push:
+        - include: tips-list-range
+        - include: tips-list-default
+        - match: '[^\n\]]+'
+          scope: minecraft.color.yellow
+          push:
+            - include: tips-list.end
+  tips-list.end:
+    - match: '\]'
+      scope: minecraft.color.darkRed
+      pop: 2
+  tips-list-range:
+    - match: '(range)(:)'
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      push:
+        - match: '(\-)?(\d+)((\.)\d+)?([Ee][\+\-]?\d+)?(\s*)(~)(\s*)(\-)?(\d+)((\.)\d+)?([Ee][\+\-]?\d+)?'
+          captures:
+            1: minecraft.color.red
+            2: minecraft.color.green
+            3: minecraft.color.green
+            4: minecraft.color.gray
+            5: minecraft.color.green
+            6: minecraft.color.gray
+            7: minecraft.color.red
+            8: minecraft.color.gray
+            9: minecraft.color.red
+            10: minecraft.color.green
+            12: minecraft.color.green
+            13: minecraft.color.gray
+            14: minecraft.color.green
+          set:
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - include: tips-list.end
+  tips-list-default: 
+    - match: '(default)(:)'
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      push:
+        - match: 'false|true'
+          scope: minecraft.color.italic_red
+          set:
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - include: tips-list.end
+        - match: '(\-)?(\d+)((\.)\d+)?([Ee][\+\-]?\d+)?'
+          captures:
+            1: minecraft.color.red
+            2: minecraft.color.green
+            3: minecraft.color.green
+            4: minecraft.color.gray
+            5: minecraft.color.green
+          set:
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - include: tips-list.end
+        - match: '[^\s\n\],]+'
+          scope: minecraft.color.yellow
+          set:
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - include: tips-list.end
+  mccnbtl:
+    - include: tips
+    - match: '(Boolean)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - match: '\"'
+              scope: minecraft.color.aqua
+              set:
+                - include: tips
+                - include: mccnbtl-boolean
+            - match: '\\[\\\"]'
+              scope: minecraft.color.purple
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - match: '[^\s\n\"]'
+              scope: minecraft.color.yellow
+    - match: '(Byte)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - match: '\"'
+              scope: minecraft.color.aqua
+              set:
+                - include: tips
+                - include: mccnbtl-byte
+            - match: '\\[\\\"]'
+              scope: minecraft.color.purple
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - match: '[^\s\n\"]'
+              scope: minecraft.color.yellow
+    - match: '(Short)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - match: '\"'
+              scope: minecraft.color.aqua
+              set:
+                - include: tips
+                - include: mccnbtl-short
+            - match: '\\[\\\"]'
+              scope: minecraft.color.purple
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - match: '[^\s\n\"]'
+              scope: minecraft.color.yellow
+    - match: '(Int)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - match: '\"'
+              scope: minecraft.color.aqua
+              set:
+                - include: tips
+                - include: mccnbtl-int
+            - match: '\\[\\\"]'
+              scope: minecraft.color.purple
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - match: '[^\s\n\"]'
+              scope: minecraft.color.yellow
+    - match: '(Long)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - match: '\"'
+              scope: minecraft.color.aqua
+              set:
+                - include: tips
+                - include: mccnbtl-long
+            - match: '\\[\\\"]'
+              scope: minecraft.color.purple
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - match: '[^\s\n\"]'
+              scope: minecraft.color.yellow
+    - match: '(Float)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - match: '\"'
+              scope: minecraft.color.aqua
+              set:
+                - include: tips
+                - include: mccnbtl-float
+            - match: '\\[\\\"]'
+              scope: minecraft.color.purple
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - match: '[^\s\n\"]'
+              scope: minecraft.color.yellow
+    - match: '(Double)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - match: '\"'
+              scope: minecraft.color.aqua
+              set:
+                - include: tips
+                - include: mccnbtl-double
+            - match: '\\[\\\"]'
+              scope: minecraft.color.purple
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - match: '[^\s\n\"]'
+              scope: minecraft.color.yellow
+    - match: '(String)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - match: '\"'
+              scope: minecraft.color.aqua
+              set:
+                - include: tips
+                - include: mccnbtl-string
+            - match: '\\[\\\"]'
+              scope: minecraft.color.purple
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - match: '[^\s\n\"]'
+              scope: minecraft.color.yellow
+    - match: '(Compound)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - match: '\"'
+              scope: minecraft.color.aqua
+              set:
+                - include: tips
+                - include: mccnbtl-compound
+            - match: '\\[\\\"]'
+              scope: minecraft.color.purple
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - match: '[^\s\n\"]'
+              scope: minecraft.color.yellow
+    - match: '(ArrayByte)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - match: '\"'
+              scope: minecraft.color.aqua
+              set:
+                - include: tips
+                - include: mccnbtl-array_byte
+            - match: '\\[\\\"]'
+              scope: minecraft.color.purple
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - match: '[^\s\n\"]'
+              scope: minecraft.color.yellow
+    - match: '(ArrayInt)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - match: '\"'
+              scope: minecraft.color.aqua
+              set:
+                - include: tips
+                - include: mccnbtl-array_int
+            - match: '\\[\\\"]'
+              scope: minecraft.color.purple
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - match: '[^\s\n\"]'
+              scope: minecraft.color.yellow
+    - match: '(ArrayLong)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - match: '\"'
+              scope: minecraft.color.aqua
+              set:
+                - include: tips
+                - include: mccnbtl-array_long
+            - match: '\\[\\\"]'
+              scope: minecraft.color.purple
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - match: '[^\s\n\"]'
+              scope: minecraft.color.yellow
+    - match: '(List)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - match: '\"'
+              scope: minecraft.color.aqua
+              set:
+                - include: tips
+                - include: mccnbtl-list
+            - match: '\\[\\\"]'
+              scope: minecraft.color.purple
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - match: '[^\s\n\"]'
+              scope: minecraft.color.yellow
+    - include: mccnbtl-compound.end
+  mccnbtl-compound:
+    - match: '\{'
+      scope: minecraft.color.gold
+      set:
+        - include: mccnbtl
+    - match: '\n'
+      scope: modstag.color.error-key
+      set:
+        - clear_scopes: 1
+  mccnbtl-compound.end:
+    - match: '\}'
+      scope: minecraft.color.gold
+      set: 
+        - include: mccnbtl-list-compound
+        - include: mccnbtl.end
+        - include: mccnbtl
+
+  mccnbtl-boolean:
+    - match: 'false|true'
+      scope: minecraft.color.italic_red
+      set:
+        - match: '\n'
+          scope: minecraft.color.textwhite
+          set:
+            - include: mccnbtl
+    - match: '\n'
+      scope: modstag.color.error-key
+      set:
+        - clear_scopes: 1
+  mccnbtl-byte:
+    - match: '\-'
+      scope: minecraft.color.red
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+          set:
+            - match: '[0-9]'
+              scope: minecraft.color.green
+            - match: 'b\n'
+              scope: minecraft.color.green
+              set:
+                - include: mccnbtl
+    - match: '[0-9]'
+      scope: minecraft.color.green
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+        - match: 'b\n'
+          scope: minecraft.color.green
+          set:
+            - include: mccnbtl
+    - match: '\n'
+      scope: modstag.color.error-key
+      set:
+        - clear_scopes: 1
+  mccnbtl-short:
+    - match: '\-'
+      scope: minecraft.color.red
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+          set:
+            - match: '[0-9]'
+              scope: minecraft.color.green
+            - match: 's\n'
+              scope: minecraft.color.green
+              set:
+                - include: mccnbtl
+    - match: '[0-9]'
+      scope: minecraft.color.green
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+        - match: 's\n'
+          scope: minecraft.color.green
+          set:
+            - include: mccnbtl
+    - match: '\n'
+      scope: modstag.color.error-key
+      set:
+        - clear_scopes: 1
+  mccnbtl-int:
+    - match: '\-'
+      scope: minecraft.color.red
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+          set:
+            - match: '[0-9]'
+              scope: minecraft.color.green
+            - match: '\n'
+              scope: minecraft.color.green
+              set:
+                - include: mccnbtl
+    - match: '[0-9]'
+      scope: minecraft.color.green
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+        - match: '\n'
+          scope: minecraft.color.green
+          set:
+            - include: mccnbtl
+    - match: '\n'
+      scope: modstag.color.error-key
+      set:
+        - clear_scopes: 1
+  mccnbtl-long:
+    - match: '\-'
+      scope: minecraft.color.red
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+          set:
+            - match: '[0-9]'
+              scope: minecraft.color.green
+            - match: 'L\n'
+              scope: minecraft.color.green
+              set:
+                - include: mccnbtl
+    - match: '[0-9]'
+      scope: minecraft.color.green
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+        - match: 'L\n'
+          scope: minecraft.color.green
+          set:
+            - include: mccnbtl
+    - match: '\n'
+      scope: modstag.color.error-key
+      set:
+        - clear_scopes: 1
+  mccnbtl-float:
+    - match: '\-'
+      scope: minecraft.color.red
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+          set:
+            - match: '[0-9]'
+              scope: minecraft.color.green
+            - match: '\.'
+              scope: minecraft.color.gray
+              set:
+                - match: '[0-9]'
+                  scope: minecraft.color.green
+                  set:
+                    - match: '[0-9]'
+                      scope: minecraft.color.green
+                    - match: 'f\n'
+                      scope: minecraft.color.green
+                      set:
+                        - include: mccnbtl
+    - match: '[0-9]'
+      scope: minecraft.color.green
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+        - match: '\.'
+          scope: minecraft.color.gray
+          set:
+            - match: '[0-9]'
+              scope: minecraft.color.green
+              set:
+                - match: '[0-9]'
+                  scope: minecraft.color.green
+                - match: 'f\n'
+                  scope: minecraft.color.green
+                  set:
+                    - include: mccnbtl
+    - match: '\n'
+      scope: modstag.color.error-key
+      set:
+        - clear_scopes: 1
+  mccnbtl-double:
+    - match: '\-'
+      scope: minecraft.color.red
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+          set:
+            - match: '[0-9]'
+              scope: minecraft.color.green
+            - match: '\.'
+              scope: minecraft.color.gray
+              set:
+                - match: '[0-9]'
+                  scope: minecraft.color.green
+                  set:
+                    - match: '[0-9]'
+                      scope: minecraft.color.green
+                    - match: 'd\n'
+                      scope: minecraft.color.green
+                      set:
+                        - include: mccnbtl
+    - match: '[0-9]'
+      scope: minecraft.color.green
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+        - match: '\.'
+          scope: minecraft.color.gray
+          set:
+            - match: '[0-9]'
+              scope: minecraft.color.green
+              set:
+                - match: '[0-9]'
+                  scope: minecraft.color.green
+                - match: 'd\n'
+                  scope: minecraft.color.green
+                  set:
+                    - include: mccnbtl
+    - match: '\n'
+      scope: modstag.color.error-key
+      set:
+        - clear_scopes: 1
+  mccnbtl-string:
+    - match: '\"'
+      scope: minecraft.color.aqua
+      set:
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - include: mccnbtl
+        - match: '\\[\\\"]'
+          scope: minecraft.color.purple
+        - match: '\\'
+          scope: modstag.color.error-key
+        - match: '\n'
+          scope: modstag.color.error-key
+          set:
+            - clear_scopes: 1
+        - match: '[^\s\n\"]'
+          scope: minecraft.color.yellow
+  mccnbtl-array_byte:
+    - match: '\['
+      scope: minecraft.color.gold
+      set:
+        - match: '(B)(;\n)'
+          captures:
+            1: minecraft.color.green
+            2: minecraft.color.gray
+          set:
+            - include: mccnbtl-array_byte-num
+  mccnbtl-array_byte-num:
+    - match: '\-'
+      scope: minecraft.color.red
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+          set:
+            - match: '[0-9]'
+              scope: minecraft.color.green
+            - match: 'B\n'
+              scope: minecraft.color.green
+              set:
+                - include: mccnbtl
+    - match: '[0-9]'
+      scope: minecraft.color.green
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+        - match: 'B\n'
+          scope: minecraft.color.green
+          set:
+            - include: mccnbtl-array_byte-num
+            - include: mccnbtl.end
+    - match: '\n'
+      scope: modstag.color.error-key
+      set:
+        - clear_scopes: 1
+  mccnbtl-array_int:
+    - match: '\['
+      scope: minecraft.color.gold
+      set:
+        - match: '(I)(;\n)'
+          captures:
+            1: minecraft.color.green
+            2: minecraft.color.gray
+          set:
+            - include: mccnbtl-array_int-num
+  mccnbtl-array_int-num:
+    - match: '\-'
+      scope: minecraft.color.red
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+          set:
+            - match: '[0-9]'
+              scope: minecraft.color.green
+            - match: '\n'
+              scope: minecraft.color.green
+              set:
+                - include: mccnbtl
+    - match: '[0-9]'
+      scope: minecraft.color.green
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+        - match: '\n'
+          scope: minecraft.color.green
+          set:
+            - include: mccnbtl-array_int-num
+            - include: mccnbtl.end
+    - match: '\n'
+      scope: modstag.color.error-key
+      set:
+        - clear_scopes: 1
+  mccnbtl-array_long:
+    - match: '\['
+      scope: minecraft.color.gold
+      set:
+        - match: '(L)(;\n)'
+          captures:
+            1: minecraft.color.green
+            2: minecraft.color.gray
+          set:
+            - include: mccnbtl-array_long-num
+  mccnbtl-array_long-num:
+    - match: '\-'
+      scope: minecraft.color.red
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+          set:
+            - match: '[0-9]'
+              scope: minecraft.color.green
+            - match: 'L\n'
+              scope: minecraft.color.green
+              set:
+                - include: mccnbtl
+    - match: '[0-9]'
+      scope: minecraft.color.green
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+        - match: 'L\n'
+          scope: minecraft.color.green
+          set:
+            - include: mccnbtl-array_long-num
+            - include: mccnbtl.end
+    - match: '\n'
+      scope: modstag.color.error-key
+      set:
+        - clear_scopes: 1
+  mccnbtl-list:
+    - match: '\['
+      scope: minecraft.color.gold
+      set:
+        - include: tips
+        - include: mccnbtl-list-compound
+        - include: mccnbtl-list-text
+        - include: mccnbtl-list-num
+        - include: mccnbtl.end
+  mccnbtl-list-text:
+    - match: '\"'
+      scope: minecraft.color.aqua
+      set:
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - include: mccnbtl-list-text
+            - include: mccnbtl.end
+            - include: tips
+        - match: '\\[\\\"]'
+          scope: minecraft.color.purple
+        - match: '\\'
+          scope: modstag.color.error-key
+        - match: '\n'
+          scope: modstag.color.error-key
+          set:
+            - clear_scopes: 1
+        - match: '[^\s\n\"]'
+          scope: minecraft.color.yellow
+  mccnbtl-list-num:
+    - match: '\-'
+      scope: minecraft.color.red
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+          set:
+            - match: '[0-9]'
+              scope: minecraft.color.green
+            - match: '[bsL]\n'
+              scope: minecraft.color.green
+              set:
+                - include: mccnbtl-list-num
+                - include: mccnbtl.end
+                - include: tips
+            - match: '\n'
+              scope: minecraft.color.green
+              set:
+                - include: mccnbtl-list-num
+                - include: mccnbtl.end
+                - include: tips
+            - match: '\.'
+              scope: minecraft.color.gray
+              set:
+                - match: '[0-9]'
+                  scope: minecraft.color.green
+                  set:
+                    - match: '[0-9]'
+                      scope: minecraft.color.green
+                    - match: '[bsL]\n'
+                      scope: minecraft.color.green
+                      set:
+                        - include: mccnbtl-list-opt
+    - match: '[0-9]'
+      scope: minecraft.color.green
+      set:
+        - match: '[0-9]'
+          scope: minecraft.color.green
+        - match: '[bsl]\n'
+          scope: minecraft.color.green
+          set:
+            - include: mccnbtl-list-num
+            - include: mccnbtl.end
+            - include: tips
+        - match: '\n'
+          scope: minecraft.color.green
+          set:
+            - include: mccnbtl-list-num
+            - include: mccnbtl.end
+            - include: tips
+        - match: '\.'
+          scope: minecraft.color.gray
+          set:
+            - match: '[0-9]'
+              scope: minecraft.color.green
+              set:
+                - match: '[0-9]'
+                  scope: minecraft.color.green
+                - match: '[fd]\n'
+                  scope: minecraft.color.green
+                  set:
+                    - include: mccnbtl-list-opt 
+  mccnbtl-list-compound:
+    - match: '\{'
+      scope: minecraft.color.gold
+      set:
+        - include: mccnbtl
+  mccnbtl.end:
+    - match: '\]'
+      scope: minecraft.color.gold
+      set:
+        - include: mccnbtl

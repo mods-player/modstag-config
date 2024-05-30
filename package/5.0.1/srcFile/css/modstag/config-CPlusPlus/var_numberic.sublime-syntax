@@ -1,0 +1,108 @@
+%YAML 1.2
+---
+name: 'cpp:var'
+display: false
+scope: source.modstag
+
+variables:
+  modstag_valueType: '(ungigned|signed)?(__int8|char|__int16|int16_t|short|short int|int short|__int32|int32_t|int|long|int long|long int|__int64|int64_t|long long|long long int|long int long|int long long)|
+    |float|double|double long|long double|wchar_t|char16_t|ptrdiff_t|char32_t'
+
+contexts:
+  prototype:
+    - match: '//tips:'
+      scope: minecraft.color.gray
+      push:
+        - meta_scope: minecraft.color.gray
+        - meta_include_prototype: false
+        - match: ':end//'
+          scope: minecraft.color.gray
+          pop: 1
+    - match: '#tips:.*$\n?'
+      scope: minecraft.color.gray
+  main:
+    - include: prototype
+  char:
+    - meta_include_prototype: false
+    - match: '[01]{8}|[0-9a-fA-F]{2}'
+      scope: minecraft.color.green
+      pop: 1
+  charList:
+    - meta_include_prototype: false
+    - match: '[01]{8}|[0-9a-fA-F]{2}'
+      scope: minecraft.color.green
+      push:
+        - match: ','
+          scope: minecraft.color.gray
+          pop: 1
+        - match: '\]\s*\n'
+          scope: minecraft.color.gold
+          pop: 2
+  int:
+    - match: '(-?)(\d+)'
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.green
+      pop: 1
+  intList:
+    - match: '(-?)(\d+)'
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.green
+      push:
+        - match: ','
+          scope: minecraft.color.gray
+          pop: 1
+        - match: '\]\s*\n'
+          scope: minecraft.color.gold
+          pop: 2
+  uint:
+    - match: '\d+'
+      scope: minecraft.color.green
+      pop: 1
+  uintList:
+    - match: '\d+'
+      scope: minecraft.color.green
+      push:
+        - match: ','
+          scope: minecraft.color.gray
+          pop: 1
+        - match: '\]\s*\n'
+          scope: minecraft.color.gold
+          pop: 2
+  fpe:
+    - match: '-infinity|infinity|-Infinity|Infinity|-inf|inf|-Inf|Inf'
+      scope: minecraft.color.green
+      pop: 1
+    - match: '(\-?)(\d+)(\.)(\d+)([Ee][\+\-]?\d+)?'
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.green
+        3: minecraft.color.gray
+        4: minecraft.color.green
+        5: minecraft.color.green
+      pop: 1
+  fpeList:
+    - match: '-infinity|infinity|-Infinity|Infinity|-inf|inf|-Inf|Inf'
+      scope: minecraft.color.green
+      push:
+        - match: ','
+          scope: minecraft.color.gray
+          pop: 1
+        - match: '\]\s*\n'
+          scope: minecraft.color.gold
+          pop: 2
+    - match: '(-?)(\d+)(\.)(\d+)([Ee][\+\-]?\d+)?'
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.green
+        3: minecraft.color.gray
+        4: minecraft.color.green
+        5: minecraft.color.green
+      push:
+        - match: ','
+          scope: minecraft.color.gray
+          pop: 1
+        - match: '\]\s*\n'
+          scope: minecraft.color.gold
+          pop: 2

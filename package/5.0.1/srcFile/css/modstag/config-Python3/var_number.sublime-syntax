@@ -1,0 +1,41 @@
+%YAML 1.2
+---
+name: 'py3:var'
+display: false
+scope: source.modstag
+
+variables:
+  modstag_valueType: 'str|int|float'
+
+contexts:
+  prototype:
+    - match: '//tips:'
+      scope: minecraft.color.gray
+      push:
+        - meta_scope: minecraft.color.gray
+        - meta_include_prototype: false
+        - match: ':end//'
+          scope: minecraft.color.gray
+          pop: 1
+    - match: '#tips:.*$\n?'
+      scope: minecraft.color.gray
+  main:
+    - include: prototype
+  int:
+    - meta_include_prototype: false
+    - match: '(-?)(\d+)'
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.green
+      pop: 1
+  float:
+    - match: '(\-?)(\d+)(\.)(\d+)([Ee][\+\-]?\d+)?|(\-?)(inf)'
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.green
+        3: minecraft.color.gray
+        4: minecraft.color.green
+        5: minecraft.color.green
+        6: minecraft.color.red
+        7: minecraft.color.green
+      pop: 1

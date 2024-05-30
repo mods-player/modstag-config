@@ -1,0 +1,164 @@
+%YAML 1.2
+---
+name: minecraft Log
+scope: source.mcl
+
+file_extensions:
+  - mcl
+  - minecraft-log
+
+contexts:
+  main:
+    - match: '(\[)\d\d(\:)\d\d(\:)\d\d(\])'
+      scope: minecraft.color.green
+      captures:
+        1: minecraft.color.gold
+        2: minecraft.color.gray
+        3: minecraft.color.gray
+        4: minecraft.color.gold
+      push: mcl
+  mcl:
+    - match: '\[(.*)(\/)(INFO)\](:)\s?'
+      scope: minecraft.color.gold
+      captures:
+        1: minecraft.color.italic_aqua
+        2: minecraft.color.purple
+        3: minecraft_log.color.info
+        4: minecraft.color.gray
+      push: mcl-info
+    - match: '\[(.*)(\/)(WARN)\](:)\s?'
+      scope: minecraft.color.gold
+      captures:
+        1: minecraft.color.italic_aqua
+        2: minecraft.color.purple
+        3: minecraft_log.color.warn
+        4: minecraft.color.gray
+      push: mcl-warn
+    - match: '\[(.*)(\/)(ERROR)\](:)\s?'
+      scope: minecraft.color.gold
+      captures:
+        1: minecraft.color.italic_aqua
+        2: minecraft.color.purple
+        3: minecraft_log.color.error
+        4: minecraft.color.gray
+      push: mcl-error
+    - match: '\[(.*)(\/)(FATAL)\](:)\s?'
+      scope: minecraft.color.gold
+      captures:
+        1: minecraft.color.italic_aqua
+        2: minecraft.color.purple
+        3: minecraft_log.color.fatal
+        4: minecraft.color.gray
+      push: mcl-fatal
+    - match: '\[(.*)(\/)(DEBUG|TRACE)\](:)\s?'
+      scope: minecraft.color.gold
+      captures:
+        1: minecraft.color.italic_aqua
+        2: minecraft.color.purple
+        3: minecraft_log.color.debug
+        4: minecraft.color.gray
+      push: mcl-debug
+    - match: '\[(.*)(\/)(.*)\](:)\s?'
+      scope: minecraft.color.gold
+      captures:
+        1: minecraft.color.italic_aqua
+        2: minecraft.color.purple
+        3: minecraft_log.color.italic_blue
+        4: minecraft.color.gray
+      push: mcl-other
+  mcl-info:
+    - match: '(\[)\d\d(\:)\d\d(\:)\d\d(\])'
+      scope: minecraft.color.green
+      captures:
+        1: minecraft.color.gold
+        2: minecraft.color.gray
+        3: minecraft.color.gray
+        4: minecraft.color.gold
+      pop: 1
+    - include: mcl-bug
+    - include: mcl-info.model
+    - match: '[^\n]'
+      scope: minecraft_log.color.info
+  mcl-warn:
+    - match: '(\[)\d\d(\:)\d\d(\:)\d\d(\])'
+      scope: minecraft.color.green
+      captures:
+        1: minecraft.color.gold
+        2: minecraft.color.gray
+        3: minecraft.color.gray
+        4: minecraft.color.gold
+      pop: 1
+    - include: mcl-bug
+    - include: mcl-warn.model
+    - match: '[^\n]'
+      scope: minecraft_log.color.warn
+  mcl-error:
+    - match: '(\[)\d\d(\:)\d\d(\:)\d\d(\])'
+      scope: minecraft.color.green
+      captures:
+        1: minecraft.color.gold
+        2: minecraft.color.gray
+        3: minecraft.color.gray
+        4: minecraft.color.gold
+      pop: 1
+    - include: mcl-bug
+    - match: '[^\n]'
+      scope: minecraft_log.color.error
+  mcl-fatal:
+    - match: '(\[)\d\d(\:)\d\d(\:)\d\d(\])'
+      scope: minecraft.color.green
+      captures:
+        1: minecraft.color.gold
+        2: minecraft.color.gray
+        3: minecraft.color.gray
+        4: minecraft.color.gold
+      pop: 1
+    - include: mcl-bug
+    - match: '[^\n]'
+      scope: minecraft_log.color.fatal
+  mcl-debug:
+    - match: '(\[)\d\d(\:)\d\d(\:)\d\d(\])'
+      scope: minecraft.color.green
+      captures:
+        1: minecraft.color.gold
+        2: minecraft.color.gray
+        3: minecraft.color.gray
+        4: minecraft.color.gold
+      pop: 1
+    - match: '[^\n]'
+      scope: minecraft_log.color.debug
+  mcl-other:
+    - match: '(\[)\d\d(\:)\d\d(\:)\d\d(\])'
+      scope: minecraft.color.green
+      captures:
+        1: minecraft.color.gold
+        2: minecraft.color.gray
+        3: minecraft.color.gray
+        4: minecraft.color.gold
+      pop: 1
+    - match: '[^\n]'
+      scope: minecraft.color.blue
+
+  mcl-info.model:
+    - match: '(\[)(.*)(\])\s?(\:)\s?(.*)'
+      captures:
+        1: minecraft.color.gold
+        2: minecraft.color.aqua
+        3: minecraft.color.gold
+        4: minecraft.color.gray
+        5: minecraft_log.color.info
+  mcl-warn.model:
+    - match: '(\[)(.*)(\])\s?(\:)\s?(.*)'
+      captures:
+        1: minecraft.color.gold
+        2: minecraft.color.aqua
+        3: minecraft.color.gold
+        4: minecraft.color.gray
+        5: minecraft_log.color.warn
+  mcl-bug:
+    - match: '\s?at (.*\..*)(\(.*\))(\s?~?)(\[.*\])'
+      scope: minecraft_log.color.error
+      captures:
+        1: minecraft_log.color.text_error
+        2: minecraft_log.color.text_fatal
+        4: minecraft_log.color.text_error

@@ -1,0 +1,357 @@
+%YAML 1.2
+---
+name: key per second
+scope: source.kps
+
+file_extensions:
+  - kps
+
+first_line_match: 'version: v\d\.\d\d?'
+
+contexts:
+  prototype:
+    - match: '#.*$\n?'
+      scope: minecraft.color.gray
+  main:
+    - match: '(version)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '(v\d)(\.)(\d\d?)'
+          captures:
+            1: minecraft.color.green
+            2: minecraft.color.gray
+            3: minecraft.color.green
+          set:
+            - include: kps
+    - include: kps
+  kps:
+    - match: '(showMax|showAvg|showCur|showTotal|showKeys|overlay|trackAllKeys|trackAllButtons|enableKeyModifierCombinations|
+      |graphEnabled|graphAverage|customColors|autoSaveStats|saveStatsOnExit|loadStatsOnLaunch)(:)'
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - meta_include_prototype: false
+        - match: '(false|true)(\n)'
+          captures: 
+            1: minecraft.color.italic_red
+            2: minecraft.color.gray
+          set:
+            - include: kps
+    - match: '(updateRate|precision|graphBacklog|
+      |maxX|maxY|maxWidth|maxHeight|avgX|avgY|avgWidth|avgHeight|curX|curY|curWidth|curHeight|
+      |totX|totY|totWidth|totHeight|graphX|graphY|graphWidth|graphHeight|cellSize|borderOffset|statsSaveInterval)(:)'
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - meta_include_prototype: false
+        - match: '(\-)?(\d+)\n'
+          captures:
+            1: minecraft.color.red 
+            2: minecraft.color.green
+          set:
+            - include: kps
+    - match: '(foregroundOpacity|backgroundOpacity)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - meta_include_prototype: false
+        - match: '(1)(\.)(0)'
+          captures: 
+            1: minecraft.color.green
+            2: minecraft.color.gray
+            3: minecraft.color.green
+          set:
+            - include: kps
+        - match: '(0)(\.)(\d+)\n'
+          captures: 
+            1: minecraft.color.green
+            2: minecraft.color.gray
+            3: minecraft.color.green
+          set:
+            - include: kps
+    - match: '(foregroundColor|backgroundColor)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '\['
+          scope: minecraft.color.gold
+          set:
+            - include: groundColor_RGB
+            - include: groundColor_RGB.end
+    - match: '(position)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '\['
+          scope: minecraft.color.gold
+          set:
+            - include: position
+            - include: position.end
+    - match: '(keyResetStats|keyExit|keyResetTotals|keyHide|keyPause|keyReload)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '\['
+          scope: minecraft.color.gold
+          set:
+            - include: commandKey
+            - include: commandKey.end
+    - match: '(maxMode|avgMode|curMode|totMode)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '(VERTICAL|HORIZONTAL_TN|HORIZONTAL_NT|DIAGONAL1|DIAGONAL2|DIAGONAL3)(\n)'
+          captures: 
+            1: minecraft.color.yellow
+            2: minecraft.color.gray
+          set:
+            - include: kps
+    - match: '(graphMode)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '(INLINE|DETACHED)(\n)'
+          captures: 
+            1: minecraft.color.yellow
+            2: minecraft.color.gray
+          set:
+            - include: kps
+    - match: '(statsDest)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '([a-zA-Z])(:)'
+          captures: 
+            1: minecraft.color.italic_yellow
+            2: minecraft.color.red
+          set:
+            - match: '\n'
+              scope: minecraft.color.gray
+              set:
+                - include: kps
+            - match: '[/:\?\*\<\>\|\"]'
+              scope: modstag.color.error-key
+            - match: '\\'
+              scope: minecraft.color.purple
+            - match: '[^\s\n/:\?\*\<\>\|\"]'
+              scope: minecraft.color.yellow
+    - match: '(statsFormat)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '(\n)'
+          captures: 
+            1: minecraft.color.gray
+          set:
+            - include: kps
+        - match: '(.)(kpsstats)'
+          captures:
+            1: minecraft.color.gray
+            2: minecraft.color.purple
+        - match: '[/:\?\*\<\>\|\"]'
+          scope: modstag.color.error-key
+        - match: '\\|yyyy|MM|dd|HH|mm|ss'
+          scope: minecraft.color.purple
+        - match: '[^\s\n/:\?\*\<\>\|\"]'
+          scope: minecraft.color.yellow
+    - match: '(statsSaveFile)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - match: '([a-zA-Z])(:)'
+          captures: 
+            1: minecraft.color.italic_yellow
+            2: minecraft.color.red
+          set:
+            - match: '(.)(kpsstats)(\n)'
+              captures: 
+                1: minecraft.color.gray
+                2: minecraft.color.purple
+                3: minecraft.color.gray
+              set:
+                - include: kps
+            - match: '[/:\?\*\<\>\|\"]'
+              scope: modstag.color.error-key
+            - match: '\\'
+              scope: minecraft.color.purple
+            - match: '[^\s\n/:\?\*\<\>\|\"]'
+              scope: minecraft.color.yellow
+        - match: '[^\s\n/:\?\*\<\>\|\"]'
+          scope: minecraft.color.yellow
+          set:
+            - match: '(.)(kpsstats)(\n)'
+              captures: 
+                1: minecraft.color.gray
+                2: minecraft.color.purple
+                3: minecraft.color.gray
+              set:
+                - include: kps
+            - match: '[/:\?\*\<\>\|\"]'
+              scope: modstag.color.error-key
+            - match: '\\'
+              scope: minecraft.color.purple
+            - match: '[^\s\n/:\?\*\<\>\|\"]'
+              scope: minecraft.color.yellow
+    - match: '(keys)(:)'
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - include: keys
+  groundColor_RGB:
+    - match: '(([Rr])|([Gg])|([Bb]))(=)'
+      captures: 
+        1: minecraft.color.aqua
+        2: rgb_hex.color.FF0000FF
+        3: rgb_hex.color.00FF00FF
+        4: rgb_hex.color.0000FFFF
+        5: minecraft.color.gray
+      set:
+        - meta_include_prototype: false
+        - match: '25[0-5]|2[0-4](\d)|1(\d{2})|(\d)?(\d?)(\d)'
+          scope: minecraft.color.green
+          set:
+            - match: ','
+              scope: minecraft.color.gray
+              set:
+                - include: groundColor_RGB
+            - include: groundColor_RGB.end
+  groundColor_RGB.end:
+    - match: '\]'
+      scope: minecraft.color.gold
+      set:
+        - include: kps
+  position:
+    - match: '(x|y)(=)(\s+)?(\-)?(\d+)'
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+        3: minecraft.color.gray
+        4: minecraft.color.red
+        5: minecraft.color.green
+      set:
+        - meta_include_prototype: false
+        - match: ','
+          scope: minecraft.color.gray
+          set:
+            - include: position
+        - include: position.end
+  position.end:
+    - match: '\]'
+      scope: minecraft.color.gold
+      set:
+        - include: kps
+  commandKey:
+    - match: '(keycode)(=)(\s+)?(\-)?(\d+)'
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+        3: minecraft.color.gray
+        4: minecraft.color.red
+        5: minecraft.color.green
+      set:
+        - meta_include_prototype: false
+        - match: ','
+          scope: minecraft.color.gray
+          set:
+            - include: commandKey
+        - include: commandKey.end
+    - match: '(ctrl|alt)(=)(\s+)?(false|true)'
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+        3: minecraft.color.gray
+        4: minecraft.color.italic_red
+      set:
+        - meta_include_prototype: false
+        - match: ','
+          scope: minecraft.color.gray
+          set:
+            - include: commandKey
+        - include: commandKey.end
+  commandKey.end:
+    - match: '\]'
+      scope: minecraft.color.gold
+      set:
+        - include: kps
+  keys:
+    - match: '(\-)(\s+)?(\[)'
+      captures: 
+        1: minecraft.color.red
+        2: minecraft.color.gray
+        3: minecraft.color.gold
+      set:
+        - include: keys-arrayData
+        - include: keys-arrayData.end
+  keys-arrayData:
+    - match: '(keycode|x|y|width|height)(=)(\s+)?(\-)?(\d+)'
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+        3: minecraft.color.gray
+        4: minecraft.color.red
+        5: minecraft.color.green
+      set:
+        - meta_include_prototype: false
+        - match: ','
+          scope: minecraft.color.gray
+          set:
+            - include: keys-arrayData
+        - include: keys-arrayData.end
+    - match: '(mode)(=)'
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - meta_include_prototype: false
+        - match: 'VERTICAL|HORIZONTAL_TN|HORIZONTAL_NT|DIAGONAL1|DIAGONAL2|DIAGONAL3'
+          scope: minecraft.color.yellow
+          set:
+            - match: ','
+              scope: minecraft.color.gray
+              set:
+                - include: keys-arrayData
+            - include: keys-arrayData.end
+    - match: '(visible)(=)(false|true)'
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+        3: minecraft.color.italic_red
+      set:
+        - match: ','
+          scope: minecraft.color.gray
+          set:
+            - include: keys-arrayData
+        - include: keys-arrayData.end
+    - match: '(name)(=)'
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      set:
+        - meta_include_prototype: false
+        - match: ','
+          scope: minecraft.color.gray
+          set:
+            - include: keys-arrayData
+        - include: keys-arrayData.end
+        - match: '[^\s\n]'
+          scope: minecraft.color.yellow
+  keys-arrayData.end:
+    - match: ']'
+      scope: minecraft.color.gold
+      set:
+        - include: keys
+        - include: kps

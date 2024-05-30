@@ -1,0 +1,91 @@
+%YAML 1.2
+---
+name: 'cs:var'
+display: false
+scope: source.modstag
+
+variables:
+  modstag_valueType: 'sbyte|byte|short|int|long|ushort|uint|ulong|float|double|decimal'
+
+contexts:
+  prototype:
+    - match: '//tips:'
+      scope: minecraft.color.gray
+      push:
+        - meta_scope: minecraft.color.gray
+        - meta_include_prototype: false
+        - match: ':end//'
+          scope: minecraft.color.gray
+          pop: 1
+    - match: '#tips:.*$\n?'
+      scope: minecraft.color.gray
+  main:
+    - include: prototype
+  int:
+    - match: '(-?)(\d+)'
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.green
+      pop: 1
+  intList:
+    - match: '(-?)(\d+)'
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.green
+      push:
+        - match: ','
+          scope: minecraft.color.gray
+          pop: 1
+        - match: '\]\s*\n'
+          scope: minecraft.color.gold
+          pop: 2
+  uint:
+    - match: '\d+'
+      scope: minecraft.color.green
+      pop: 1
+  uintList:
+    - match: '\d+'
+      scope: minecraft.color.green
+      push:
+        - match: ','
+          scope: minecraft.color.gray
+          pop: 1
+        - match: '\]\s*\n'
+          scope: minecraft.color.gold
+          pop: 2
+  fpe:
+    - match: '-infinity|infinity|-Infinity|Infinity|-inf|inf|-Inf|Inf'
+      scope: minecraft.color.green
+      pop: 1
+    - match: '(\-?)(\d+)(\.)(\d+)([Ee][\+\-]?\d+)?'
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.green
+        3: minecraft.color.gray
+        4: minecraft.color.green
+        5: minecraft.color.green
+      pop: 1
+  fpeList:
+    - match: '-infinity|infinity|-Infinity|Infinity|-inf|inf|-Inf|Inf'
+      scope: minecraft.color.green
+      push:
+        - match: ','
+          scope: minecraft.color.gray
+          pop: 1
+        - match: '\]\s*\n'
+          scope: minecraft.color.gold
+          pop: 2
+    - match: '(-?)(\d+)(\.)(\d+)([Ee][\+\-]?\d+)?'
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.green
+        3: minecraft.color.gray
+        4: minecraft.color.green
+        5: minecraft.color.green
+      push:
+        - match: ','
+          scope: minecraft.color.gray
+          pop: 1
+        - match: '\]\s*\n'
+          scope: minecraft.color.gold
+          pop: 2
