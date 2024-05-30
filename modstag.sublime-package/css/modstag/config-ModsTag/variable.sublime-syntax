@@ -1,0 +1,352 @@
+%YAML 1.2
+---
+name: 'modstag:var'
+display: false
+scope: source.modstag
+
+variables:
+  modstag_valueType: 'unsigned\<\<int4|unsigned\<\<int8|unsigned\<\<int16|unsigned\<\<int32|unsigned\<\<int64|unsigned\<\<int128|unsigned\<\<int256|
+    |signed\<\<int4|signed\<\<int8|signed\<\<int16|signed\<\<int32|signed\<\<int64|signed\<\<int128|signed\<\<int256|
+    |unsigned\<\<dec8|unsigned\<\<dec16|unsigned\<\<dec32|unsigned\<\<dec64|unsigned\<\<dec128|unsigned\<\<dec256|
+    |signed\<\<dec8|signed\<\<dec16|signed\<\<dec32|signed\<\<dec64|signed\<\<dec128|signed\<\<dec256|
+    |unsigned\<\<bdec32|unsigned\<\<bdec64|unsigned\<\<bdec128|unsigned\<\<bdec256|
+    |signed\<\<bdec32|signed\<\<bdec64|signed\<\<bdec128|signed\<\<bdec256|
+    |single|double|extended|quadruple|octuple|doubledec'
+
+contexts:
+  prototype:
+    - match: '//tips:'
+      scope: minecraft.color.gray
+      push:
+        - meta_scope: minecraft.color.gray
+        - meta_include_prototype: false
+        - match: ':end//'
+          scope: minecraft.color.gray
+          pop: 1
+    - match: '#tips:.*$\n?'
+      scope: minecraft.color.gray
+  main:
+    - include: Packages/modstag/css/modstag/config/api_attribute.sublime-syntax
+    - match: '%'
+      scope: minecraft.color.red
+      push:
+        - meta_include_prototype: false
+        - match: '\<(signed|unsigned)\<\<(int(4|8|16|32|64|128|256))\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.aqua
+            3: minecraft.color.aqua
+            4: minecraft.color.gray
+          set:
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_numberic.sublime-syntax#int
+        - match: '\<(signed|unsigned)\<\<(int(4|8|16|32|64|128|256))\*(\d*)\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.aqua
+            3: minecraft.color.aqua
+            4: minecraft.color.green
+            5: minecraft.color.gray
+          set:
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_numberic.sublime-syntax#intList
+            - include: list.end
+        - match: '\<(signed|unsigned)\<\<(dec(8|16|32|64|128|256))\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.aqua
+            3: minecraft.color.aqua
+            4: minecraft.color.gray
+          set:
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_numberic.sublime-syntax#dec
+        - match: '\<(signed|unsigned)\<\<(dec(8|16|32|64|128|256))\*(\d*)\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.aqua
+            3: minecraft.color.aqua
+            4: minecraft.color.green
+            5: minecraft.color.gray
+          set:
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_numberic.sublime-syntax#decList
+            - include: list.end
+        - match: '\<(signed|unsigned)\<\<(bdec(32|64|128|256))\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.aqua
+            3: minecraft.color.aqua
+            4: minecraft.color.gray
+          set:
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_numberic.sublime-syntax#bdec
+        - match: '\<(signed|unsigned)\<\<(bdec(32|64|128|256))\*(\d*)\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.aqua
+            3: minecraft.color.aqua
+            4: minecraft.color.green
+            5: minecraft.color.gray
+          set:
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_numberic.sublime-syntax#bdecList
+            - include: list.end
+        - match: '\<(single|double|extended|quadruple|octuple)\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_numberic.sublime-syntax#fpe
+        - match: '\<(single|double|extended|quadruple|octuple)\*(\d*)\>%\s*(:)\s*'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.green
+            3: minecraft.color.gray
+          set:
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_numberic.sublime-syntax#fpeList
+            - include: list.end
+        - match: '\<(short_string)\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_str.sublime-syntax#shortstring
+        - match: '\<(short_string)\*(\d*)\>%\s*(:)\s*(\[)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.green
+            3: minecraft.color.gray
+            4: minecraft.color.gold
+          set:
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_str.sublime-syntax#shortstringList
+            - include: list.end
+        - match: '\<(string)\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_str.sublime-syntax#string
+        - match: '\<(string)\*(\d*)\>%\s*(:)\s*(\[)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.green
+            3: minecraft.color.gray
+            4: minecraft.color.gold
+          set:
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_str.sublime-syntax#stringList
+            - include: list.end
+        - match: '\<(long_string)\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_str.sublime-syntax#longstring
+        - match: '\<(long_string)\*(\d*)\>%\s*(:)\s*(\[)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.green
+            3: minecraft.color.gray
+            4: minecraft.color.gold
+          set:
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_str.sublime-syntax#longstringList
+            - include: list.end
+        - match: '\<(sign_string)\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_str.sublime-syntax#signstring
+        - match: '\<(sign_string)\*(\d*)\>%\s*(:)\s*(\[)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.green
+            3: minecraft.color.gray
+            4: minecraft.color.gold
+          set:
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_str.sublime-syntax#signstringList
+            - include: list.end
+        - match: '\<(boolean)\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_oth.sublime-syntax#boolean
+        - match: '\<(boolean)\*(\d*)\>%\s*(:)\s*(\[)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.green
+            3: minecraft.color.gray
+            4: minecraft.color.gold
+          set:
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_oth.sublime-syntax#booleanList
+            - include: list.end
+        - match: '\<(boolean)\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_oth.sublime-syntax#boolean
+        - match: '\<(boolean)\*(\d*)\>%\s*(:)\s*(\[)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.green
+            3: minecraft.color.gray
+            4: minecraft.color.gold
+          set:
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_oth.sublime-syntax#booleanList
+            - include: list.end
+        - match: '\<(build)\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_oth.sublime-syntax#build
+        - match: '\<(build)\*(\d*)\>%\s*(:)\s*(\[)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.green
+            3: minecraft.color.gray
+            4: minecraft.color.gold
+          set:
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_oth.sublime-syntax#buildList
+            - include: list.end
+
+        - match: '\<(json)\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - match: ''''
+              scope: minecraft.color.aqua
+              set:
+                - match: ''''
+                  scope: minecraft.color.aqua
+                  pop: 1
+                - include: Packages/modstag/css/modstag/config/api_json.sublime-syntax#value
+        - match: '\<(binary|bin)\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_oth.sublime-syntax#bin
+        - match: '\<(hexadecimal|hex)\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_oth.sublime-syntax#hex
+        - match: '\<(math\.cfg)((\<)({{modstag_valueType}})(\>))?\>%\s*(:)\s*(\<)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            3: minecraft.color.red
+            4: minecraft.color.aqua
+            5: minecraft.color.red
+            6: minecraft.color.gray
+            7: minecraft.color.gold
+          set:
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_math.sublime-syntax#math
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_math.sublime-syntax#.end-math
+        - match: '\<(def_value|def)\>%\s*(:)'
+          scope: minecraft.color.red
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - match: '\n'
+              scope: modstag.color.error-key
+              set:
+                - clear_scopes: 1
+            - include: Packages/modstag/css/modstag/config-ModsTag/var_def.sublime-syntax#def
+        - match: '\\[\\:%\.]'
+          scope: minecraft.color.purple
+        - match: ':'
+          scope: minecraft.color.red
+        - match: '\\'
+          scope: modstag.color.error-key
+        - match: '[^\\]'
+          scope: minecraft.color.yellow
+        - match: '\n'
+          scope: minecraft.color.textwhite
+          set:
+            - clear_scopes: 1
+            - include: main
+  list.end:
+    - match: '\]'
+      scope: minecraft.color.gold
+      pop: 1

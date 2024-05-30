@@ -1,0 +1,50 @@
+%YAML 1.2
+---
+name: 'py2:var'
+display: false
+scope: source.modstag
+
+variables:
+  modstag_valueType: 'str|int|long|float'
+
+contexts:
+  prototype:
+    - match: '//tips:'
+      scope: minecraft.color.gray
+      push:
+        - meta_scope: minecraft.color.gray
+        - meta_include_prototype: false
+        - match: ':end//'
+          scope: minecraft.color.gray
+          pop: 1
+    - match: '#tips:.*$\n?'
+      scope: minecraft.color.gray
+  main:
+    - include: prototype
+  extra:
+    - match: '\"'
+      scope: minecraft.color.aqua
+      set:
+        - match: '\"'
+          scope: minecraft.color.aqua
+          pop: 1
+        - match: '(\\([\\\"/bfnrt]|u[0-9a-fA-F]{4}))'
+          scope: minecraft.color.purple
+        - match: '\\'
+          scope: modstag.color.error-key
+        - match: '[^\s\n]'
+          scope: minecraft.color.yellow
+    - match: 'false|true|null'
+      scope: minecraft.color.italic_red
+      pop: 1
+    - match: '(\-)?(\d+)((\.)\d+)?([Ee][\+\-]?\d+)?'
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.green
+        3: minecraft.color.green
+        4: minecraft.color.gray
+        5: minecraft.color.green
+      pop: 1
+    - match: '(0x([0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{4}|[0-9a-fA-F]{2}))|(0b([01]{8}|[01]{16}|[01]{24}|[01]{32}))|0'
+      scope: minecraft.color.green
+      pop: 1

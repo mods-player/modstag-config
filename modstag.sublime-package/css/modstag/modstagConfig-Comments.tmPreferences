@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+	<!--
+	# YAML 
+	{
+		scope: "source.modstag", 
+		settings: {
+			decreaseIndentPattern: "(?x)(^("(?:[^"\\]|\\.)*"|[^"/{\n])*)|^("(?:[^"\\]|\\.)*"|[^"/(\n])*\).*$|(^(.*\*/)?\s*\].*$)"
+			increaseIndentPattern: "(?x)(^.*\{("(?:[^"\\]|\\.)*"|[^"/}])*($|/[/*]))|(^.*\[("(?:[^"\\]|\\.)*"|[^"/\]])*($|/[/*]))"
+			indentSquareBrackets: true
+			shellVariables: [
+				{name: "TM_COMMENT_START", value: "#tips: "}
+				{name: "TM_COMMENT_START_2", value: "//tips: "}
+				{name: "TM_COMMENT_END_2", value: " :end//"}
+			]
+		}
+	}
+	// JSON 
+	{
+		"scope": "score.modstag", 
+		"settings": 
+			"decreaseIndentPattern": "(?x)(^("(?:[^"\\]|\\.)*"|[^"/{\n])*)|(^(.*\*/)?\s*\].*$)",
+			"increaseIndentPattern": "(?x)(^.*\{("(?:[^"\\]|\\.)*"|[^"/}])*($|/[/*]))|(^.*\[("(?:[^"\\]|\\.)*"|[^"/\]])*($|/[/*]))",
+			"indentSquareBrackets": true,
+			"shellVariables": [
+				{"name": "TM_COMMENT_START", "value": "#tips: "},
+				{"name": "TM_COMMENT_START_2", "value": "//tips: "},
+				{"name": "TM_COMMENT_END_2", "value": " :end//"}
+			]
+		}
+	}
+	-->
+	<dict>
+		<key>scope</key>
+		<string>source.modstag</string>
+		<key>settings</key>
+		<dict>
+			<key>decreaseIndentPattern</key>
+			<string>(?x)
+				(
+					^("(?:[^"\\]|\\.)*"|[^"/{\n])*\}.*$
+				)
+				|
+				(
+					^("(?:[^"\\]|\\.)*"|[^"/(\n])*\).*$
+				)
+				|
+				(
+					^(.*\*/)?\s*\].*$
+				)
+			</string>
+			<key>increaseIndentPattern</key>
+			<string>(?x)
+				(
+					^.*\{("(?:[^"\\]|\\.)*"|[^"/}])*($|/[/*])
+				)
+				|
+				(
+					^.*\[("(?:[^"\\]|\\.)*"|[^"/\]])*($|/[/*])
+				)
+			</string>
+			<key>indentSquareBrackets</key>
+			<true/>
+			<key>shellVariables</key>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>TM_COMMENT_START</string>
+					<key>value</key>
+					<string>#tips: </string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>TM_COMMENT_START_2</string>
+					<key>value</key>
+					<string>//tips: </string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>TM_COMMENT_END_2</string>
+					<key>value</key>
+					<string> :end//</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+</plist>

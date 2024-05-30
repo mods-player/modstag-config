@@ -1,0 +1,253 @@
+%YAML 1.2
+---
+name: 'py3:var'
+display: false
+scope: source.modstag
+
+variables:
+  modstag_valueType: 'str|int|float'
+
+contexts:
+  prototype:
+    - match: '//tips:'
+      scope: minecraft.color.gray
+      push:
+        - meta_scope: minecraft.color.gray
+        - meta_include_prototype: false
+        - match: ':end//'
+          scope: minecraft.color.gray
+          pop: 1
+    - match: '#tips:.*$\n?'
+      scope: minecraft.color.gray
+  main:
+    - include: Packages/modstag/css/modstag/config/api_attribute.sublime-syntax
+    - match: '\)'
+      scope: minecraft.color.gold
+      set:
+        - meta_include_prototype: false
+        - match: ';'
+          scope: minecraft.color.gray
+          pop: 1
+    - match: '%'
+      scope: minecraft.color.red
+      push:
+        - meta_include_prototype: false
+        - match: '%'
+          scope: modstag.color.error-key
+        - meta_include_prototype: false
+        - match: '(str)(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - meta_include_prototype: false
+            - match: '(%)(\s+)?(:)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+              set:
+                - match: '\n'
+                  scope: modstag.color.error-key
+                  set:
+                    - clear_scopes: 1
+                - include: Packages/modstag/css/modstag/config-Python3/var_oth.sublime-syntax#string
+            - match: '(\\[\\:\[\]%\.])|([:\[\]])'
+              captures:
+                1: minecraft.color.purple
+                2: minecraft.color.red
+            - match: '\\'
+              scope: modstag.color.error-key
+            - match: '[^\\]'
+              scope: minecraft.color.yellow
+        - match: '(int)(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - meta_include_prototype: false
+            - match: '(%)(\s+)?(:)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+              set:
+                - include: Packages/modstag/css/modstag/config-Python3/var_number.sublime-syntax#int
+            - match: '(\\[\\:\[\]%\.])|([:\[\]])'
+              captures:
+                1: minecraft.color.purple
+                2: minecraft.color.red
+            - match: '\\'
+              scope: modstag.color.error-key
+            - match: '[^\\]'
+              scope: minecraft.color.yellow
+        - match: '(float)(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - meta_include_prototype: false
+            - match: '(%)(\s+)?(:)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+              set:
+                - include: Packages/modstag/css/modstag/config-Python3/var_number.sublime-syntax#float
+            - match: '(\\[\\:\[\]%\.])|([:\[\]])'
+              captures:
+                1: minecraft.color.purple
+                2: minecraft.color.red
+            - match: '\\'
+              scope: modstag.color.error-key
+            - match: '[^\\]'
+              scope: minecraft.color.yellow
+        - match: '(boolean)(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - meta_include_prototype: false
+            - match: '(%)(\s+)?(:)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+              set:
+                - match: '\n'
+                  scope: modstag.color.error-key
+                  set:
+                    - clear_scopes: 1
+                - include: Packages/modstag/css/modstag/config-Python3/var_oth.sublime-syntax#boolean
+            - match: '(\\[\\:\[\]%\.])|([:\[\]])'
+              captures:
+                1: minecraft.color.purple
+                2: minecraft.color.red
+            - match: '\\'
+              scope: modstag.color.error-key
+            - match: '[^\\]'
+              scope: minecraft.color.yellow
+        - match: '(extra)(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - meta_include_prototype: false
+            - match: '(%)(\s+)?(:)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+              set:
+                - match: '\n'
+                  scope: modstag.color.error-key
+                  set:
+                    - clear_scopes: 1
+                - include: Packages/modstag/css/modstag/config-Python3/var_extra.sublime-syntax#extra
+            - match: '(\\[\\:\[\]%\.])|([:\[\]])'
+              captures:
+                1: minecraft.color.purple
+                2: minecraft.color.red
+            - match: '\\'
+              scope: modstag.color.error-key
+            - match: '[^\\]'
+              scope: minecraft.color.yellow
+
+        - match: '(list)(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - meta_include_prototype: false
+            - match: '(%)(\s+)?(:)(\s+)?(\[)'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+                4: minecraft.color.gray
+                5: minecraft.color.gold
+              set:
+                - include: Packages/modstag/css/modstag/config-Python3/var_oth.sublime-syntax#list
+                - include: list.end
+            - match: '(\\[\\:\[\]%\.])|([:\[\]])'
+              captures:
+                1: minecraft.color.purple
+                2: minecraft.color.red
+            - match: '\\'
+              scope: modstag.color.error-key
+            - match: '[^\\]'
+              scope: minecraft.color.yellow
+        - match: '(dict)(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - meta_include_prototype: false
+            - match: '(%)(\s+)?(:)(\s+)?'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+                4: minecraft.color.gray
+              set:
+                - include: Packages/modstag/css/modstag/config-Python3/var_oth.sublime-syntax#dict
+                - include: dict.end
+            - match: '(\\[\\:\[\]%\.])|([:\[\]])'
+              captures:
+                1: minecraft.color.purple
+                2: minecraft.color.red
+            - match: '\\'
+              scope: modstag.color.error-key
+            - match: '[^\\]'
+              scope: minecraft.color.yellow
+        - match: '(tuple)(\.)'
+          captures: 
+            1: minecraft.color.aqua
+            2: minecraft.color.gray
+          set:
+            - meta_include_prototype: false
+            - match: '(%)(\s+)?(:)(\s+)?(\()'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.gray
+                3: minecraft.color.gray
+                4: minecraft.color.gray
+                5: minecraft.color.gold
+              set:
+                - include: Packages/modstag/css/modstag/config-Python3/var_oth.sublime-syntax#tuple
+                - include: tuple.end
+            - match: '(\\[\\:\[\]%\.])|([:\[\]])'
+              captures:
+                1: minecraft.color.purple
+                2: minecraft.color.red
+            - match: '\\'
+              scope: modstag.color.error-key
+            - match: '[^\\]'
+              scope: minecraft.color.yellow
+        - match: '[^\s\n\.]'
+          scope: modstag.color.error-key
+        - match: '\n'
+          scope: minecraft.color.textwhite
+          push:
+            - clear_scopes: 1
+        - match: '\n'
+          scope: minecraft.color.textwhite
+          set:
+            - clear_scopes: 1
+            - include: main
+        - match: '[^\s\n\:]'
+          scope: modstag.color.error-key
+    - match: '[^\s\n\:]'
+      scope: modstag.color.error-key
+  list.end:
+    - match: '\]'
+      scope: minecraft.color.gold
+      pop: 1
+  dict.end:
+    - match: '\}'
+      scope: minecraft.color.gold
+      pop: 1
+  tuple.end:
+    - match: '\)'
+      scope: minecraft.color.gold
+      pop: 1

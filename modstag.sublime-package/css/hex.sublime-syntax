@@ -1,0 +1,184 @@
+%YAML 1.2
+---
+name: modstag hex
+scope: source.modstag-hex
+
+file_extensions:
+  - modstag-hex
+
+contexts:
+  main:
+    - include: hex-8bit-FF0000
+    - include: hex-4bit-FF0000
+    - include: hex-2bit-FF0000
+
+  hex-2bit-FF0000:
+    - match: '\h{2}\s'
+      scope: rgb_hex.color.FF0000FF
+      set:
+        - include: hex-8bit-FF00FF
+        - include: hex-4bit-FF00FF
+        - include: hex-2bit-FF00FF
+        - match: '\n'
+          set:
+            - include: hex-8bit-FF0000
+            - include: hex-4bit-FF0000
+            - include: hex-2bit-FF0000
+  hex-2bit-FF00FF:
+    - match: '\h{2}\s'
+      scope: rgb_hex.color.FF00FFFF
+      set:
+        - include: hex-8bit-00FF00
+        - include: hex-4bit-00FF00
+        - include: hex-2bit-00FF00
+        - match: '\n'
+          set:
+            - include: hex-8bit-FF0000
+            - include: hex-4bit-FF0000
+            - include: hex-2bit-FF0000
+  hex-2bit-00FF00:
+    - match: '\h{2}\s'
+      scope: rgb_hex.color.00FF00FF
+      set:
+        - include: hex-8bit-00FFFF
+        - include: hex-4bit-00FFFF
+        - include: hex-2bit-00FFFF
+        - match: '\n'
+          set:
+            - include: hex-8bit-FF0000
+            - include: hex-4bit-FF0000
+            - include: hex-2bit-FF0000
+  hex-2bit-00FFFF:
+    - match: '\h{2}\s'
+      scope: rgb_hex.color.00FFFFFF
+      set:
+        - include: hex-8bit-FF0000
+        - include: hex-4bit-FF0000
+        - include: hex-2bit-FF0000
+        - match: '\n'
+          set:
+            - include: hex-8bit-FF0000
+            - include: hex-4bit-FF0000
+            - include: hex-2bit-FF0000
+
+  hex-4bit-FF0000:
+    - match: '(\h{2})(\h{2})\s'
+      captures: 
+        1: rgb_hex.color.FF0000FF
+        2: rgb_hex.color.FF00FFFF
+      set:
+        - include: hex-8bit-00FF00
+        - include: hex-4bit-00FF00
+        - include: hex-2bit-00FF00
+        - match: '\n'
+          set:
+            - include: hex-8bit-FF0000
+            - include: hex-4bit-FF0000
+            - include: hex-2bit-FF0000
+  hex-4bit-FF00FF:
+    - match: '(\h{2})(\h{2})\s'
+      captures: 
+        1: rgb_hex.color.FF00FFFF
+        2: rgb_hex.color.00FF00FF
+      set:
+        - include: hex-8bit-00FFFF
+        - include: hex-4bit-00FFFF
+        - include: hex-2bit-00FFFF
+        - match: '\n'
+          set:
+            - include: hex-8bit-FF0000
+            - include: hex-4bit-FF0000
+            - include: hex-2bit-FF0000
+  hex-4bit-00FF00:
+    - match: '(\h{2})(\h{2})\s'
+      captures: 
+        1: rgb_hex.color.00FF00FF
+        2: rgb_hex.color.00FFFFFF
+      set:
+        - include: hex-8bit-FF0000
+        - include: hex-4bit-FF0000
+        - include: hex-2bit-FF0000
+        - match: '\n'
+          set:
+            - include: hex-8bit-FF0000
+            - include: hex-4bit-FF0000
+            - include: hex-2bit-FF0000
+  hex-4bit-00FFFF:
+    - match: '(\h{2})(\h{2})\s'
+      captures: 
+        1: rgb_hex.color.00FFFFFF
+        2: rgb_hex.color.FF0000FF
+      set:
+        - include: hex-8bit-FF00FF
+        - include: hex-4bit-FF00FF
+        - include: hex-2bit-FF00FF
+        - match: '\n'
+          set:
+            - include: hex-8bit-FF0000
+            - include: hex-4bit-FF0000
+            - include: hex-2bit-FF0000
+
+  hex-8bit-FF0000:
+    - match: '(\h{2})(\h{2})(\h{2})(\h{2})\s'
+      captures: 
+        1: rgb_hex.color.FF0000FF
+        2: rgb_hex.color.FF00FFFF
+        3: rgb_hex.color.00FF00FF
+        4: rgb_hex.color.00FFFFFF
+      set:
+        - include: hex-8bit-FF0000
+        - include: hex-4bit-FF0000
+        - include: hex-2bit-FF0000
+        - match: '\n'
+          set:
+            - include: hex-8bit-FF0000
+            - include: hex-4bit-FF0000
+            - include: hex-2bit-FF0000
+  hex-8bit-FF00FF:
+    - match: '(\h{2})(\h{2})(\h{2})(\h{2})\s'
+      captures: 
+        1: rgb_hex.color.FF00FFFF
+        2: rgb_hex.color.00FF00FF
+        3: rgb_hex.color.00FFFFFF
+        4: rgb_hex.color.FF0000FF
+      set:
+        - include: hex-8bit-FF00FF
+        - include: hex-4bit-FF00FF
+        - include: hex-2bit-FF00FF
+        - match: '\n'
+          set:
+            - include: hex-8bit-FF0000
+            - include: hex-4bit-FF0000
+            - include: hex-2bit-FF0000
+  hex-8bit-00FF00:
+    - match: '(\h{2})(\h{2})(\h{2})(\h{2})\s'
+      captures: 
+        1: rgb_hex.color.00FF00FF
+        2: rgb_hex.color.00FFFFFF
+        3: rgb_hex.color.FF0000FF
+        4: rgb_hex.color.FF00FFFF
+      set:
+        - include: hex-8bit-00FF00
+        - include: hex-4bit-00FF00
+        - include: hex-2bit-00FF00
+        - match: '\n'
+          set:
+            - include: hex-8bit-FF0000
+            - include: hex-4bit-FF0000
+            - include: hex-2bit-FF0000
+  hex-8bit-00FFFF:
+    - match: '(\h{2})(\h{2})(\h{2})(\h{2})\s'
+      captures: 
+        1: rgb_hex.color.00FFFFFF
+        2: rgb_hex.color.FF0000FF
+        3: rgb_hex.color.FF00FFFF
+        4: rgb_hex.color.00FF00FF
+      set:
+        - include: hex-8bit-00FFFF
+        - include: hex-4bit-00FFFF
+        - include: hex-2bit-00FFFF
+        - match: '\n'
+          set:
+            - include: hex-8bit-FF0000
+            - include: hex-4bit-FF0000
+            - include: hex-2bit-FF0000

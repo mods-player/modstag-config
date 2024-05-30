@@ -1,0 +1,68 @@
+%YAML 1.2
+---
+name: InitializationFile Config
+scope: source.ini
+
+file_extensions:
+  - ini
+  - inf
+
+contexts:
+  prototype:
+    - match: '[;#].*$\n?'
+      scope: minecraft.color.gray
+  main:
+    - include: ini
+  ini:
+    - match: '\['
+      scope: minecraft.color.gold
+      push:
+        - match: '\\[\\\[\]]'
+          scope: minecraft.color.purple
+        - match: '\\'
+          scope: modstag.color.error-key
+        - match: '\]'
+          scope: minecraft.color.gold
+          pop: 1
+        - match: '[^\s\n\]]'
+          scope: minecraft.color.aqua
+    - include: ini-data
+  ini-data:
+    - match: '[^\s\n\=]'
+      scope: minecraft.color.aqua
+      set:
+        - match: '((==)|(=))(\s+)?'
+          captures:
+            1: minecraft.color.gray
+            2: minecraft.color.red
+            3: minecraft.color.gray
+            4: minecraft.color.gray 
+          set:
+            - match: '(false|true|null)(\s?)'
+              scope: minecraft.color.red
+              pop: 1
+            - match: '(\h+)(\s+)?\n'
+              captures:
+                1: minecraft.color.green
+                2: minecraft.color.gray
+              pop: 1
+            - match: '(\-)?(\d+)(\.(\d+))?([Ee][\+\-]?\d+)?(\s+)?\n'
+              captures:
+                1: minecraft.color.red 
+                2: minecraft.color.green
+                3: minecraft.color.gray
+                4: minecraft.color.green
+                5: minecraft.color.green
+                6: minecraft.color.gray
+              pop: 1
+            - match: '([^\n]+)\n'
+              captures: 
+                1: minecraft.color.yellow
+              pop: 1
+            - match: '\n'
+              scope: minecraft.color.gray
+              pop: 1
+        - match: '\n'
+          pop: 1
+        - match: '[^\s\n\=]'
+          scope: minecraft.color.aqua

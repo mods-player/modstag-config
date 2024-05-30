@@ -1,0 +1,197 @@
+%YAML 1.2
+---
+name: 'modstag:var'
+display: false
+scope: source.modstag
+
+variables:
+  modstag_valueType: 'unsigned\<\<int4|unsigned\<\<int8|unsigned\<\<int16|unsigned\<\<int32|unsigned\<\<int64|unsigned\<\<int128|unsigned\<\<int256|
+    |signed\<\<int4|signed\<\<int8|signed\<\<int16|signed\<\<int32|signed\<\<int64|signed\<\<int128|signed\<\<int256|
+    |unsigned\<\<dec8|unsigned\<\<dec16|unsigned\<\<dec32|unsigned\<\<dec64|unsigned\<\<dec128|unsigned\<\<dec256|
+    |signed\<\<dec8|signed\<\<dec16|signed\<\<dec32|signed\<\<dec64|signed\<\<dec128|signed\<\<dec256|
+    |unsigned\<\<bdec32|unsigned\<\<bdec64|unsigned\<\<bdec128|unsigned\<\<bdec256|
+    |signed\<\<bdec32|signed\<\<bdec64|signed\<\<bdec128|signed\<\<bdec256|
+    |single|double|extended|quadruple|octuple|doubledec'
+
+contexts:
+  prototype:
+    - match: '//tips:'
+      scope: minecraft.color.gray
+      push:
+        - meta_scope: minecraft.color.gray
+        - meta_include_prototype: false
+        - match: ':end//'
+          scope: minecraft.color.gray
+          pop: 1
+    - match: '#tips:.*$\n?'
+      scope: minecraft.color.gray
+  main:
+    - include: prototype
+  str.notNextError:
+    - match: '\n'
+      scope: modstag.color.error-key
+      set:
+        - clear_scopes: 1
+  str.notNextError-unsignedNumber:
+    - match: '\n'
+      set:
+        - include: dec.end
+        - match: '[0-9]|\.'
+          scope: modstag.color.error-key
+          set:
+            - match: '[0-9]'
+              scope: modstag.color.error-key
+            - clear_scopes: 1
+  str.notNext:
+    - match: '\n'
+      scope: minecraft.color.textWhite
+      set:
+        - clear_scopes: 1
+  shortstring:
+    - match: '\"'
+      scope: minecraft.color.aqua
+      set:
+        - meta_include_prototype: false
+        - include: str.notNextError
+        - match: '\"'
+          scope: minecraft.color.aqua
+          pop: 1
+        - match: '\\[bfnrt\"\\]'
+          scope: minecraft.color.purple
+        - match: '\\'
+          scope: modstag.color.error-key
+        - match: '[\x00-\xff]'
+          scope: minecraft.color.yellow
+  string:
+    - match: '\"'
+      scope: minecraft.color.aqua
+      set:
+        - meta_include_prototype: false
+        - include: str.notNextError
+        - match: '\"'
+          scope: minecraft.color.aqua
+          pop: 1
+        - match: '\\[bfnrt\"\\]|\\u[0-9a-fA-F]{4}'
+          scope: minecraft.color.purple
+        - match: '\\'
+          scope: modstag.color.error-key
+        - match: '[^\n]'
+          scope: minecraft.color.yellow
+  longstring:
+    - match: '\"'
+      scope: minecraft.color.aqua
+      set:
+        - meta_include_prototype: false
+        - include: str.notNextError
+        - match: '\"'
+          scope: minecraft.color.aqua
+          pop: 1
+        - match: '\\[bfnrt\"\\]|\\u[0-9a-fA-F]{4}'
+          scope: minecraft.color.purple
+        - match: '\\'
+          scope: modstag.color.error-key
+        - match: '[^\n]'
+          scope: minecraft.color.yellow
+  signstring:
+    - match: '\"'
+      scope: minecraft.color.aqua
+      set:
+        - meta_include_prototype: false
+        - include: str.notNextError
+        - match: '\"'
+          scope: minecraft.color.aqua
+          pop: 1
+        - match: '[a-zA-Z_\.]'
+          scope: minecraft.color.yellow
+        - match: '[^\n]'
+          scope: modstag.color.error-key
+  shortstringList:
+    - meta_include_prototype: false
+    - match: '\"'
+      scope: minecraft.color.aqua
+      push:
+        - meta_include_prototype: false
+        - include: str.notNextError
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - meta_include_prototype: false
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - match: '\]'
+              scope: minecraft.color.gold
+              pop: 2
+        - match: '\\[bfnrt\"\\]'
+          scope: minecraft.color.purple
+        - match: '\\'
+          scope: modstag.color.error-key
+        - match: '[\x00-\xff]'
+          scope: minecraft.color.yellow
+  stringList:
+    - meta_include_prototype: false
+    - match: '\"'
+      scope: minecraft.color.aqua
+      push:
+        - meta_include_prototype: false
+        - include: str.notNextError
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - meta_include_prototype: false
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - match: '\]'
+              scope: minecraft.color.gold
+              pop: 2
+        - match: '\\[bfnrt\"\\]|\\u[0-9a-fA-F]{4}'
+          scope: minecraft.color.purple
+        - match: '\\'
+          scope: modstag.color.error-key
+        - match: '[^\s\n\"]'
+          scope: minecraft.color.yellow
+  longstringList:
+    - meta_include_prototype: false
+    - match: '\"'
+      scope: minecraft.color.aqua
+      push:
+        - meta_include_prototype: false
+        - include: str.notNextError
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - meta_include_prototype: false
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - match: '\]'
+              scope: minecraft.color.gold
+              pop: 2
+        - match: '\\[bfnrt\"\\]|\\u[0-9a-fA-F]{4}'
+          scope: minecraft.color.purple
+        - match: '\\'
+          scope: modstag.color.error-key
+        - match: '[^\s\n\"]'
+          scope: minecraft.color.yellow
+  signstringList:
+    - meta_include_prototype: false
+    - match: '\"'
+      scope: minecraft.color.aqua
+      push:
+        - meta_include_prototype: false
+        - include: str.notNextError
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - meta_include_prototype: false
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+            - match: '\]'
+              scope: minecraft.color.gold
+              pop: 2
+        - match: '[a-zA-Z_\.]'
+          scope: minecraft.color.yellow
+        - match: '[^\n]'
+          scope: modstag.color.error-key

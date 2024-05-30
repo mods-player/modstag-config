@@ -1,0 +1,173 @@
+%YAML 1.2
+---
+name: modstag config
+scope: source.modstag
+
+file_extensions:
+  - modstag-cfg
+  - modstag-config
+
+first_line_match: '@modstag-config|@modstag-cfg'
+
+contexts:
+  prototype:
+    - match: '//tips:'
+      scope: minecraft.color.gray
+      push:
+        - meta_scope: minecraft.color.gray
+        - meta_include_prototype: false
+        - match: ':end//'
+          scope: minecraft.color.gray
+          pop: 1
+    - match: '#tips:.*$\n?'
+      scope: minecraft.color.gray
+  main:
+    - include: firstmatch
+    - include: package
+    - include: readme
+    - include: run
+  firstmatch:
+    - match: '!tips: .*$\n?'
+      scope: minecraft.color.gray
+    - match: '(@modstag-config|@modstag-cfg)\('
+      scope: minecraft.color.italic_red
+      push: 
+        - meta_include_prototype: false
+        - match: '\)'
+          scope: minecraft.color.italic_red
+          pop: 1
+        - include: firstmatch-type
+  firstmatch-type:
+    - match: '(version)(:)'
+      captures:
+        1: minecraft.color.italic_red
+        2: minecraft.color.italic_gray
+      push:
+        - meta_include_prototype: false
+        - match: '(5)(\.)(\d)(\.)(\d\d?)([+-]?)'
+          captures: 
+            1: minecraft.color.italic_yellow
+            2: minecraft.color.gray
+            3: minecraft.color.italic_yellow
+            4: minecraft.color.gray
+            5: minecraft.color.italic_yellow
+            6: minecraft.color.italic_red
+          push: firstmatch-type.end
+    - match: '(maincode)(:)'
+      captures:
+        1: minecraft.color.italic_red
+        2: minecraft.color.italic_gray
+      push:
+        - meta_include_prototype: false
+        - match: 'modstag|python3|python|java|cs|cpp|c++|c'
+          scope: minecraft.color.italic_yellow
+          push: firstmatch-type.end
+    - match: '(bin)(:)'
+      captures:
+        1: minecraft.color.italic_red
+        2: minecraft.color.italic_gray
+      push:
+        - meta_include_prototype: false
+        - match: '!/usr/bin/env (modstag|cpp|c++|cs|c|java|python3|python|sh)'
+          scope: minecraft.color.italic_yellow
+          push: firstmatch-type.end
+  firstmatch-type.end:
+    - meta_include_prototype: false
+    - match: ','
+      scope: minecraft.color.italic_gray
+      pop: 2
+    - match: '\)'
+      scope: minecraft.color.italic_red
+      pop: 3
+  package:
+    - match: '!tips: .*$\n?'
+      scope: minecraft.color.gray
+    - match: '(package)(\s+)?(:)(\s+)?'
+      captures: 
+        1: minecraft.color.italic_red
+        2: minecraft.color.gray
+        3: minecraft.color.gray
+        4: minecraft.color.gray
+        5: minecraft.color.gray
+      push:
+        - meta_scope: minecraft.color.italic_yellow
+        - meta_include_prototype: false
+        - match: '\\\\'
+          scope: minecraft.color.italic_yellow
+        - match: '[\\/:\?\*<>\|\"]'
+          scope: modstag.color.error-key
+        - match: '\n'
+          scope: minecraft.color.textwhite
+          pop: 1
+  readme:
+    - match: '!tips: .*$\n?'
+      scope: minecraft.color.gray
+    - match: '(readme|README|Readme)(\s+)?(:)(\s+)?'
+      captures:
+        1: minecraft.color.italic_red
+        2: minecraft.color.gray
+        3: minecraft.color.gray
+        4: minecraft.color.gray
+        5: minecraft.color.gray
+      push:
+        - meta_scope: minecraft.color.italic_yellow
+        - meta_include_prototype: false
+        - match: '\\\\'
+          scope: minecraft.color.italic_yellow
+        - match: '[\\/:\?\*<>\|\"]'
+          scope: modstag.color.error-key
+        - match: '\n'
+          scope: minecraft.color.textwhite
+          pop: 1
+  run:
+    - match: '!tips: .*$\n?'
+      scope: minecraft.color.gray
+    - match: '(run)(\((c)\))'
+      captures: 
+        1: minecraft.color.italic_red
+        2: minecraft.color.italic_gold
+        3: minecraft.color.italic_aqua
+      push:
+        - include: Packages/modstag/css/modstag/config-C/main.sublime-syntax
+    - match: '(run)(\((cpp|c\+\+)\))'
+      captures: 
+        1: minecraft.color.italic_red
+        2: minecraft.color.italic_gold
+        3: minecraft.color.italic_aqua
+      push:
+        - include: Packages/modstag/css/modstag/config-CPlusPlus/main.sublime-syntax
+    - match: '(run)(\((cs)\))'
+      captures: 
+        1: minecraft.color.italic_red
+        2: minecraft.color.italic_gold
+        3: minecraft.color.italic_aqua
+      push:
+        - include: Packages/modstag/css/modstag/config-CSharp/main.sublime-syntax
+    - match: '(run)(\((java)\))'
+      captures: 
+        1: minecraft.color.italic_red
+        2: minecraft.color.italic_gold
+        3: minecraft.color.italic_aqua
+      push:
+        - include: Packages/modstag/css/modstag/config-Java/main.sublime-syntax
+    - match: '(run)(\((modstag)\))'
+      captures: 
+        1: minecraft.color.italic_red
+        2: minecraft.color.italic_gold
+        3: minecraft.color.italic_aqua
+      push:
+        - include: Packages/modstag/css/modstag/config-ModsTag/main.sublime-syntax
+    - match: '(run)(\((python2|py2)\))'
+      captures: 
+        1: minecraft.color.italic_red
+        2: minecraft.color.italic_gold
+        3: minecraft.color.italic_aqua
+      push:
+        - include: Packages/modstag/css/modstag/config-Python2/main.sublime-syntax
+    - match: '(run)(\((python3|py3)\))'
+      captures: 
+        1: minecraft.color.italic_red
+        2: minecraft.color.italic_gold
+        3: minecraft.color.italic_aqua
+      push:
+        - include: Packages/modstag/css/modstag/config-Python3/main.sublime-syntax

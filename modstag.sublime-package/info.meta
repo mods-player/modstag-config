@@ -1,0 +1,14 @@
+{
+	"info": {
+		"version": "5.0.1",
+		"auther": ["ModsTag", "ModsTag_CPython"],
+		"github": "https://github.com/mods-player/sublimeText-modstag"
+	},
+	"folderKeyMap": [
+		{
+			"type": ["folder","package:/"],
+			"match": "css",
+			"scope": "config&setting&syntax folder"
+		}
+	]
+}

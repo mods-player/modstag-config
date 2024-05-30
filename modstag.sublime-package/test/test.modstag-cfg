@@ -1,0 +1,247 @@
+@modstag-cfg(version: 5.0.1)
+//tips:
+more line tips
+:end//
+#tips: one line tips
+!tips: only hand file use tips
+package: \/:?*<>|" dabchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~
+\/:?*<>|" dabchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~
+readme: \/:?*<>|" dabchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~
+\/:?*<>|" dabchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~
+
+#tips: this only test and using with not in this run()
+run(c)
+%file[int].test%: (
+  %std::string.test%: "\\ /:?*<>|\"1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~"
+  %std::string[].test%: ["\\ /:?*<[]|\"1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~"]
+  #tips: __int8, signed __int8, unsigned __int8, char, signed char, unsigned char
+  %char.test%: aa
+  #tips: []<- input number
+  %char[].test%: [aa]
+  #tips: __int16, int16_t, short, short int, int short
+  #tips: signed __int16, signed int16_t, short, signed short int, signed int short
+  #tips: unsigned __int16, unsigned int16_t, short, unsigned short int, unsigned int short
+  %short.test%: 127
+  %short[].test%: [127]
+  #tips: __int32, int32_t, int, long, int long, long int
+  #tips: signed __int32, signed int32_t, signed int, signed long, signed int long, signed long int
+  #tips: unsigned __int32, unsigned int32_t, unsigned int, unsigned long, unsigned int long, unsigned long int
+  %int.test%: 127
+  %int[].test%: [127]
+  #tips: __int64, int64_t, long long, long long int, long int long, int long long
+  #tips: signed __int64, signed int64_t, signed long long, signed long long int, signed long int long, signed int long long
+  #tips: unsigned __int64, unsigned int64_t, unsigned long long, unsigned long long int, unsigned long int long, unsigned int long long
+  %long long.test%: 127
+  %long long[].test%: [127]
+  #tips:
+  %float.test%: 127.0
+  %float[].test%: [127.0]
+  #tips:
+  %double.test%: 127.0
+  %double[].test%: [127.0]
+  #tips: double long
+  %long double.name%: 127.0
+  %long double[].test%: [127.0]
+  #tips:
+  %boolean.true%: true
+  %boolean.false%: false
+  %boolean.null%: null
+  %boolean[].test%: [true,false,null]
+  %extra.test%: "text"
+  %extra.test%: 127
+);
+run(c++)
+%file[int].test%: (
+  %std::string.test%: "\\ /:?*<>|\"1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~"
+  %std::string[].test%: ["\\ /:?*<>|\"1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~"]
+  #tips: __int8, signed __int8, unsigned __int8, char, signed char, unsigned char
+  %char.test%: aa
+  #tips: []<- input number
+  %char[].test%: [aa]
+  #tips: __int16, int16_t, short, short int, int short
+  #tips: signed __int16, signed int16_t, short, signed short int, signed int short
+  #tips: unsigned __int16, unsigned int16_t, short, unsigned short int, unsigned int short, char16_t, wchar_t
+  %short.test%: 127
+  %short[].test%: [127]
+  #tips: __int32, int32_t, int, long, int long, long int, ptrdiff_t
+  #tips: signed __int32, signed int32_t, signed int, signed long, signed int long, signed long int
+  #tips: unsigned __int32, unsigned int32_t, unsigned int, unsigned long, unsigned int long, unsigned long int, char32_t
+  %int.test%: 127
+  %int[].test%: [127]
+  #tips: __int64, int64_t, long long, long long int, long int long, int long long
+  #tips: signed __int64, signed int64_t, signed long long, signed long long int, signed long int long, signed int long long
+  #tips: unsigned __int64, unsigned int64_t, unsigned long long, unsigned long long int, unsigned long int long, unsigned int long long
+  %long long.test%: 127
+  %long long[].test%: [127]
+  #tips:
+  %float.test%: 127.0
+  %float[].test%: [127.0]
+  #tips:
+  %double.test%: 127.0
+  %double[].test%: [127.0]
+  #tips: double long
+  %long double.name%: 127.0
+  %long double[].test%: [127.0]
+  #tips:
+  %boolean.true%: true
+  %boolean.false%: false
+  %boolean.null%: null
+  %boolean[].test%: [true,false,null]
+  %extra.test%: "text"
+  %extra.test%: 127
+);
+run(cs)
+%file[int].test%: (
+  %string.test%: "\\ /:?*<>|\"dabchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~"
+  %string[].test%: ["\\ /:?*<>|\"dabchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~","",""]
+  %sbyte.test%: 255
+  %byte.test%: 127
+  %sbyte[].test%: [127]
+  %byte[].test%: [127]
+  %short.test%: 127
+  %ushort.test%: 255
+  %short[].test%: [127]
+  %ushort[].test%: [127]
+  %int.test%: 127
+  %uint.test%: 255
+  %int[].test%: [127]
+  %uint[].test%: [127]
+  %long.test%: 127
+  %ulong.test%: 255
+  %long[].test%: [127]
+  %ulong[].test%: [127]
+  %float.test%: 127.0
+  %float[].test%: [127.0]
+  %double.test%: 127.0
+  %double[].test%: [127.0]
+  %decimal.name%: 127.0
+  %decimal[].test%: [127.0]
+  %boolean.false%: false
+  %boolean.true%: true
+  %boolean.null%: null
+  %boolean[].test%: [true,false,null]
+  %extra.test%: "text"
+  %extra.test%: 127
+);
+run(java)
+%file[int].test%: (
+  %String.test%: "\\ /:?*<>|\"dabchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~"
+  %String[].test%: ["\\ /:?*<>|\"dabchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~",""]
+  %byte.test%: 127
+  %byte[].test%: [127]
+  %short.test%: 127
+  %short[].test%: [127]
+  %int.test%: 127
+  %int[].test%: [127]
+  %long.test%: 127
+  %long[].test%: [127]
+  %float.test%: 127.0
+  %float[].test%: [127.0]
+  %double.test%: 127.0
+  %double[].test%: [127.0]
+  %boolean.test%: false
+  %boolean.test%: true
+  %boolean.test%: null
+  %boolean[].test%: [false,true,null]
+  %json.test%: '{}'
+  %extra.test%: "text"
+  %extra.test%: 127
+  %extra[].test%: ["text"]
+  %extra[].test%: [127]
+);
+run(modstag)
+%test<file(signed<<int32)>%: (
+  %test<short_string>%: "\\ /:?*<>|\"1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~"
+  %test<short_string*1>%: ["\\ /:?*<>|\"1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~"]
+  %test<string>%: "\\ /:?*<>|\"1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~ \ua007"
+  %test<string*1>%: ["\\ /:?*<>|\"1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~ \ua007"]
+  %test<long_string>%: "\\ /:?*<>|\"1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~ \ua007"
+  %test<long_string*1>%: ["\\ /:?*<>|\"1234567890abchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~ \ua007"]
+  %test<signed<<int4>%: 7
+  %test<signed<<int4*1>%: [7]
+  %test<signed<<int8>%: 7
+  %test<signed<<int8*1>%: [7]
+  %test<signed<<int16>%: 7
+  %test<signed<<int16*1>%: [7]
+  %test<signed<<int32>%: 7
+  %test<signed<<int32*1>%: [7]
+  %test<signed<<int64>%: 7
+  %test<signed<<int64*1>%: [7]
+  %test<signed<<int128>%: 7
+  %test<signed<<int128*1>%: [7]
+  %test<signed<<int256>%: 7
+  %test<signed<<int256*1>%: [7]
+  %test<signed<<dec8>%: 7.0
+  %test<signed<<dec8*1>%: [7.0]
+  %test<signed<<dec16>%: 7.0
+  %test<signed<<dec16*1>%: [7.0]
+  %test<signed<<dec32>%: 7.0
+  %test<signed<<dec32*1>%: [7.0]
+  %test<signed<<dec64>%: 7.0
+  %test<signed<<dec64*1>%: [7.0]
+  %test<signed<<dec128>%: 7.0
+  %test<signed<<dec128*1>%: [7.0]
+  %test<signed<<dec256>%: 7.0
+  %test<signed<<dec256*1>%: [7.0]
+  %test<signed<<bdec32>%: 7.0
+  %test<signed<<bdec32*1>%: [7.0]
+  %test<signed<<bdec64>%: 7.0
+  %test<signed<<bdec64*1>%: [7.0]
+  %test<signed<<bdec128>%: 7.0
+  %test<signed<<bdec128*1>%: [7.0]
+  %test<signed<<bdec256>%: 7.0
+  %test<signed<<bdec256*1>%: [7.0]
+  %test<single>%: 7.0E1
+  %test<single*1>%: [7.0E1]
+  %test<double>%: 7.0E1
+  %test<double*1>%: [7.0E1]
+  %test<extended>%: 7.0E1
+  %test<extended*1>%: [7.0E1]
+  %test<quadruple>%: 7.0E1
+  %test<quadruple*1>%: [7.0E1]
+  %test<octuple>%: 7.0E1
+  %test<octuple*1>%: [7.0E1]
+  %test<binary>%: 10100110 10001101 10001011 1001100001100100
+  %test<hex>%: 1f fc fa 9f 100a d01a
+  %test<boolean>%: null
+  %test<boolean>%: false
+  %test<boolean>%: true
+  %test<boolean*3>%: [true,false,null]
+  %test<boolean*3>%: [true,false,null]
+  %test<build>%: start>>aa.a1.a.a<<end
+  %test<build*1>%: [start>>aa.a1.a.a<<end]
+  %test<math.cfg>%: <123+3312.123-03213>
+  %test<math.cfg>%: <3213+%s>
+  %test<math.cfg>%: <'%s'==123>
+  %test<math.cfg>%: <'%s'==123+%s>
+  %test<math.cfg<signed<<int32>>%: <0/1*2<<3>>4^5(6)+7.8E9> #tips: /0 -> error
+);
+run(python2)
+%file[int].test%: (
+  %str.test%: "\\ /:?*<>|\"dabchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~"
+  %int.test%: 127
+  %long.test%: 127
+  %float.test%: 127.0
+  %boolean.test%: False
+  %boolean.test%: True
+  %boolean.test%: None
+  %list.test%: ["true", 111, 111.0] 
+  %tuple.test%: ("true", 111, 111.0) 
+  %dict.test%: {"true": 11, "111": "1"} 
+  %extra.test%: "text"
+  %extra.test%: 127.0
+);
+run(python3)
+%file[int].test%: (
+  %str.test%: "\\ /:?*<>|\"dabchefghijklmnopqrstuvwxyz`!@#$%^&()_+-=.,~"
+  %int.test%: 127
+  %float.test%: 127.0
+  %boolean.test%: False
+  %boolean.test%: True
+  %boolean.test%: None
+  %list.test%: ["true", True, 111, 111.0] 
+  %tuple.test%: ("true", 111, 111.0) 
+  %dict.test%: {"true": 11, "111": "1"} 
+  %extra.test%: "text"
+  %extra.test%: 127.0
+);

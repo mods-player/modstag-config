@@ -1,0 +1,165 @@
+%YAML 1.2
+---
+name: modstag program
+scope: source.modstag
+
+file_extensions:
+  - modstag-pg
+  - modstag-program
+
+first_line_match: '@modstag-program|@modstag-pg'
+
+contexts:
+  main:
+    - include: package
+    - include: system
+    - include: var
+  package:
+    - match: '(package)(\s+)?(:)(\s+)?'
+      captures: 
+        1: minecraft.color.italic_red
+        2: minecraft.color.gray
+        3: minecraft.color.gray
+        4: minecraft.color.gray
+        5: minecraft.color.gray
+      push:
+        - meta_scope: minecraft.color.italic_yellow
+        - meta_include_prototype: false
+        - match: '\\\\'
+          scope: minecraft.color.italic_yellow
+        - match: '[\\/:\?\*<>\|\"]'
+          scope: modstag.color.error-key
+        - match: '\n'
+          scope: minecraft.color.textwhite
+          pop: 1
+  var:
+    - match: 'system|sys'
+      scope: modstag.color.error-key
+      push:
+        - clear_scopes: 1
+    - match: '([a-zA-Z_])([0-9a-zA-Z_]+)?(<)(plus\s|minus\s)?(int(4|8|16|32|64|128|256))(>)'
+      captures: 
+        1: minecraft.color.yellow
+        2: minecraft.color.yellow
+        3: minecraft.color.red
+        4: minecraft.color.aqua
+        5: minecraft.color.aqua
+        6: minecraft.color.aqua
+        7: minecraft.color.red
+      push:
+        - match: '='
+          scope: minecraft.color.red
+          set:
+            - include: system
+            - match: '(\-?)(\d+)((\.)\d+)?([Ee][\+\-]?\d+)?'
+              captures:
+                1: minecraft.color.red
+                2: minecraft.color.green
+                3: minecraft.color.green
+                4: minecraft.color.gray
+                5: minecraft.color.green
+            - match: ';'
+              scope: minecraft.color.gray
+              pop: 1
+  system:
+    - match: '(system|sys)(\.)([a-zA-Z_])([0-9a-zA-Z_]+)?'
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+        3: minecraft.color.aqua
+        4: minecraft.color.aqua
+      push:
+        - match: '(\.)([a-zA-Z_])([0-9a-zA-Z_]+)?'
+          captures: 
+            1: minecraft.color.gray
+            2: minecraft.color.aqua
+            3: minecraft.color.aqua
+        - match: '\('
+          scope: minecraft.color.gold
+          push:
+            - include: system-open
+  closecomma1-system:
+    - match: '\)(\s+)?(;)'
+      scope: minecraft.color.gold
+      captures:
+        1: minecraft.color.gray
+        2: minecraft.color.gray
+      pop: 2
+  closecomma2-system:
+    - match: '\)(\s+)?(;|,)'
+      scope: minecraft.color.gold
+      captures:
+        1: minecraft.color.gray
+        2: minecraft.color.gray
+      pop: 3
+  closecomma3-system:
+    - match: '\)(\s+)?(;|,)'
+      scope: minecraft.color.gold
+      captures:
+        1: minecraft.color.gray
+        2: minecraft.color.gray
+      pop: 4
+  close1-system:
+    - match: '\)'
+      scope: minecraft.color.gold
+      pop: 1
+  close2-system:
+    - match: '\)'
+      scope: minecraft.color.gold
+      pop: 2
+  close3-system:
+    - match: '\)'
+      scope: minecraft.color.gold
+      pop: 3
+  system-open:
+    - include: closecomma1-system
+    - include: close1-system
+    - include: system
+    - match: '([a-zA-Z_])([0-9a-zA-Z_]+)?((<)(plus\s|minus\s)?(int(4|8|16|32|64|128|256))(>))?'
+      captures: 
+        1: minecraft.color.yellow
+        2: minecraft.color.yellow
+        3: minecraft.color.gray
+        4: minecraft.color.red
+        5: minecraft.color.aqua
+        6: minecraft.color.aqua
+        7: minecraft.color.aqua
+        8: minecraft.color.red
+      push:
+        - include: closecomma2-system
+        - include: close2-system
+        - match: ','
+          scope: minecraft.color.gray
+          pop: 1
+    - match: '(\-?)(\d+)((\.)\d+)?([Ee][\+\-]?\d+)?'
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.green
+        3: minecraft.color.green
+        4: minecraft.color.gray
+        5: minecraft.color.green
+      push:
+        - include: closecomma2-system
+        - include: close2-system
+        - match: ','
+          scope: minecraft.color.gray
+          pop: 1
+    - match: '\"'
+      scope: minecraft.color.aqua
+      push:
+        - meta_include_prototype: false
+        - match: '\"'
+          scope: minecraft.color.aqua
+          set:
+            - include: closecomma2-system
+            - include: close2-system
+            - match: ','
+              scope: minecraft.color.gray
+              pop: 1
+        - match: '\\[bfnrt\"\\]|\\u[0-9a-fA-F]{4}'
+          scope: minecraft.color.purple
+        - match: '\\'
+          scope: modstag.color.error-key
+        - match: '[^\s\n]'
+          scope: minecraft.color.yellow
+

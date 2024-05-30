@@ -1,0 +1,191 @@
+%YAML 1.2
+---
+name: def code
+scope: source.def
+
+file_extensions:
+  - def
+
+first_line_match: '\/\/ def'
+
+contexts:
+  prototype:
+    - match: '//tips:'
+      scope: minecraft.color.gray
+      push:
+        - meta_scope: minecraft.color.gray
+        - meta_include_prototype: false
+        - match: ':end//'
+          scope: minecraft.color.gray
+          pop: 1
+    - match: '#tips:.*$\n?'
+      scope: minecraft.color.gray
+  main:
+    - include: def
+  def:
+    - match: '(int)\((self|public|private|null|all)\)\s*\{'
+      scope: minecraft.color.gold
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.italic_red
+      set:
+        - include: def-int
+    - match: '(decimal)\((self|public|private|null|all)\)\s*\{'
+      scope: minecraft.color.gold
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.italic_red
+      set:
+        - include: def-decimal
+    - match: '(float)\((self|public|private|null|all)\)\s*\{'
+      scope: minecraft.color.gold
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.italic_red
+      set:
+        - include: def-float
+  def-public:
+    - match: '(MemoryCoreUsage)(:)'
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      push:
+        - include: def-public-int
+    - match: '(MemoryUsage)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      push:
+        - match: '\['
+          scope: minecraft.color.gold
+          set:
+            - match: '\]'
+              scope: minecraft.color.gold
+              pop: 1
+            - match: ','
+              scope: minecraft.color.gray
+            - match: '\d'
+              scope: minecraft.color.green
+    - match: '(Infinity)(:)'
+      captures:
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      push:
+        - match: '(false|true)\n'
+          scope: minecraft.color.italic_red
+          pop: 1
+    - match: '(JsonLogic)(:)'
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      push:
+        - match: ''''
+          scope: minecraft.color.aqua
+          set:
+            - match: ''''
+              scope: minecraft.color.aqua
+              pop: 1
+            - include: Packages/modstag/css/modstag/config/api_json.sublime-syntax#value
+    - match: '(Sign)(:)'
+      captures: 
+        1: minecraft.color.aqua
+        2: minecraft.color.gray
+      push:
+        - match: '[a-zA-Z_][a-zA-Z0-9_]*\s*\n'
+          scope: minecraft.color.yellow
+          pop: 1
+  def-public-int:
+    - match: '([\-\+])?\d+\s*\n'
+      scope: minecraft.color.green
+      captures:
+        1: minecraft.color.red
+      pop: 1
+  def-public-decimal:
+    - match: '([\-\+])?\d+(\.)\d+\s*\n'
+      scope: minecraft.color.green
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.gray
+      pop: 1
+  def-public-float:
+    - match: '([\-\+])?\d+(\.)\d+[Ee][\+\-]?\d+\s*\n'
+      scope: minecraft.color.green
+      captures:
+        1: minecraft.color.red
+        2: minecraft.color.gray
+      pop: 1
+  def-int:
+    - match: '\}'
+      scope: minecraft.color.gold
+      pop: 1
+    - match: '[a-zA-Z_][a-zA-Z0-9_]*'
+      scope: minecraft.color.yellow
+      push:
+        - match: '\{'
+          scope: minecraft.color.gold
+          set:
+            - include: def-public
+            - match: '(MaxValue|MinValue)(:)'
+              captures: 
+                1: minecraft.color.aqua
+                2: minecraft.color.gray
+              push:
+                - include: def-public-int
+            - match: '\}'
+              scope: minecraft.color.gold
+              pop: 1
+  def-decimal:
+    - match: '\}'
+      scope: minecraft.color.gold
+      pop: 1
+    - match: '[a-zA-Z_][a-zA-Z0-9_]*'
+      scope: minecraft.color.yellow
+      push:
+        - match: '\{'
+          scope: minecraft.color.gold
+          set:
+            - include: def-public
+            - match: '(MaxValue|MinValue)(:)'
+              captures: 
+                1: minecraft.color.aqua
+                2: minecraft.color.gray
+              push:
+                - include: def-public-decimal
+                - include: def-public-int
+            - match: '(Decimal)(:)'
+              captures: 
+                1: minecraft.color.aqua
+                2: minecraft.color.gray
+              push:
+                - include: def-public-int
+            - match: '\}'
+              scope: minecraft.color.gold
+              pop: 1
+  def-float:
+    - match: '\}'
+      scope: minecraft.color.gold
+      pop: 1
+    - match: '[a-zA-Z_][a-zA-Z0-9_]*'
+      scope: minecraft.color.yellow
+      push:
+        - match: '\{'
+          scope: minecraft.color.gold
+          set:
+            - include: def-public
+            - match: '(MaxValue|MinValue|BitValue)(:)'
+              captures: 
+                1: minecraft.color.aqua
+                2: minecraft.color.gray
+              push:
+                - include: def-public-float
+                - include: def-public-decimal
+                - include: def-public-int
+            - match: '(Decimal)(:)'
+              captures: 
+                1: minecraft.color.aqua
+                2: minecraft.color.gray
+              push:
+                - include: def-public-int
+            - match: '\}'
+              scope: minecraft.color.gold
+              pop: 1
